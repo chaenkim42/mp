@@ -21,7 +21,8 @@ public class AskAccountActivity extends AppCompatActivity {
         btn_signup.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(AskAccountActivity.this, SignUpActivity.class);
+                startActivity(intent);
             }
         });
         /*   login button   */
