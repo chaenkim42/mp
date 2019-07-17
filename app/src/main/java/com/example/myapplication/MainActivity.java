@@ -85,6 +85,9 @@ public class MainActivity extends AppCompatActivity
 //                fragmentManager.beginTransaction()
 //                        .add(R.id.fragment_menu, new AskAccountActivity()).commit();
                 homeLayout.setVisibility(View.GONE);
+
+                ScheduleFragment scheduleFragment = new ScheduleFragment();
+
                 fragmentETCLayout.setVisibility(View.GONE);
                 fragmentMenuLayout.setVisibility(View.VISIBLE);
                 //스택 모두 제거하기
