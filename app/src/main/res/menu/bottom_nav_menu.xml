@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<item
+    android:id="@+id/bottom_nav_home"
+    android:title="홈"
+    android:enabled="true"
+    android:icon="@color/cardview_dark_background"
+    app:showAsAction="ifRoom"
+    />
+
+<item
+    android:id="@+id/bottom_nav_schedule"
+    android:title="일정관리"
+    android:enabled="true"
+    android:icon="@color/cardview_dark_background"
+    app:showAsAction="ifRoom"
+    />
+
+<item
+    android:id="@+id/bottom_nav_community"
+    android:title="게시판"
+    android:enabled="true"
+    android:icon="@color/cardview_dark_background"
+    app:showAsAction="ifRoom"
+    />
+
+<item
+    android:id="@+id/bottom_nav_setting"
+    android:title="설정"
+    android:enabled="true"
+    android:icon="@color/cardview_dark_background"
+    app:showAsAction="ifRoom"
+    />
+
+</menu>
