@@ -64,11 +64,6 @@ public class MainActivity extends AppCompatActivity
         bottomBar = (BottomNavigationView) findViewById(R.id.bottom_nav);
         bottomBar.setOnNavigationItemSelectedListener(this);
 
-        //메인 홈 레이아웃 (프래그먼트)
-//        homeLayout = (RelativeLayout)findViewById(R.id.home);
-//        fragmentMenuLayout = (RelativeLayout)findViewById(R.id.fragment_menu);
-//        fragmentETCLayout = (RelativeLayout)findViewById(R.id.fragment_etc);
-
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, mapFragment).commitAllowingStateLoss();
