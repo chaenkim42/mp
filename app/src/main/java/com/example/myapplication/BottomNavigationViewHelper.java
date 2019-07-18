@@ -9,8 +9,10 @@ import android.util.Log;
 import java.lang.reflect.Field;
 
 public class BottomNavigationViewHelper {
+
     @SuppressLint("RestrictedApi")
     public static void disableShiftMode(BottomNavigationView view) {
+
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
         try {
             Field shiftingMode = menuView.getClass().getDeclaredField("mShiftingMode");

@@ -35,6 +35,11 @@ public class MainActivity extends AppCompatActivity
     private RelativeLayout homeLayout;
     private RelativeLayout fragmentMenuLayout, fragmentETCLayout;
 
+    //fragments
+    private ScheduleFragment scheduleFragment = new ScheduleFragment();
+    private RecomFragment recomFragment = new RecomFragment();
+    private MapFragment mapFragment = new MapFragment();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,47 +65,42 @@ public class MainActivity extends AppCompatActivity
         bottomBar.setOnNavigationItemSelectedListener(this);
 
         //메인 홈 레이아웃 (프래그먼트)
-        homeLayout = (RelativeLayout)findViewById(R.id.home);
-        fragmentMenuLayout = (RelativeLayout)findViewById(R.id.fragment_menu);
-        fragmentETCLayout = (RelativeLayout)findViewById(R.id.fragment_etc);
+//        homeLayout = (RelativeLayout)findViewById(R.id.home);
+//        fragmentMenuLayout = (RelativeLayout)findViewById(R.id.fragment_menu);
+//        fragmentETCLayout = (RelativeLayout)findViewById(R.id.fragment_etc);
+
         fragmentManager = getSupportFragmentManager();
-
-
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, mapFragment).commitAllowingStateLoss();
 
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         switch (menuItem.getItemId()){
             case R.id.bottom_nav_home:
-                homeLayout.setVisibility(View.VISIBLE);
-                fragmentETCLayout.setVisibility(View.GONE);
-                fragmentMenuLayout.setVisibility(View.GONE);
+                fragmentTransaction.replace(R.id.frameLayout, mapFragment).commitAllowingStateLoss();
                 //스택 모두 제거하기
                 for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
                     fragmentManager.popBackStack();
                 }
-                return true;
+                 break;
             case R.id.bottom_nav_schedule:
-//                fragmentManager.beginTransaction()
-//                        .add(R.id.fragment_menu, new AskAccountActivity()).commit();
-                homeLayout.setVisibility(View.GONE);
+                fragmentTransaction.replace(R.id.frameLayout, scheduleFragment).commitAllowingStateLoss();
 
-                ScheduleFragment scheduleFragment = new ScheduleFragment();
-
-                fragmentETCLayout.setVisibility(View.GONE);
-                fragmentMenuLayout.setVisibility(View.VISIBLE);
                 //스택 모두 제거하기
                 for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
                     fragmentManager.popBackStack();
                 }
-                return true;
+                break;
             case R.id.bottom_nav_community:
-                return true;
+                fragmentTransaction.replace(R.id.frameLayout, recomFragment).commitAllowingStateLoss();
+                break;
             case R.id.bottom_nav_setting:
-                return true;
+                break;
         }
-        return false;
+        return true;
     }
 
 

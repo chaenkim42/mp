@@ -9,11 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-public class ScheduleFragment extends Fragment implements View.OnClickListener{
-    private FloatingActionButton button;
-
+public class MapFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,16 +18,8 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_schdeule, container, false);
-
-        button = view.findViewById(R.id.btn_floating);
-        button.setOnClickListener(this);
+        View view = inflater.inflate(R.layout.fragment_map, container, false);
 
         return view;
-    }
-
-    @Override
-    public void onClick(View view) {
-
     }
 }
