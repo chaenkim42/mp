@@ -19,7 +19,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class AskAccountActivity extends AppCompatActivity {
+public class AskAccount extends AppCompatActivity {
     private FirebaseAuth mAuth;
     Button btn_login;
     Button btn_signup;
@@ -47,7 +47,7 @@ public class AskAccountActivity extends AppCompatActivity {
                 try{
                     sleep(2000);
                     //일단은 메인으로 넘어가도록
-                    startActivity(new Intent(AskAccountActivity.this,MainActivity.class));
+                    startActivity(new Intent(AskAccount.this, Main.class));
                     finish();
                 } catch (InterruptedException e){
                     e.printStackTrace();
@@ -100,7 +100,7 @@ public class AskAccountActivity extends AppCompatActivity {
     }
 
     private void createAccount(String email, String password) {
-        Log.d("AskAccountActivity", "createAccount:" + email);
+        Log.d("AskAccount", "createAccount:" + email);
 
         if (!validateForm()) {
             return;
@@ -112,14 +112,14 @@ public class AskAccountActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d("AskAccountActivity", "createUserWithEmail:success");
+                            Log.d("AskAccount", "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
 
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w("AskAccountActivity", "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(AskAccountActivity.this, "Authentication failed.",
+                            Log.w("AskAccount", "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(AskAccount.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
@@ -128,7 +128,7 @@ public class AskAccountActivity extends AppCompatActivity {
     }
 
     private void signIn(String email, String password) {
-        Log.d("AskAccountActivity", "signIn:" + email);
+        Log.d("AskAccount", "signIn:" + email);
 
         if (!validateForm()) {
             return;
@@ -140,13 +140,13 @@ public class AskAccountActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d("AskAccountActivity", "signInWithEmail:success");
+                            Log.d("AskAccount", "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("", "signInWithEmail:failure", task.getException());
-                            Toast.makeText(AskAccountActivity.this, "Authentication failed.",
+                            Toast.makeText(AskAccount.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
@@ -171,12 +171,12 @@ public class AskAccountActivity extends AppCompatActivity {
                         findViewById(R.id.btn_verify).setEnabled(true);
 
                         if (task.isSuccessful()) {
-                            Toast.makeText(AskAccountActivity.this,
+                            Toast.makeText(AskAccount.this,
                                     "Verification email sent to " + user.getEmail(),
                                     Toast.LENGTH_SHORT).show();
                         } else {
-                            Log.e("AskAccountActivity", "sendEmailVerification", task.getException());
-                            Toast.makeText(AskAccountActivity.this,
+                            Log.e("AskAccount", "sendEmailVerification", task.getException());
+                            Toast.makeText(AskAccount.this,
                                     "Failed to send verification email.",
                                     Toast.LENGTH_SHORT).show();
                         }

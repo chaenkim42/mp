@@ -15,7 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class ScheduleFragment extends Fragment implements View.OnClickListener{
+public class Schedule extends Fragment implements View.OnClickListener{
     private FloatingActionButton button;
 
     @Override
