@@ -41,6 +41,21 @@ public class AskAccountActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                try{
+                    sleep(2000);
+                    //일단은 메인으로 넘어가도록
+                    startActivity(new Intent(AskAccountActivity.this,MainActivity.class));
+                    finish();
+                } catch (InterruptedException e){
+                    e.printStackTrace();
+                }
+            }
+        };
+        thread.start();
+
     }
 
     @Override

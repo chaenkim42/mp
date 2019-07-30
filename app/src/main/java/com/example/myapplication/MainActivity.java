@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity
     //각 내비게이션 버튼
     private BottomNavigationItemView homeBtn, scheduleBtn, communityBtn, settingBtn;
 
-    //Fragment Manager, Fragment Tracsaction to handle Fragement
+    //Fragment Manager, Fragment Transaction to handle Fragment
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
 
