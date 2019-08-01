@@ -5,10 +5,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-    <meta-data
-        android:name="com.kakao.sdk.AppKey"
-        android:value="0b344387456e09c50b0e0d312efe43ae" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,24 +13,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ScheduleForm"></activity>
-        <activity android:name=".SearchMap" />
+        <activity android:name=".SearchMap" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".SearchPage" />
         <activity android:name=".Splash">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-        <activity android:name=".MapActivity" />
         <activity android:name=".Main">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".AskAccount" />
+
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="c0e9c3217878bcdc7abdbfb402ae0577" />
+
     </application>
 
 </manifest>
