@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +19,8 @@ import android.widget.RelativeLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+
 
 public class Main extends AppCompatActivity implements View.OnClickListener {
 
@@ -27,10 +31,14 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
 
-
     private Button searchBtn;
     private Button mytripBtn;
 
+    RecyclerView recyclerView;
+    RecyclerView.Adapter adapter;
+    RecyclerView.LayoutManager layoutManager;
+
+    ArrayList<String> samples = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +53,21 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
         searchBtn = findViewById(R.id.main_search_btn);
         mytripBtn = findViewById(R.id.main_mytrip_btn);
-
+        recyclerView = findViewById(R.id.recyclerView);
         searchBtn.setOnClickListener(this);
         mytripBtn.setOnClickListener(this);
+
+        //recyclerview
+        layoutManager = new LinearLayoutManager(this);
+        ((LinearLayoutManager) layoutManager).setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(layoutManager);
+
+        samples.add("문정");
+        samples.add("찬주");
+        samples.add("채은");
+
+        adapter = new ScheduleAdapter(samples);
+        recyclerView.setAdapter(adapter);
 
     }
 
