@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.Main;
 
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;

@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.Main;
 
 import android.app.Activity;
 import android.widget.Toast;

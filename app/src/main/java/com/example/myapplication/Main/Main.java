@@ -1,6 +1,5 @@
-package com.example.myapplication;
+package com.example.myapplication.Main;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.FragmentManager;
@@ -10,14 +9,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.LogPrinter;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.myapplication.R;
+import com.example.myapplication.Schedule.ScheduleAdapter;
+import com.example.myapplication.Schedule.ScheduleForm;
+import com.example.myapplication.Search.SearchPage;
 
 import java.util.ArrayList;
 

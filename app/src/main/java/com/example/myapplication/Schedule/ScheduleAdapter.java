@@ -1,18 +1,16 @@
-package com.example.myapplication;
+package com.example.myapplication.Schedule;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.R;
+
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Hashtable;
 
 public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHolder> {
     private ArrayList<String> strings;
@@ -29,7 +27,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         }
     }
 
-    ScheduleAdapter(ArrayList<String> str){
+    public ScheduleAdapter(ArrayList<String> str){
         strings = str;
 //        drawables = drb;
     }

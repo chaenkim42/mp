@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.Search;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.example.myapplication.R;
 
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;

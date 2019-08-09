@@ -15,15 +15,17 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:hardwareAccelerated="true"
         >
-        <activity android:name=".ScheduleForm"></activity>
-        <activity android:name=".SearchMap" >
+        <activity android:name=".Schedule.ScheduleForm">
 
         </activity>
-        <activity android:name=".SearchPage" />
+        <activity android:name=".Search.SearchMap" >
+
+        </activity>
+        <activity android:name=".Search.SearchPage" />
         <activity android:name=".Splash">
 
         </activity>
-        <activity android:name=".Main">
+        <activity android:name=".Main.Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
