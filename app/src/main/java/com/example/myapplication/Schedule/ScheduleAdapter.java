@@ -9,52 +9,78 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.databinding.ItemCardviewBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHolder> {
-    private ArrayList<String> strings;
-//    private ArrayList<Drawable> drawables;
+public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    Context context;
+    List<MyData> datas;
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView textView;
-//        ImageView imageView;
+    public class ViewCard extends RecyclerView.ViewHolder{
+    ItemCardviewBinding binding;
 
-        ViewHolder(View itemView){
-            super(itemView);
-            textView = itemView.findViewById(R.id.textView);
-//            imageView = itemView.findViewById(R.id.imageView);
+        public ViewCard(ItemCardviewBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+        }
+
+        public void bind(int position){
+            if(position==0){
+                binding.date.setText(datas.get(position).getText());
+                binding.placePic.setImageResource(datas.get(position).getImgNum());
+            }else{
+                binding.date.setText(datas.get(position).getText());
+            }
+
+//            binding.placePic.setImageResource(R.drawable.doggo);
+//            System.out.println(datas.get(position).getImgNum());
+//            binding.placePic.setImageDrawable(context.getResources().getDrawable(datas.get(position).getImgNum()));
         }
     }
 
-    public ScheduleAdapter(ArrayList<String> str){
-        strings = str;
-//        drawables = drb;
+//    public class ViewImage extends RecyclerView.ViewHolder{
+//        public ViewImage(){
+//
+//        }
+//    }
+
+    public ScheduleAdapter(Context context, List<MyData> datas){
+       this.context = context;
+       this.datas = datas;
     }
 
     //아이템 뷰를 위한 뷰홀더 객체 생성
-    public ScheduleAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Context context = parent.getContext() ;
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = inflater.inflate(R.layout.recycler_item, parent, false) ;
-        ScheduleAdapter.ViewHolder vh = new ScheduleAdapter.ViewHolder(view) ;
+        if(viewType==0){
+            return new ViewCard(ItemCardviewBinding.inflate(LayoutInflater.from(context), parent, false));
+        }else{
+            return new ViewCard(ItemCardviewBinding.inflate(LayoutInflater.from(context), parent, false));
+        }
 
-        return vh ;
     }
 
     @Override
-    public void onBindViewHolder(ScheduleAdapter.ViewHolder holder, int position) {
-        String string = strings.get(position);
-//        Drawable drawable = drawables.get(position);
-        holder.textView.setText(string);
-//        holder.imageView.setImageDrawable(drawable);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if(datas.get(position).viewType==0){
+            ((ViewCard)holder).bind(position);
+        }else{
+            ((ViewCard)holder).bind(position);
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+       if (datas.get(position).viewType==0) return 0;
+       else return 1;
     }
 
     // getItemCount() - 전체 데이터 갯수 리턴.
     @Override
     public int getItemCount() {
-        return strings.size() ;
+        return datas.size() ;
     }
 
 }

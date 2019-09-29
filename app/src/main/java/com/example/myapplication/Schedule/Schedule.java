@@ -40,8 +40,8 @@ public class Schedule extends Fragment implements View.OnClickListener{
         list.add("Seoul") ;
         list.add("Suwon") ;
 
-        ScheduleAdapter adapter = new ScheduleAdapter(list);
-        recyclerView.setAdapter(adapter);
+//        ScheduleAdapter adapter = new ScheduleAdapter(list);
+//        recyclerView.setAdapter(adapter);
 
         return view;
     }

@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.myapplication.R;
+import com.example.myapplication.Schedule.MyData;
 import com.example.myapplication.Schedule.ScheduleAdapter;
 import com.example.myapplication.Schedule.ScheduleForm;
 import com.example.myapplication.Search.SearchPage;
@@ -41,7 +42,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     RecyclerView.Adapter adapter;
     RecyclerView.LayoutManager layoutManager;
 
-    ArrayList<String> samples = new ArrayList<>();
+    ArrayList<MyData> samples = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,11 +66,11 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         ((LinearLayoutManager) layoutManager).setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
 
-        samples.add("문정");
-        samples.add("찬주");
-        samples.add("채은");
+        samples.add(new MyData("문정", 0));
+        samples.add(new MyData("찬주", 0));
+        samples.add(new MyData("채은", 0));
 
-        adapter = new ScheduleAdapter(samples);
+        adapter = new ScheduleAdapter(this, samples);
         recyclerView.setAdapter(adapter);
 
     }
