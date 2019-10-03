@@ -33,7 +33,7 @@ public class Schedule extends Fragment implements View.OnClickListener{
         button.setOnClickListener(this);
 
         //리사이클러뷰에 리니어 레이아웃 메니저 설정
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView1);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         ArrayList<String> list = new ArrayList<>();

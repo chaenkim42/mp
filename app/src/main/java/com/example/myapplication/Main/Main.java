@@ -15,6 +15,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.myapplication.R;
 import com.example.myapplication.Schedule.MyData;
@@ -37,6 +38,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
     private Button searchBtn;
     private Button mytripBtn;
+    private ImageButton profile;
 
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
@@ -48,6 +50,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getAppKeyHash();
 
         //뒤로가기
         backPress = new BackPressCloseHandler(this);
@@ -55,9 +58,11 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
 
+        profile = findViewById(R.id.main_profile_img_btn);
         searchBtn = findViewById(R.id.main_search_btn);
         mytripBtn = findViewById(R.id.main_mytrip_btn);
-        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView1);
+        profile.setOnClickListener(this);
         searchBtn.setOnClickListener(this);
         mytripBtn.setOnClickListener(this);
 
@@ -73,6 +78,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         adapter = new ScheduleAdapter(this, samples);
         recyclerView.setAdapter(adapter);
 
+
     }
 
     private void getAppKeyHash() {
@@ -84,8 +90,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 md.update(signature.toByteArray());
                 String something = new String(Base64.encode(md.digest(), 0));
                 Log.e("Hash key", something);
-                System.out.println(something);
-                System.out.println(something);
+                System.out.println("Hash key "+something);
             }
         } catch (Exception e) {
             // TODO Auto-generated catch block
