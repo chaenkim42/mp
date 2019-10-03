@@ -42,7 +42,7 @@ public class AskAccount extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        Thread thread = new Thread(){
+        /*Thread thread = new Thread(){
             @Override
             public void run() {
                 try{
@@ -55,7 +55,7 @@ public class AskAccount extends AppCompatActivity {
                 }
             }
         };
-        thread.start();
+        thread.start();*/
 
     }
 

@@ -11,6 +11,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -49,6 +50,8 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //getAppKeyHash();
+
         //뒤로가기
         backPress = new BackPressCloseHandler(this);
 
@@ -73,12 +76,21 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         adapter = new ScheduleAdapter(this, samples);
         recyclerView.setAdapter(adapter);
 
+
     }
 
     private void getAppKeyHash() {
         try {
             PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNING_CERTIFICATES);
-            for (Signature signature : info.signatures) {
+            //Log.e("Hash key", info.signingInfo.getApkContentsSigners());
+            Signature[] signatures = info.signingInfo.getApkContentsSigners();
+            MessageDigest md = MessageDigest.getInstance("SHA");
+            for(Signature signature:signatures){
+                md.update(signature.toByteArray());
+                final String signatureBase64 = new String(Base64.encode(md.digest(),Base64.DEFAULT));
+                Log.d("Signature Base 64", signatureBase64);
+            }
+            /*for (Signature signature : info.signingInfo.getApkContentsSigners()) {
                 MessageDigest md;
                 md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());
@@ -86,7 +98,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 Log.e("Hash key", something);
                 System.out.println(something);
                 System.out.println(something);
-            }
+            }*/
         } catch (Exception e) {
             // TODO Auto-generated catch block
             Log.e("name not found", e.toString());
