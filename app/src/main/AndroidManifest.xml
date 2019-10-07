@@ -15,21 +15,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AskPreference"></activity>
-        <activity android:name=".Schedule.ScheduleForm"></activity>
-        <activity android:name=".Search.SearchMap"></activity>
-        <activity android:name=".Search.SearchPage"></activity>
-        <activity android:name=".Splash">
+        <activity android:name=".AskLocation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter></activity>
+        <activity android:name=".AskPreference" />
+        <activity android:name=".Schedule.ScheduleForm" />
+        <activity android:name=".Search.SearchMap" />
+        <activity android:name=".Search.SearchPage" />
+        <activity android:name=".Splash">
         </activity>
-        <activity android:name=".Main.Main"></activity>
-        <activity android:name=".Main.MyPage"></activity>
-        <activity android:name=".Schedule.AskSchduleDate"></activity>
-        <activity android:name=".AskAccount"></activity>
+        <activity android:name=".Main.Main" />
+        <activity android:name=".Main.MyPage" />
+        <activity android:name=".Schedule.AskSchduleDate" />
+        <activity android:name=".AskAccount" />
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

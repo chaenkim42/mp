@@ -14,7 +14,7 @@ import android.widget.ToggleButton;
 
 public class AskPreference extends AppCompatActivity implements ToggleButton.OnCheckedChangeListener {
 
-    private String[] categories = {
+    public String[] categories = {
             "#드라이브","#해수욕장","#미술관","#수산물시장",
             "#역사탐방","#성지순례","#등산","#목장","#계곡",
             "#박물관","#동물원","#놀이공원","#체험학습",
