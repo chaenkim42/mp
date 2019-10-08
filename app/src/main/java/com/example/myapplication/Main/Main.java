@@ -16,8 +16,10 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.myapplication.R;
+import com.example.myapplication.Schedule.AskSchduleDate;
 import com.example.myapplication.Schedule.MyData;
 import com.example.myapplication.Schedule.ScheduleAdapter;
 import com.example.myapplication.Schedule.ScheduleForm;
@@ -38,6 +40,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
     private Button searchBtn;
     private Button mytripBtn;
+    private ImageButton profile;
 
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
@@ -60,9 +63,12 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
         searchBtn = findViewById(R.id.main_search_btn);
         mytripBtn = findViewById(R.id.main_mytrip_btn);
+        profile = findViewById(R.id.main_profile_img_btn);
         recyclerView = findViewById(R.id.recyclerView);
+
         searchBtn.setOnClickListener(this);
         mytripBtn.setOnClickListener(this);
+        profile.setOnClickListener(this);
 
         //recyclerview
         layoutManager = new LinearLayoutManager(this);
@@ -79,31 +85,31 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
     }
 
-    private void getAppKeyHash() {
-        try {
-            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNING_CERTIFICATES);
-            //Log.e("Hash key", info.signingInfo.getApkContentsSigners());
-            Signature[] signatures = info.signingInfo.getApkContentsSigners();
-            MessageDigest md = MessageDigest.getInstance("SHA");
-            for(Signature signature:signatures){
-                md.update(signature.toByteArray());
-                final String signatureBase64 = new String(Base64.encode(md.digest(),Base64.DEFAULT));
-                Log.d("Signature Base 64", signatureBase64);
-            }
-            /*for (Signature signature : info.signingInfo.getApkContentsSigners()) {
-                MessageDigest md;
-                md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                String something = new String(Base64.encode(md.digest(), 0));
-                Log.e("Hash key", something);
-                System.out.println(something);
-                System.out.println(something);
-            }*/
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            Log.e("name not found", e.toString());
-        }
-    }
+//    private void getAppKeyHash() {
+//        try {
+//            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNING_CERTIFICATES);
+//            //Log.e("Hash key", info.signingInfo.getApkContentsSigners());
+//            Signature[] signatures = info.signingInfo.getApkContentsSigners();
+//            MessageDigest md = MessageDigest.getInstance("SHA");
+//            for(Signature signature:signatures){
+//                md.update(signature.toByteArray());
+//                final String signatureBase64 = new String(Base64.encode(md.digest(),Base64.DEFAULT));
+//                Log.d("Signature Base 64", signatureBase64);
+//            }
+//            /*for (Signature signature : info.signingInfo.getApkContentsSigners()) {
+//                MessageDigest md;
+//                md = MessageDigest.getInstance("SHA");
+//                md.update(signature.toByteArray());
+//                String something = new String(Base64.encode(md.digest(), 0));
+//                Log.e("Hash key", something);
+//                System.out.println(something);
+//                System.out.println(something);
+//            }*/
+//        } catch (Exception e) {
+//            // TODO Auto-generated catch block
+//            Log.e("name not found", e.toString());
+//        }
+//    }
 
     //뒤로가기 버튼
     @Override
@@ -128,7 +134,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 startActivity(new Intent(Main.this, SearchPage.class));
                 break;
             case R.id.main_mytrip_btn:
-                startActivity(new Intent(Main.this, ScheduleForm.class));
+                startActivity(new Intent(Main.this, AskSchduleDate.class));
                 break;
             case R.id.main_profile_img_btn:
                 startActivity(new Intent(Main.this, MyPage.class));

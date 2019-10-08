@@ -2,6 +2,7 @@ package com.example.myapplication.Schedule;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -35,8 +36,15 @@ public class AskSchduleDate extends AppCompatActivity implements View.OnClickLis
         finish_date = findViewById(R.id.finish);
         add_btn = findViewById(R.id.add);
         datePicker = findViewById(R.id.datePicker);
+
         start_date.setOnClickListener(this);
         finish_date.setOnClickListener(this);
+        add_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(AskSchduleDate.this, ScheduleForm.class));
+            }
+        });
 
         getCurrentDate();
         datePicker.init(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day), new DatePicker.OnDateChangedListener() {
