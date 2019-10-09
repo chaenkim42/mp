@@ -4,15 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
-public class AskPreference extends AppCompatActivity implements ToggleButton.OnCheckedChangeListener {
+public class AskPreference extends AppCompatActivity implements ToggleButton.OnCheckedChangeListener, View.OnClickListener {
 
     public String[] categories = {
             "#드라이브","#해수욕장","#미술관","#수산물시장",
@@ -29,6 +31,9 @@ public class AskPreference extends AppCompatActivity implements ToggleButton.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ask_preference);
+
+        Button nextBtn = findViewById(R.id.askPreference_nextPageBtn);
+        nextBtn.setOnClickListener(this);
 
         //처음엔 모두 0(비선택)
         for(int i=0; i< selectedBoolean.length; i++){
@@ -101,5 +106,10 @@ public class AskPreference extends AppCompatActivity implements ToggleButton.OnC
             s+= String.valueOf(selectedBoolean[i]);
         }
         Log.e("select",s);
+    }
+
+    @Override
+    public void onClick(View v) {
+        startActivity(new Intent(AskPreference.this, AskLocation.class));
     }
 }

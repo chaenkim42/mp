@@ -57,7 +57,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //getAppKeyHash();
+        getAppKeyHash();
 
         //뒤로가기
         backPress = new BackPressCloseHandler(this);
