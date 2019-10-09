@@ -6,10 +6,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.content.pm.SigningInfo;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Base64;
@@ -24,8 +26,10 @@ import com.example.myapplication.Schedule.MyData;
 import com.example.myapplication.Schedule.ScheduleAdapter;
 import com.example.myapplication.Schedule.ScheduleForm;
 import com.example.myapplication.Search.SearchPage;
+import com.kakao.util.maps.helper.Utility;
 
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 
@@ -85,6 +89,23 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
     }
 
+    private void getAppKeyHash() {
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    getPackageName(), PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.e("MY KEY HASH:",
+                        Base64.encodeToString(md.digest(), Base64.DEFAULT));
+                System.out.println("MY KEY HASH: "+Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        } catch (NoSuchAlgorithmException e) {
+
+        }
+    }
 //    private void getAppKeyHash() {
 //        try {
 //            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNING_CERTIFICATES);
