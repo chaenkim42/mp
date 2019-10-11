@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="380dp"
+    android:layout_height="190dp"
+    android:background="@drawable/rectangle_box"
+    tools:context=".Search.PlaceInfoBoxFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/fragment_place_info_box_placeName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:text="TextView"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/fragment_place_info_box_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="00km"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_place_info_box_placeName"
+            app:layout_constraintStart_toEndOf="@+id/fragment_place_info_box_placeName"
+            app:layout_constraintTop_toTopOf="@+id/fragment_place_info_box_placeName" />
+
+        <ToggleButton
+            android:id="@+id/fragment_place_info_box_starToggleBtn"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/star_empty"
+            android:text="ToggleButton"
+            android:textOff=" "
+            android:textOn=" "
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_place_info_box_downArrowBtn"
+            app:layout_constraintEnd_toStartOf="@+id/fragment_place_info_box_downArrowBtn"
+            app:layout_constraintTop_toTopOf="@+id/fragment_place_info_box_downArrowBtn" />
+
+        <ImageButton
+            android:id="@+id/fragment_place_info_box_downArrowBtn"
+            android:layout_width="30dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/down_arrow"
+            android:src="@color/WHITE"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/fragment_place_info_box_addressLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="주소"
+            app:layout_constraintStart_toStartOf="@+id/fragment_place_info_box_placeName"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_place_info_box_placeName" />
+
+        <TextView
+            android:id="@+id/fragment_place_info_box_telLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="전화번호"
+            app:layout_constraintStart_toStartOf="@+id/fragment_place_info_box_addressLabel"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_place_info_box_addressLabel" />
+
+        <TextView
+            android:id="@+id/fragment_place_info_box_openTimeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="영업시간"
+            app:layout_constraintStart_toStartOf="@+id/fragment_place_info_box_telLabel"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_place_info_box_telLabel" />
+
+        <TextView
+            android:id="@+id/fragment_place_info_box_enterFeeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="관람료"
+            app:layout_constraintStart_toStartOf="@+id/fragment_place_info_box_openTimeLabel"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_place_info_box_openTimeLabel" />
+
+        <TextView
+            android:id="@+id/fragment_place_info_box_gotoDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="상세보기>"
+            android:textColor="#3F51B5"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_place_info_box_distance"
+            app:layout_constraintStart_toEndOf="@+id/fragment_place_info_box_distance"
+            app:layout_constraintTop_toTopOf="@+id/fragment_place_info_box_distance"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/fragment_place_info_box_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_place_info_box_addressLabel"
+            app:layout_constraintStart_toEndOf="@+id/fragment_place_info_box_addressLabel"
+            app:layout_constraintTop_toTopOf="@+id/fragment_place_info_box_addressLabel"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/fragment_place_info_box_tel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:gravity="start|left"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/fragment_place_info_box_telLabel"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_place_info_box_address" />
+
+        <TextView
+            android:id="@+id/fragment_place_info_box_openTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/fragment_place_info_box_openTimeLabel"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_place_info_box_tel" />
+
+        <TextView
+            android:id="@+id/fragment_place_info_box_enterFee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/fragment_place_info_box_enterFeeLabel"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_place_info_box_openTime" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

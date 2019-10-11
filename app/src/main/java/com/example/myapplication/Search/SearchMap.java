@@ -3,8 +3,10 @@ package com.example.myapplication.Search;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -13,13 +15,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.example.myapplication.R;
 import com.example.myapplication.Schedule.MapFragment;
@@ -31,17 +38,23 @@ import net.daum.mf.map.api.MapView;
 //지도로 검색결과 나오는 액티비티
 
 public class SearchMap extends AppCompatActivity implements MapView.CurrentLocationEventListener, Button.OnClickListener, MapView.POIItemEventListener,
-                                                                MapView.MapViewEventListener{
+        MapView.MapViewEventListener, PlaceInfoBoxFragment.OnFragmentInteractionListener, PlaceInfoBoxFragment.OnInputListener{
 
     private static final String LOG_TAG = "HomeFragment";
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION};
+    public static String[] locationInformation = {"국립해양박물관","부산 영도구 해양로 301번길 45", "051-309-1500", "평일 09:00-18:00","무료"};
 
     private MapView mapView;
     ViewGroup mapViewContainer;
     Button gps_btn;
     MapPoint current_mapPoint;
+    ImageButton downArrow;
+    ToggleButton starBtn;
+    ConstraintLayout infoContainer;
+
+    String poiName = "null";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,14 +88,6 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
             checkRunTimePermission();
 
         }
-
-        // 후에 SearchMapFragment 추가
-//        FragmentManager fm = getSupportFragmentManager();
-//        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-//        fragmentTransaction.add(R.id.map_container, new SearchMapFragment());
-//        fragmentTransaction.commit();
-
-
     }
 
     @Override
@@ -104,17 +109,14 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
     public void onCurrentLocationDeviceHeadingUpdate(MapView mapView, float v) {
 
     }
-
     @Override
     public void onCurrentLocationUpdateCancelled(MapView mapView) {
 
     }
-
     @Override
     public void onCurrentLocationUpdateFailed(MapView mapView) {
 
     }
-
     @Override
     public void onRequestPermissionsResult(int permsRequestCode,
                                            @NonNull String[] permissions,
@@ -213,7 +215,6 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
         builder.create().show();
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -244,14 +245,27 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
     }
 
 
-    @Override //Button.OnClickListener
+    @Override
+    //Button.OnClickListener
     public void onClick(View view) {
-        if(mapView.getZoomLevel()>=1){
-            mapView.setZoomLevel(1,false);
+        switch (view.getId())
+        {
+            case R.id.gps_btn:
+                if(mapView.getZoomLevel()>=1){
+                    mapView.setZoomLevel(1,false);
+                }
+                mapView.setMapCenterPoint(current_mapPoint, false);
+                mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
+                break;
+            case R.id.search_map_info_container:
+                Log.e("infocontainer","clicked");
+                break;
         }
-        mapView.setMapCenterPoint(current_mapPoint, false);
-        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
 
+    }
+
+    public String getData(){
+        return poiName;
     }
 
     @Override //MapView.POIItemEventListener
@@ -261,7 +275,13 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
 
     @Override //MapView.POIItemEventListener
     public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem) {
-
+        //Fragment part
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        PlaceInfoBoxFragment placeInfoBoxFragment = new PlaceInfoBoxFragment();
+        fragmentTransaction.add(R.id.search_map_info_container, placeInfoBoxFragment);
+        fragmentTransaction.commit();
+        poiName = mapPOIItem.getItemName();
     }
 
     @Override //MapView.POIItemEventListener
@@ -292,7 +312,7 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
 
     @Override //MapView.MapViewEventListener
     public void onMapViewSingleTapped(MapView mapView, MapPoint mapPoint) {
-
+        infoContainer.setVisibility(View.INVISIBLE);
     }
 
     @Override //MapView.MapViewEventListener
@@ -318,6 +338,22 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
     @Override //MapView.MapViewEventListener
     public void onMapViewMoveFinished(MapView mapView, MapPoint mapPoint) {
         mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeadingWithoutMapMoving);
+    }
+
+    @Override
+    //PlaceInfoBoxFragment.OnFragmentInteractionListener
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    //PlaceInfoBoxFragment.OnInputListener
+    public void sendInput(int inputId) {
+        switch (inputId){
+            case R.id.fragment_place_info_box_downArrowBtn:
+                infoContainer.setVisibility(View.INVISIBLE);
+                break;
+        }
     }
 }
 
