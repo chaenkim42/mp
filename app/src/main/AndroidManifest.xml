@@ -22,14 +22,14 @@
         <activity android:name=".Schedule.ScheduleForm" >
         </activity>
         <activity android:name=".Search.SearchMap" >
+        </activity>
+        <activity android:name=".Search.SearchPage" />
+        <activity android:name=".Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".Search.SearchPage" />
-        <activity android:name=".Splash">
         </activity>
         <activity android:name=".Main.Main" >
         </activity>
