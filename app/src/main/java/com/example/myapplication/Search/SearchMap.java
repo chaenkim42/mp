@@ -53,6 +53,7 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
     ImageButton downArrow;
     ToggleButton starBtn;
     ConstraintLayout infoContainer;
+    Boolean markerIsSelected = false;
 
     String poiName = "null";
 
@@ -81,6 +82,8 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
         mapView.setPOIItemEventListener(this);
 
         gps_btn.setOnClickListener(this);
+
+        infoContainer = findViewById(R.id.search_map_info_container);
 
         if (!checkLocationServicesStatus()) {
             showDialogForLocationServiceSetting();
@@ -258,7 +261,7 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
                 mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
                 break;
             case R.id.search_map_info_container:
-                Log.e("infocontainer","clicked");
+//                Log.e("infocontainer","clicked");
                 break;
         }
 
@@ -275,6 +278,8 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
 
     @Override //MapView.POIItemEventListener
     public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem) {
+        markerIsSelected = true;
+        infoContainer.setVisibility(View.VISIBLE);
         //Fragment part
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
@@ -288,23 +293,18 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
     public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem, MapPOIItem.CalloutBalloonButtonType calloutBalloonButtonType) {
 
     }
-
     @Override //View.OnDragListener
     public void onDraggablePOIItemMoved(MapView mapView, MapPOIItem mapPOIItem, MapPoint mapPoint) {
 
     }
-
-
     @Override //MapView.MapViewEventListener
     public void onMapViewInitialized(MapView mapView) {
 
     }
-
     @Override //MapView.MapViewEventListener
     public void onMapViewCenterPointMoved(MapView mapView, MapPoint mapPoint) {
 
     }
-
     @Override //MapView.MapViewEventListener
     public void onMapViewZoomLevelChanged(MapView mapView, int i) {
 
@@ -312,29 +312,28 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
 
     @Override //MapView.MapViewEventListener
     public void onMapViewSingleTapped(MapView mapView, MapPoint mapPoint) {
-        infoContainer.setVisibility(View.INVISIBLE);
+        if(markerIsSelected){
+            infoContainer.setVisibility(View.INVISIBLE);
+            markerIsSelected = false;
+        }
     }
 
     @Override //MapView.MapViewEventListener
     public void onMapViewDoubleTapped(MapView mapView, MapPoint mapPoint) {
 
     }
-
     @Override //MapView.MapViewEventListener
     public void onMapViewLongPressed(MapView mapView, MapPoint mapPoint) {
 
     }
-
     @Override //MapView.MapViewEventListener
     public void onMapViewDragStarted(MapView mapView, MapPoint mapPoint) {
 
     }
-
     @Override //MapView.MapViewEventListener
     public void onMapViewDragEnded(MapView mapView, MapPoint mapPoint) {
 
     }
-
     @Override //MapView.MapViewEventListener
     public void onMapViewMoveFinished(MapView mapView, MapPoint mapPoint) {
         mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeadingWithoutMapMoving);
