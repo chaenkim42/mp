@@ -12,9 +12,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class AskPreference extends AppCompatActivity implements ToggleButton.OnCheckedChangeListener, View.OnClickListener {
+
+    int selected = 0;
+    Button nextBtn;
 
     public String[] categories = {
             "#드라이브","#해수욕장","#미술관","#수산물시장",
@@ -32,7 +36,8 @@ public class AskPreference extends AppCompatActivity implements ToggleButton.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ask_preference);
 
-        Button nextBtn = findViewById(R.id.askPreference_nextPageBtn);
+        nextBtn = findViewById(R.id.askPreference_nextPageBtn);
+        nextBtn.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         nextBtn.setOnClickListener(this);
 
         //처음엔 모두 0(비선택)
@@ -94,11 +99,18 @@ public class AskPreference extends AppCompatActivity implements ToggleButton.OnC
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         //클릭될 때마다 background resource(버튼 배경) 바꾸고 selectedBoolean에 반영
         if(isChecked){
+            selected ++;
             buttonView.setBackgroundResource(R.drawable.hash_selected);
             selectedBoolean[Integer.valueOf(buttonView.getId())-100] = 1;
         }else{
+            selected --;
             buttonView.setBackgroundResource(R.drawable.hash_unselected);
             selectedBoolean[Integer.valueOf(buttonView.getId())-100] = 0;
+        }
+        if(selected >=5){
+            nextBtn.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
+        }else{
+            nextBtn.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         }
         //test 용 코드
         String s = "";
@@ -110,6 +122,8 @@ public class AskPreference extends AppCompatActivity implements ToggleButton.OnC
 
     @Override
     public void onClick(View v) {
-        startActivity(new Intent(AskPreference.this, AskLocation.class));
+        if(selected >= 5){
+            startActivity(new Intent(AskPreference.this, AskLocation.class));
+        }
     }
 }

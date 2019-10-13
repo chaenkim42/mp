@@ -55,6 +55,10 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
     ConstraintLayout infoContainer;
     Boolean markerIsSelected = false;
 
+    FragmentManager fm;
+    FragmentTransaction fragmentTransaction;
+    PlaceInfoBoxFragment placeInfoBoxFragment = new PlaceInfoBoxFragment();
+
     String poiName = "null";
 
     @Override
@@ -254,8 +258,9 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
         switch (view.getId())
         {
             case R.id.gps_btn:
-                if(mapView.getZoomLevel()>=1){
-                    mapView.setZoomLevel(1,false);
+//                Toast.makeText(this, String.valueOf(mapView.getZoomLevel()), Toast.LENGTH_SHORT).show();
+                if(mapView.getZoomLevel()>=2){
+                    mapView.setZoomLevel(2,false);
                 }
                 mapView.setMapCenterPoint(current_mapPoint, false);
                 mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
@@ -279,11 +284,10 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
     @Override //MapView.POIItemEventListener
     public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem) {
         markerIsSelected = true;
-        infoContainer.setVisibility(View.VISIBLE);
+//        infoContainer.setVisibility(View.VISIBLE);
         //Fragment part
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        PlaceInfoBoxFragment placeInfoBoxFragment = new PlaceInfoBoxFragment();
+        fm = getSupportFragmentManager();
+        fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.add(R.id.search_map_info_container, placeInfoBoxFragment);
         fragmentTransaction.commit();
         poiName = mapPOIItem.getItemName();
@@ -313,7 +317,11 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
     @Override //MapView.MapViewEventListener
     public void onMapViewSingleTapped(MapView mapView, MapPoint mapPoint) {
         if(markerIsSelected){
-            infoContainer.setVisibility(View.INVISIBLE);
+            fm = getSupportFragmentManager();
+            fragmentTransaction = fm.beginTransaction();
+            fragmentTransaction.remove(placeInfoBoxFragment);
+            fragmentTransaction.commit();
+//            infoContainer.setVisibility(View.INVISIBLE);
             markerIsSelected = false;
         }
     }
@@ -350,7 +358,11 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
     public void sendInput(int inputId) {
         switch (inputId){
             case R.id.fragment_place_info_box_downArrowBtn:
-                infoContainer.setVisibility(View.INVISIBLE);
+                fm = getSupportFragmentManager();
+                fragmentTransaction = fm.beginTransaction();
+                fragmentTransaction.remove(placeInfoBoxFragment);
+                fragmentTransaction.commit();
+//                infoContainer.setVisibility(View.INVISIBLE);
                 break;
         }
     }

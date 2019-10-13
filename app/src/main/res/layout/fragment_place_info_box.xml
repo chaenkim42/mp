@@ -39,7 +39,7 @@
             android:id="@+id/fragment_place_info_box_starToggleBtn"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
             android:background="@drawable/star_empty"
             android:text="ToggleButton"
             android:textOff=" "
