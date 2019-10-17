@@ -1,14 +1,11 @@
 package com.example.myapplication.Schedule;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class AskSchduleDate extends AppCompatActivity implements View.OnClickListener {
+public class AskScheduleDate extends AppCompatActivity implements View.OnClickListener {
     TextView start_date, finish_date;
     DatePicker datePicker;
     Button add_btn;
@@ -30,7 +27,7 @@ public class AskSchduleDate extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ask_date);
+        setContentView(R.layout.activity_ask_schedule_date);
 
         start_date = findViewById(R.id.start);
         finish_date = findViewById(R.id.finish);
@@ -42,7 +39,7 @@ public class AskSchduleDate extends AppCompatActivity implements View.OnClickLis
         add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(AskSchduleDate.this, ScheduleForm.class));
+                startActivity(new Intent(AskScheduleDate.this, ScheduleForm.class));
             }
         });
 

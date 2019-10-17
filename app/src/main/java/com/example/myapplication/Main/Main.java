@@ -6,14 +6,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.content.pm.SigningInfo;
 import android.os.Bundle;
-import android.os.Message;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -21,12 +18,10 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.example.myapplication.R;
-import com.example.myapplication.Schedule.AskSchduleDate;
+import com.example.myapplication.Schedule.AskScheduleDate;
 import com.example.myapplication.Schedule.MyData;
 import com.example.myapplication.Schedule.ScheduleAdapter;
-import com.example.myapplication.Schedule.ScheduleForm;
 import com.example.myapplication.Search.SearchPage;
-import com.kakao.util.maps.helper.Utility;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -155,7 +150,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 startActivity(new Intent(Main.this, SearchPage.class));
                 break;
             case R.id.main_mytrip_btn:
-                startActivity(new Intent(Main.this, AskSchduleDate.class));
+                startActivity(new Intent(Main.this, AskScheduleDate.class));
                 break;
             case R.id.main_profile_img_btn:
                 startActivity(new Intent(Main.this, MyPage.class));
