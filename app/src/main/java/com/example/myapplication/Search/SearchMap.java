@@ -29,7 +29,6 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.myapplication.R;
-import com.example.myapplication.Schedule.MapFragment;
 
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.myapplication.Location;
 import com.example.myapplication.R;
@@ -30,7 +31,7 @@ import java.util.List;
 
 //TODO: 스크롤 될 때 목록 자동 접고 펴기
 //TODO: Location 실제 위, 경도 값 받아서 타임라인 표시
-public class ScheduleForm extends AppCompatActivity {
+public class ScheduleForm extends AppCompatActivity implements ExpandableListAdapter.OnAdapterInteractionListener {
     ViewGroup mapContainer;
     private RecyclerView recyclerView;
 
@@ -104,19 +105,14 @@ public class ScheduleForm extends AppCompatActivity {
         }
     }
 
-    private ViewGroup mapViewContainer;
-    private MapView mapView;
+    public static ViewGroup mapViewContainer;
+    public static MapView mapView;
 //    private MapPoint mapPoint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_form);
-
-//        FragmentManager fm = getSupportFragmentManager();
-//        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-//        fragmentTransaction.add(R.id.scheduleForm_mapContainer, new MapFragment());
-//        fragmentTransaction.commit();
 
         mapViewContainer = findViewById(R.id.scheduleForm_mapContainer);
         mapView = new MapView(this);
@@ -183,11 +179,11 @@ public class ScheduleForm extends AppCompatActivity {
             firstDayLocations.add(location2);
             firstDayLocations.add(location3);
             List<Location> secondDayLocations = new ArrayList<>();
-            secondDayLocations.add(new Location("유명한 산"));
-            secondDayLocations.add(new Location("큰 산"));
-            secondDayLocations.add(new Location("멋진 공원"));
-            secondDayLocations.add(new Location("작은 공원"));
             List<Location> thirdDayLocations = new ArrayList<>();
+            thirdDayLocations.add(new Location("유명한 산"));
+            thirdDayLocations.add(new Location("큰 산"));
+            thirdDayLocations.add(new Location("멋진 공원"));
+            thirdDayLocations.add(new Location("작은 공원"));
             thirdDayLocations.add(new Location("다양한 동물원"));
             thirdDayLocations.add(new Location("멋진 동물원"));
             thirdDayLocations.add(new Location("멋진 박물관"));
@@ -223,19 +219,22 @@ public class ScheduleForm extends AppCompatActivity {
                 // 각 날짜별로 포함된 location 을 CHILD로 추가
                 List<Location> spots = thisTrip.getDay(i).getSpots();
                 int order = 0;
+                if(spots.isEmpty() || spots == null){
+                    data.add(new ExpandableListAdapter.Item(ExpandableListAdapter.EMPTY_CHILD));
+                }
                 for(int j=0; j<spots.size(); j++){
                     data.add(new ExpandableListAdapter.Item(ExpandableListAdapter.CHILD, spots.get(j), ++order));
+                    if(j == spots.size()-1 ){
+                        data.add(new ExpandableListAdapter.Item(ExpandableListAdapter.EMPTY_CHILD));
+                    }
                 }
             }
 
-            recyclerView.setAdapter(new ExpandableListAdapter(data));
+            recyclerView.setAdapter(new ExpandableListAdapter(data, this));
 
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-
-
 //        List<ExpandableListAdapter.Item> data = new ArrayList<>();
 //
 //        data.add(new ExpandableListAdapter.Item(ExpandableListAdapter.HEADER, "Day "+String.valueOf(1)));
@@ -260,4 +259,16 @@ public class ScheduleForm extends AppCompatActivity {
 //        recyclerView.setAdapter(new ExpandableListAdapter(data));
 
     }
+
+    @Override  //ExpandableListAdapter.OnAdapterInteractionListener
+    public void addBtnClickedInAdapter(boolean isClicked){
+        if(isClicked){
+//            Toast.makeText(this, "check adapter data sended to activity", Toast.LENGTH_SHORT).show();
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fm.beginTransaction();
+            fragmentTransaction.add(R.id.scheduleForm_fragment_container, new ScheduleFormMapFragment());
+            fragmentTransaction.commit();
+        }
+    }
+
 }

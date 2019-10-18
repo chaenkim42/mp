@@ -27,7 +27,7 @@ public class Schedule extends Fragment implements View.OnClickListener{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_schdeule, container, false);
+        View view = inflater.inflate(R.layout.fragment_schedule, container, false);
 
         button = view.findViewById(R.id.btn_floating);
         button.setOnClickListener(this);

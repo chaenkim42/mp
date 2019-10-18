@@ -33,16 +33,25 @@
         app:layout_constraintBottom_toBottomOf="@+id/recyclerviewheader_title"
         app:layout_constraintStart_toEndOf="@+id/recyclerviewheader_title" />
 
-    <ImageView
-        android:id="@+id/recyclerviewheader_btn_expand_toggle"
-        android:layout_width="20dp"
-        android:layout_height="15dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/recyclerviewheader_toggleBtn_constraintLayout"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/down_arrow"
         app:layout_constraintBottom_toBottomOf="@+id/recyclerviewheader_date"
         app:layout_constraintStart_toEndOf="@+id/recyclerviewheader_date"
-        app:layout_constraintTop_toTopOf="@+id/recyclerviewheader_date" />
+        app:layout_constraintTop_toTopOf="@+id/recyclerviewheader_date">
+
+        <ImageView
+            android:id="@+id/recyclerviewheader_btn_expand_toggle"
+            android:layout_width="20dp"
+            android:layout_height="15dp"
+            android:src="@drawable/down_arrow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/recyclerviewheader_budgetBtn"
