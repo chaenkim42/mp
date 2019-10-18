@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -59,7 +60,8 @@ public class ExpandableListAdapter extends RecyclerView.Adapter {
             case HEADER:
                 final ListHeaderViewHolder itemController = (ListHeaderViewHolder) holder;
                 itemController.refferalItem = item;
-                itemController.header_title.setText(item.text);
+                itemController.header_title.setText(item.title);
+                itemController.header_date.setText(item.subTitle);
                 if (item.invisibleChildren == null) {
                     itemController.btn_expand_toggle.setImageResource(R.drawable.up_arrow);
                 } else {
@@ -94,7 +96,7 @@ public class ExpandableListAdapter extends RecyclerView.Adapter {
                 break;
             case CHILD:
                 TextView itemTextView = (TextView) holder.itemView;
-                itemTextView.setText(data.get(position).text);
+                itemTextView.setText(data.get(position).title);
                 break;
         }
     }
@@ -112,27 +114,40 @@ public class ExpandableListAdapter extends RecyclerView.Adapter {
 
     private static class ListHeaderViewHolder extends RecyclerView.ViewHolder {
         public TextView header_title;
+        public TextView header_date;
         public ImageView btn_expand_toggle;
+        public Button budgetBtn;
+        public Button editBtn;
         public Item refferalItem;
 
         public ListHeaderViewHolder(View itemView) {
             super(itemView);
             header_title = (TextView) itemView.findViewById(R.id.recyclerviewListItem_title);
+            header_date = (TextView) itemView.findViewById(R.id.recyclerviewListItem_date);
             btn_expand_toggle = (ImageView) itemView.findViewById(R.id.recyclerviewListItem_btn_expand_toggle);
+            budgetBtn = (Button) itemView.findViewById(R.id.recyclerviewListItem_budgetBtn);
+            budgetBtn = (Button) itemView.findViewById(R.id.recyclerviewListItem_editBtn);
         }
     }
 
     public static class Item {
         public int type;
-        public String text;
+        public String title;
+        public String subTitle;
         public List<Item> invisibleChildren;
 
         public Item() {
         }
 
-        public Item(int type, String text) {
+        public Item(int type, String title) {
             this.type = type;
-            this.text = text;
+            this.title = title;
+        }
+
+        public Item(int type, String title, String subTitle) {
+            this.type = type;
+            this.title = title;
+            this.subTitle = subTitle;
         }
     }
 }

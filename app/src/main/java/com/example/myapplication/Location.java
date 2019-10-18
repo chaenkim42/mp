@@ -5,6 +5,13 @@ public class Location {
     private int id;
     private int drawableId; // should be R.drawable.blahblah
 
+    private float latitude;
+    private float longitude;
+
+    public Location(String name){
+        this.name = name;
+    }
+
     public Location(String name, int id){
         this.name = name;
         this.id = id;

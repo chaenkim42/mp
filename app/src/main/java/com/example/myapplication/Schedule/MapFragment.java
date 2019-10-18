@@ -27,6 +27,8 @@ public class MapFragment extends Fragment {
         try{
             v = inflater.inflate(R.layout.fragment_map, container, false);
             MapView mapView = new MapView(getActivity());
+
+
             ViewGroup mapContainer = v.findViewById(R.id.container);
             mapContainer.addView(mapView);
         }catch (InflateException e){
