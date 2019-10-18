@@ -21,6 +21,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.Schedule.AskScheduleDate;
 import com.example.myapplication.Schedule.MyData;
 import com.example.myapplication.Schedule.ScheduleAdapter;
+import com.example.myapplication.Search.SearchMap;
 import com.example.myapplication.Search.SearchPage;
 
 import java.security.MessageDigest;
@@ -147,7 +148,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.main_search_btn:
-                startActivity(new Intent(Main.this, SearchPage.class));
+                startActivity(new Intent(Main.this, SearchMap.class));
                 break;
             case R.id.main_mytrip_btn:
                 startActivity(new Intent(Main.this, AskScheduleDate.class));

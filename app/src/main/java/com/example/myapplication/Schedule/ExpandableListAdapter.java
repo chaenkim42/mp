@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.Location;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
@@ -36,19 +37,24 @@ public class ExpandableListAdapter extends RecyclerView.Adapter {
         switch (viewType) {
             case HEADER: // HEADER 인 경우에 recyclerview_list_item.xml 을 생성
                 LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.recylerview_list_item, parent, false);
+                view = inflater.inflate(R.layout.scheduleform_recyclerview_header, parent, false);
                 ListHeaderViewHolder header = new ListHeaderViewHolder(view);
                 return header;
-            case CHILD: // CHILD 인 경우에는 TextView만 생성
-                TextView itemTextView = new TextView(context);
-                itemTextView.setPadding(subItemPaddingLeft, subItemPaddingTopAndBottom, 0, subItemPaddingTopAndBottom);
-                itemTextView.setTextColor(0x88000000);
-                itemTextView.setLayoutParams(
-                        new ViewGroup.LayoutParams(
-                                ViewGroup.LayoutParams.MATCH_PARENT,
-                                ViewGroup.LayoutParams.WRAP_CONTENT));
-                return new RecyclerView.ViewHolder(itemTextView) {
-                };
+            case CHILD:
+                inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = inflater.inflate(R.layout.scheduleform_recyclerview_child, parent, false);
+                ListChildViewHolder child = new ListChildViewHolder(view);
+                return child;
+            // CHILD 인 경우에는 TextView만 생성
+//                TextView itemTextView = new TextView(context);
+//                itemTextView.setPadding(subItemPaddingLeft, subItemPaddingTopAndBottom, 0, subItemPaddingTopAndBottom);
+//                itemTextView.setTextColor(0x88000000);
+//                itemTextView.setLayoutParams(
+//                        new ViewGroup.LayoutParams(
+//                                ViewGroup.LayoutParams.MATCH_PARENT,
+//                                ViewGroup.LayoutParams.WRAP_CONTENT));
+//                return new RecyclerView.ViewHolder(itemTextView) {
+//                };
         }
         return null;
     }
@@ -95,8 +101,11 @@ public class ExpandableListAdapter extends RecyclerView.Adapter {
                 });
                 break;
             case CHILD:
-                TextView itemTextView = (TextView) holder.itemView;
-                itemTextView.setText(data.get(position).title);
+                final ListChildViewHolder controller = (ListChildViewHolder) holder;
+                controller.title.setText(item.title);
+                controller.circle.setText(String.valueOf(item.orderOfVisit));
+//                TextView itemTextView = (TextView) holder.itemView;
+//                itemTextView.setText(data.get(position).title);
                 break;
         }
     }
@@ -122,11 +131,22 @@ public class ExpandableListAdapter extends RecyclerView.Adapter {
 
         public ListHeaderViewHolder(View itemView) {
             super(itemView);
-            header_title = (TextView) itemView.findViewById(R.id.recyclerviewListItem_title);
-            header_date = (TextView) itemView.findViewById(R.id.recyclerviewListItem_date);
-            btn_expand_toggle = (ImageView) itemView.findViewById(R.id.recyclerviewListItem_btn_expand_toggle);
-            budgetBtn = (Button) itemView.findViewById(R.id.recyclerviewListItem_budgetBtn);
-            budgetBtn = (Button) itemView.findViewById(R.id.recyclerviewListItem_editBtn);
+            header_title = (TextView) itemView.findViewById(R.id.recyclerviewheader_title);
+            header_date = (TextView) itemView.findViewById(R.id.recyclerviewheader_date);
+            btn_expand_toggle = (ImageView) itemView.findViewById(R.id.recyclerviewheader_btn_expand_toggle);
+            budgetBtn = (Button) itemView.findViewById(R.id.recyclerviewheader_budgetBtn);
+            budgetBtn = (Button) itemView.findViewById(R.id.recyclerviewheader_editBtn);
+        }
+    }
+
+    private static class ListChildViewHolder extends RecyclerView.ViewHolder{
+        public TextView title;
+        public TextView circle;
+
+        public ListChildViewHolder(View itemView){
+            super(itemView);
+            title = (TextView) itemView.findViewById(R.id.recyclerviewchild_location_title);
+            circle = (TextView) itemView.findViewById(R.id.recyclerviewchild_circle);
         }
     }
 
@@ -134,20 +154,26 @@ public class ExpandableListAdapter extends RecyclerView.Adapter {
         public int type;
         public String title;
         public String subTitle;
+        public int orderOfVisit;// for child item.
         public List<Item> invisibleChildren;
 
         public Item() {
         }
 
-        public Item(int type, String title) {
-            this.type = type;
-            this.title = title;
+        public Item(int type, String title, String subTitle) {
+            if(type == HEADER){
+                this.type = type;
+                this.title = title; // ex. "Day 1"
+                this.subTitle = subTitle; // ex "09/01 일"
+            }
+        }
+        public Item(int type, Location location, int orderOfVisit){
+            if(type == CHILD){
+                this.type = type;
+                this.title = location.getName(); // 여행장소 이름 ex. "여수엑스포"
+                this.orderOfVisit= orderOfVisit;
+            }
         }
 
-        public Item(int type, String title, String subTitle) {
-            this.type = type;
-            this.title = title;
-            this.subTitle = subTitle;
-        }
     }
 }
