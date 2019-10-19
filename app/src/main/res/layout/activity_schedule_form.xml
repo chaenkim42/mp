@@ -1,88 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+<androidx.drawerlayout.widget.DrawerLayout
+    android:id="@+id/drawerlayout"
+    android:layout_height="match_parent" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_height="match_parent">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="200dp"
+        <FrameLayout
+            android:layout_below="@+id/toolbar"
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/title"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="여수 식도락 여행"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/date"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="200dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="여수 식도락 여행"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="2019.09.01 - 2019.09.04"
+                            app:layout_constraintStart_toStartOf="@+id/title"
+                            app:layout_constraintTop_toBottomOf="@+id/title" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <ImageButton
+                        android:id="@+id/scheduleForm_diaryBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@android:drawable/ic_menu_edit"
+                        app:layout_constraintBottom_toBottomOf="@+id/scheduleForm_budgetBtn"
+                        app:layout_constraintEnd_toStartOf="@+id/scheduleForm_budgetBtn"
+                        app:layout_constraintTop_toTopOf="@+id/scheduleForm_budgetBtn" />
+
+                    <ImageButton
+                        android:id="@+id/scheduleForm_budgetBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:src="@android:drawable/ic_menu_share"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <ListView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="2019.09.01 - 2019.09.04"
-                    app:layout_constraintStart_toStartOf="@+id/title"
-                    app:layout_constraintTop_toBottomOf="@+id/title" />
+                    android:layout_height="61dp" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <RelativeLayout
+                    android:id="@+id/scheduleForm_mapContainer"
+                    android:layout_gravity="center"
+                    android:layout_width="350dp"
+                    android:layout_height="200dp"></RelativeLayout>
 
-            <ImageButton
-                android:id="@+id/scheduleForm_diaryBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@android:drawable/ic_menu_edit"
-                app:layout_constraintBottom_toBottomOf="@+id/scheduleForm_budgetBtn"
-                app:layout_constraintEnd_toStartOf="@+id/scheduleForm_budgetBtn"
-                app:layout_constraintTop_toTopOf="@+id/scheduleForm_budgetBtn" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/scheduleForm_planRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp" />
 
-            <ImageButton
-                android:id="@+id/scheduleForm_budgetBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:src="@android:drawable/ic_menu_share"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
+        </FrameLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 
-        <ListView
-            android:id="@+id/scheduleForm_members"
-            android:layout_width="match_parent"
-            android:layout_height="61dp" />
 
-        <RelativeLayout
-            android:id="@+id/scheduleForm_mapContainer"
-            android:layout_gravity="center"
-            android:layout_width="350dp"
-            android:layout_height="200dp"></RelativeLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:layout_gravity="start"
+        android:id="@+id/navigationview"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:headerLayout="@layout/header"
+        >
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/scheduleForm_planRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp" />
+            android:layout_marginTop="150dp"
+        android:id="@+id/drawer_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        </androidx.recyclerview.widget.RecyclerView>
 
-    </LinearLayout>
+    </com.google.android.material.navigation.NavigationView>
 
-</RelativeLayout>
+
+</androidx.drawerlayout.widget.DrawerLayout>
+
+
+
+
+

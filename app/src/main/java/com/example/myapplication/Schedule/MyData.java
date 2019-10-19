@@ -7,13 +7,13 @@ public class MyData {
     int imgNum;
     int viewType;
 
-    public MyData(String text, int imgNum, int viewType){
+    public MyData(String text, int imgNum){
         this.text = text;
         this.imgNum = imgNum;
         this.viewType = viewType;
     }
 
-    public MyData(String text, int viewType){
+    public MyData(String text){
         this.text = text;
         this.viewType = viewType;
     }

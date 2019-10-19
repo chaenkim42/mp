@@ -1,6 +1,9 @@
 package com.example.myapplication.Schedule;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,10 +11,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.Toolbar;
 
 import com.example.myapplication.Location;
 import com.example.myapplication.R;
+import com.google.android.material.navigation.NavigationView;
 
 import net.daum.mf.map.api.CameraUpdateFactory;
 import net.daum.mf.map.api.MapPOIItem;
@@ -33,6 +45,7 @@ import java.util.List;
 public class ScheduleForm extends AppCompatActivity {
     ViewGroup mapContainer;
     private RecyclerView recyclerView;
+
 
     private class Trip{
         private String title;
@@ -113,10 +126,43 @@ public class ScheduleForm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_form);
 
+        //data 있는 schedules 초기화
+        ArrayList<MyData> schedules = new ArrayList<>();
+        schedules.add(new MyData("서울", R.drawable.location0 ));
+        schedules.add(new MyData("경주",R.drawable.location1));
+        schedules.add(new MyData("부산",R.drawable.location3 ));
+        schedules.add(new MyData("제주",R.drawable.location5));
+
+        //툴바 생성
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        // 액션바에 드로어 아이콘 추가
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.btn_floating);
+
+        DrawerLayout drawerLayout = findViewById(R.id.drawerlayout);
+        NavigationView navigationView = findViewById(R.id.navigationview);
+
+        //drawer toggle 세트로 drawerlayout, toolbar 등 해서 생성 - 드로어 여닫기 완성
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.closed);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+
+        //drawer recyclerview
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        ((LinearLayoutManager) layoutManager).setOrientation(RecyclerView.VERTICAL);
+        RecyclerView drawer_recyclerview = findViewById(R.id.drawer_recyclerview);
+        drawer_recyclerview.setLayoutManager(layoutManager);
+        ScheduleAdapter scheduleAdapter = new ScheduleAdapter(this, schedules, 2);
+        drawer_recyclerview.setAdapter(scheduleAdapter);
+
+
+
 //        FragmentManager fm = getSupportFragmentManager();
 //        FragmentTransaction fragmentTransaction = fm.beginTransaction();
 //        fragmentTransaction.add(R.id.scheduleForm_mapContainer, new MapFragment());
 //        fragmentTransaction.commit();
+
+
 
         mapViewContainer = findViewById(R.id.scheduleForm_mapContainer);
         mapView = new MapView(this);
@@ -166,7 +212,7 @@ public class ScheduleForm extends AppCompatActivity {
 
 
         recyclerView = findViewById(R.id.scheduleForm_planRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
 
         List<ExpandableListAdapter.Item> data = new ArrayList<>();
 
@@ -233,8 +279,6 @@ public class ScheduleForm extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-
 
 //        List<ExpandableListAdapter.Item> data = new ArrayList<>();
 //
