@@ -1,6 +1,9 @@
 package com.example.myapplication.Schedule;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,11 +11,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.Toolbar;
 import android.widget.Toast;
 
 import com.example.myapplication.Location;
 import com.example.myapplication.R;
+import com.google.android.material.navigation.NavigationView;
 
 import net.daum.mf.map.api.CameraUpdateFactory;
 import net.daum.mf.map.api.MapPOIItem;
@@ -34,6 +46,7 @@ import java.util.List;
 public class ScheduleForm extends AppCompatActivity implements ExpandableListAdapter.OnAdapterInteractionListener {
     ViewGroup mapContainer;
     private RecyclerView recyclerView;
+
 
     private class Trip{
         private String title;
@@ -114,6 +127,11 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_form);
 
+//        FragmentManager fm = getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+//        fragmentTransaction.add(R.id.scheduleForm_mapContainer, new MapFragment());
+//        fragmentTransaction.commit();
+
         mapViewContainer = findViewById(R.id.scheduleForm_mapContainer);
         mapView = new MapView(this);
         mapViewContainer.addView(mapView);
@@ -162,7 +180,7 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
 
 
         recyclerView = findViewById(R.id.scheduleForm_planRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
 
         List<ExpandableListAdapter.Item> data = new ArrayList<>();
 
@@ -235,6 +253,9 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+
+
 //        List<ExpandableListAdapter.Item> data = new ArrayList<>();
 //
 //        data.add(new ExpandableListAdapter.Item(ExpandableListAdapter.HEADER, "Day "+String.valueOf(1)));

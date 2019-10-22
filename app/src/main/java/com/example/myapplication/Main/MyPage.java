@@ -21,8 +21,8 @@ public class MyPage extends AppCompatActivity {
         setContentView(R.layout.activity_mypage);
 
         List<MyData> list = new ArrayList<>();
-        list.add(new MyData("SEOUL, WITH MY MOM", R.drawable.doggo, 0));
-        ScheduleAdapter adapter = new ScheduleAdapter(this, list);
+        list.add(new MyData("SEOUL, WITH MY MOM", R.drawable.doggo));
+        ScheduleAdapter adapter = new ScheduleAdapter(this, list, 1);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         ((LinearLayoutManager) layoutManager).setOrientation(RecyclerView.HORIZONTAL);

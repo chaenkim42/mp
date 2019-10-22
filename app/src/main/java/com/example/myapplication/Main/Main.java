@@ -79,7 +79,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         samples.add(new MyData("찬주", 0));
         samples.add(new MyData("채은", 0));
 
-        adapter = new ScheduleAdapter(this, samples);
+        adapter = new ScheduleAdapter(this, samples, 0);
         recyclerView.setAdapter(adapter);
 
 
