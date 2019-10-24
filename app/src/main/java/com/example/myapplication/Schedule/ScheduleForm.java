@@ -285,10 +285,10 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
     public void addBtnClickedInAdapter(boolean isClicked){
         if(isClicked){
 //            Toast.makeText(this, "check adapter data sended to activity", Toast.LENGTH_SHORT).show();
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fm.beginTransaction();
-            fragmentTransaction.add(R.id.scheduleForm_fragment_container, new ScheduleFormMapFragment());
-            fragmentTransaction.commit();
+//            FragmentManager fm = getSupportFragmentManager();
+//            FragmentTransaction fragmentTransaction = fm.beginTransaction();
+//            fragmentTransaction.add(R.id.scheduleForm_fragment_container, new ScheduleFormMapFragment());
+//            fragmentTransaction.commit();
         }
     }
 

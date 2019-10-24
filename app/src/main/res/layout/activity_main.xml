@@ -2,77 +2,173 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_constraintlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Main.Main">
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="183dp"
+        app:srcCompat="@drawable/main_background" />
+
     <ImageButton
         android:id="@+id/main_profile_img_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="50dp"
-        android:src="@mipmap/ic_launcher_round"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="122dp"
+        android:layout_marginEnd="289dp"
+        android:layout_marginBottom="517dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/roundcorner"
+        android:scaleType="centerCrop"
+        android:src="@drawable/invalid_name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/main_greeting_txt"
+        android:id="@+id/main_username_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/main_greeting_message"
-        app:layout_constraintStart_toStartOf="@+id/main_profile_img_btn"
-        app:layout_constraintTop_toBottomOf="@+id/main_profile_img_btn" />
+        android:layout_marginStart="14dp"
+        android:layout_marginBottom="15dp"
+        android:text="이찬주"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintStart_toEndOf="@+id/main_profile_img_btn" />
 
-    <LinearLayout
-        android:layout_width="349dp"
-        android:layout_height="232dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <TextView
+        android:id="@+id/main_username_txt2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text="님"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/main_username_txt"
+        app:layout_constraintStart_toEndOf="@+id/main_username_txt"
+        app:layout_constraintTop_toTopOf="@+id/main_username_txt" />
+
+    <TextView
+        android:id="@+id/main_letsgo_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="134dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginBottom="17dp"
+        android:text="떠나요,\n탱자와"
+        android:textColor="@color/white"
+        android:textSize="23sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.82"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/main_search_btn"
+        android:layout_width="183dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="18dp"
+        android:background="@drawable/letsgo_btn"
+        android:text="@string/main_search_btn"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="191dp"
+        android:layout_marginTop="60dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_greeting_txt"
-        app:layout_constraintVertical_bias="0.078">
+        app:layout_constraintTop_toBottomOf="@+id/imageView2">
 
         <Button
-            android:id="@+id/main_search_btn"
-            android:layout_width="300dp"
+            android:id="@+id/main_mytrip_btn"
+            android:layout_width="71dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="31dp"
+            android:layout_marginEnd="309dp"
+            android:background="@color/WHITE"
+            android:text="내 일정 관리"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/main_seemoreplanBtn"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_marginEnd="18dp"
+            android:background="@drawable/main_seemoreplan_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main_planlist_constraintlayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:text="@string/main_search_btn" />
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/main_mytrip_btn">
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:orientation="horizontal">
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <Button
-                android:id="@+id/main_mytrip_btn"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:text="new plan" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </HorizontalScrollView>
 
-        </LinearLayout>
-    </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="236dp"
+        android:layout_marginTop="38dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+        <Button
+            android:id="@+id/main_besttrip_btn"
+            android:layout_width="71dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="31dp"
+            android:layout_marginEnd="309dp"
+            android:background="@color/WHITE"
+            android:text="베스트 여행"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/main_seemorebestplanBtn"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_marginEnd="18dp"
+            android:background="@drawable/main_seemoreplan_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

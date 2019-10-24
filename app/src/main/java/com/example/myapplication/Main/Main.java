@@ -10,9 +10,11 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -54,6 +56,16 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
 
         getAppKeyHash();
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        double width = size.x;
+        double height = size.y;
+
+        Log.e("size", String.valueOf(width));
+        Log.e("size", String.valueOf(height));
+
 
         //뒤로가기
         backPress = new BackPressCloseHandler(this);
