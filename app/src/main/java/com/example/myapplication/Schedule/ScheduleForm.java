@@ -132,6 +132,35 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
 //        fragmentTransaction.add(R.id.scheduleForm_mapContainer, new MapFragment());
 //        fragmentTransaction.commit();
 
+        //data 있는 schedules 초기화
+        ArrayList<MyData> schedules = new ArrayList<>();
+        schedules.add(new MyData("서울", R.drawable.location0 ));
+        schedules.add(new MyData("경주",R.drawable.location1));
+        schedules.add(new MyData("부산",R.drawable.location3 ));
+        schedules.add(new MyData("제주",R.drawable.location5));
+
+        //툴바 생성
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        // 액션바에 드로어 아이콘 추가
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.btn_floating);
+
+        DrawerLayout drawerLayout = findViewById(R.id.drawerlayout);
+        NavigationView navigationView = findViewById(R.id.navigationview);
+
+        //drawer toggle 세트로 drawerlayout, toolbar 등 해서 생성 - 드로어 여닫기 완성
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.closed);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+
+        //drawer recyclerview
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        ((LinearLayoutManager) layoutManager).setOrientation(RecyclerView.VERTICAL);
+        RecyclerView drawer_recyclerview = findViewById(R.id.drawer_recyclerview);
+        drawer_recyclerview.setLayoutManager(layoutManager);
+        ScheduleAdapter scheduleAdapter = new ScheduleAdapter(this, schedules, 2);
+        drawer_recyclerview.setAdapter(scheduleAdapter);
+
         mapViewContainer = findViewById(R.id.scheduleForm_mapContainer);
         mapView = new MapView(this);
         mapViewContainer.addView(mapView);

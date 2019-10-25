@@ -31,10 +31,10 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public ScheduleAdapter(Context context, List<MyData> datas, int viewType){
-       this.context = context;
-       this.datas = datas;
-       this.type = viewType;
-       // 어댑터를 생성할때 뷰타입을 받아온다 - 뷰 홀더에 레이아웃 인플레이트 할때 다른 종류로 나눠줌
+        this.context = context;
+        this.datas = datas;
+        this.type = viewType;
+        // 어댑터를 생성할때 뷰타입을 받아온다 - 뷰 홀더에 레이아웃 인플레이트 할때 다른 종류로 나눠줌
     }
 
     @NonNull
@@ -67,10 +67,10 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 main_title = holder.itemView.findViewById(R.id.textView);
                 main_title.setText(datas.get(position).getText());
             case 2:
-//                drawer_schedule_title = holder.itemView.findViewById(R.id.drawer_schedule_title);
-//                drawer_schedule_img = holder.itemView.findViewById(R.id.drawer_schedule_img);
-//                drawer_schedule_title.setText(datas.get(position).getText());
-//                drawer_schedule_img.setImageResource(datas.get(position).getImgNum());
+                drawer_schedule_title = holder.itemView.findViewById(R.id.drawer_schedule_title);
+                drawer_schedule_img = holder.itemView.findViewById(R.id.drawer_schedule_img);
+                drawer_schedule_title.setText(datas.get(position).getText());
+                drawer_schedule_img.setImageResource(datas.get(position).getImgNum());
         }
     }
 
