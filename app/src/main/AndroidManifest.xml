@@ -35,7 +35,6 @@
         <activity android:name=".Schedule.AskScheduleDate" >
 
         </activity>
-        <activity android:name=".AskAccount" />
 
         <activity android:name=".LogIn">
             <intent-filter>
@@ -44,6 +43,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SignUp"></activity>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
