@@ -48,7 +48,7 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
     private RecyclerView recyclerView;
 
 
-    private class Trip{
+    public static class Trip{
         private String title;
         private int period;
         private Date startDate;
@@ -83,7 +83,7 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
 
     }
 
-    private class Day{
+    public static class Day{
         private int order;
         private List<Location> spots = new ArrayList<>();
 

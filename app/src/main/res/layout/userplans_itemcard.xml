@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="400dp"
+    android:layout_height="130dp">
+
+    <com.mikhaellopez.circularimageview.CircularImageView
+        android:id="@+id/userplansitem_imageview"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="24dp"
+        android:scaleType="centerInside"
+        app:civ_border="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/location5" />
+
+    <TextView
+        android:id="@+id/userplansitem_plantitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:text="plan title"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/userplansitem_imageview"
+        app:layout_constraintTop_toTopOf="@+id/userplansitem_imageview" />
+
+    <TextView
+        android:id="@+id/userplansitem_plandates"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="plan dates"
+        app:layout_constraintStart_toStartOf="@+id/userplansitem_plantitle"
+        app:layout_constraintTop_toBottomOf="@+id/userplansitem_plantitle" />
+</androidx.constraintlayout.widget.ConstraintLayout>

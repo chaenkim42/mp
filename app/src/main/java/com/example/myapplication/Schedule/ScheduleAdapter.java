@@ -67,10 +67,10 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 main_title = holder.itemView.findViewById(R.id.textView);
                 main_title.setText(datas.get(position).getText());
             case 2:
-                drawer_schedule_title = holder.itemView.findViewById(R.id.drawer_schedule_title);
-                drawer_schedule_img = holder.itemView.findViewById(R.id.drawer_schedule_img);
-                drawer_schedule_title.setText(datas.get(position).getText());
-                drawer_schedule_img.setImageResource(datas.get(position).getImgNum());
+//                drawer_schedule_title = holder.itemView.findViewById(R.id.drawer_schedule_title);
+//                drawer_schedule_img = holder.itemView.findViewById(R.id.drawer_schedule_img);
+//                drawer_schedule_title.setText(datas.get(position).getText());
+//                drawer_schedule_img.setImageResource(datas.get(position).getImgNum());
         }
     }
 
