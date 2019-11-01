@@ -57,7 +57,7 @@ public class LogIn extends AppCompatActivity {
                 // 디비 프린트
                 System.out.println(helper.showAll());
                 break;
-            case R.id.ask_sign_up:
+            case R.id.btn_ask_sign_up:
                 Intent intent = new Intent(LogIn.this, SignUp.class);
                 startActivity(intent);
         }
