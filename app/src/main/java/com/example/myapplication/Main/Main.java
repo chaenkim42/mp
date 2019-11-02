@@ -99,6 +99,13 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         adapter = new ScheduleAdapter(this, samples, 0);
         recyclerView.setAdapter(adapter);
 
+        ImageView btn_new_schedule = findViewById(R.id.btn_new_schedule);
+        btn_new_schedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
     }
 

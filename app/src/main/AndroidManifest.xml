@@ -20,11 +20,7 @@
         <activity android:name=".AskLocation">
         </activity>
         <activity android:name=".Schedule.ScheduleForm" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".Search.SearchMap" >
         </activity>
@@ -32,6 +28,11 @@
         <activity android:name=".Splash">
         </activity>
         <activity android:name=".Main.Main" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".Main.MyPage" >
 
