@@ -7,4 +7,6 @@
     <color name="white">#FFFFFF</color>
     <color name="mainBlue">#4198E1</color>
     <color name="black">#000000</color>
+    <color name="skipbtn_gray">#505050</color>
+    <color name="togglebtn_selected_blue">#3f82c7</color>
 </resources>

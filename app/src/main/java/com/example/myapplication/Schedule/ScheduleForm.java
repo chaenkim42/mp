@@ -47,7 +47,7 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
     ViewGroup mapContainer;
     private RecyclerView recyclerView;
 
-
+    //TODO: 별도 class로 분리한다. Trip, Day 클래스를.
     public static class Trip{
         private String title;
         private int period;

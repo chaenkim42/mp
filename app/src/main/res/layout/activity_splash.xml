@@ -7,25 +7,13 @@
     tools:context=".Splash">
 
     <ImageView
-        android:id="@+id/tmp_splash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/seoul"
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/tmp_splash_text"
-        android:layout_width="wrap_content"
-        android:layout_height="16dp"
-        android:text="탱자탱자"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/tmp_splash"
-        app:layout_constraintStart_toStartOf="@+id/tmp_splash"
-        app:layout_constraintTop_toTopOf="@+id/tmp_splash"
-        app:layout_constraintVertical_bias="0.24000001" />
+        app:srcCompat="@drawable/splash_tmp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
