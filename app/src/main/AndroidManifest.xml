@@ -15,33 +15,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AskPreference" >
+        <activity android:name=".Schedule.MyDiaryEditPage">
         </activity>
-        <activity android:name=".AskLocation">
-        </activity>
-        <activity android:name=".Schedule.ScheduleForm" >
-        </activity>
-        <activity android:name=".Search.SearchMap" >
-        </activity>
-        <activity android:name=".Search.SearchPage" />
-        <activity android:name=".Splash">
-        </activity>
-        <activity android:name=".Main.Main" >
-        </activity>
-        <activity android:name=".Main.MyPage" >
-        </activity>
-        <activity android:name=".Schedule.MyDiary">
+        <activity android:name=".Schedule.MyDiaryPage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Schedule.AskScheduleDate" >
-        </activity>
+        <activity android:name=".AskPreference" />
+        <activity android:name=".AskLocation" />
+        <activity android:name=".Schedule.ScheduleForm" />
+        <activity android:name=".Search.SearchMap" />
+        <activity android:name=".Search.SearchPage" />
+        <activity android:name=".Splash" />
+        <activity android:name=".Main.Main" />
+        <activity android:name=".Main.MyPage" />
+        <activity android:name=".Schedule.MyDiary"></activity>
+        <activity android:name=".Schedule.AskScheduleDate" />
         <activity android:name=".AskAccount" />
-        <activity android:name=".LogIn">
-        </activity>
+        <activity android:name=".LogIn" />
+
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="c0e9c3217878bcdc7abdbfb402ae0577" />
