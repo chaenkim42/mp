@@ -7,5 +7,52 @@
     android:layout_height="match_parent">
 
 
+    <TextView
+        android:id="@+id/mydiary_triptitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="40dp"
+        android:text="여행 제목"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/mydiary_btn_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:background="@color/WHITE"
+        app:layout_constraintBottom_toBottomOf="@+id/mydiary_btn_edit"
+        app:layout_constraintEnd_toStartOf="@+id/mydiary_btn_edit"
+        app:layout_constraintTop_toTopOf="@+id/mydiary_btn_edit"
+        app:srcCompat="@drawable/btn_add" />
+
+    <ImageButton
+        android:id="@+id/mydiary_btn_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="76dp"
+        android:layout_marginEnd="15dp"
+        android:background="@color/WHITE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/btn_edit" />
+
+    <ScrollView
+        android:id="@+id/mydiary_scrollview"
+        android:layout_width="380dp"
+        android:layout_height="603dp"
+        android:layout_marginTop="128dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mydiary_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
