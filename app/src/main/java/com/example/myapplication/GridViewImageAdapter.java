@@ -78,16 +78,27 @@ class GridViewImageAdapter extends BaseAdapter implements CompoundButton.OnCheck
         }
         //주어진 위치(position)에 출력할 이미지를 반환함
         ToggleButton tb;
+//        ImageView iv;
         if(convertView == null){
+//            iv = new ImageView(mContext);
             tb = new ToggleButton(mContext);
 //            toggleButton.setLayoutParams(new GridView.LayoutParams(size, size)); //85,85
+//            iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
 //            toggleButton.setScaleType(ImageView.ScaleType.CENTER_CROP);
 //            toggleButton.setPadding(pad,pad,pad,pad); //4,4,4,4
         }else{
             tb = (ToggleButton) convertView;
+//            iv = (ImageView) convertView;
         }
         //이미지뷰에 주어진 위치의 이미지를 설정함
-        tb.setBackgroundResource(imageIds[position]);
+//        tb.setBackgroundResource(imageIds[position]);
+//        tb.set
+//        tb.setWidth(170);
+//        tb.setHeight(170);
+        //tb.setBackgroundDrawable(mContext.getResources().getDrawable(imageIds[position]));
+//        tb.setBackgroundColor(mContext.getResources().getColor(R.color.black));
+//        tb.setPadding(10,10,10,10);
+//        tb.setButtonDrawable(imageIds[position]);
         tb.setText(placeName[position]);
         tb.setTextOn(placeName[position]);
         tb.setTextOff(placeName[position]);

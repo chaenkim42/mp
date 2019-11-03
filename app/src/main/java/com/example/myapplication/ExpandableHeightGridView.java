@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
@@ -38,6 +39,10 @@ public class ExpandableHeightGridView extends GridView {
             // View.MEASURED_SIZE_MASK represents the largest height possible.
             int expandSpec = MeasureSpec.makeMeasureSpec(MEASURED_SIZE_MASK,
                     MeasureSpec.AT_MOST);
+//            Log.e("MEASURED_SIZE_MASK",String.valueOf(MEASURED_SIZE_MASK));
+//            Log.e("MeasureSpec.AT_MOST",String.valueOf(MeasureSpec.AT_MOST));
+//            Log.e("widthMeasureSpec",String.valueOf(widthMeasureSpec));
+//            Log.e("expandSpec",String.valueOf(expandSpec));
             super.onMeasure(widthMeasureSpec, expandSpec);
 
             ViewGroup.LayoutParams params = getLayoutParams();

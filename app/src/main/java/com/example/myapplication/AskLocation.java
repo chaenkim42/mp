@@ -22,7 +22,7 @@ import com.example.myapplication.Main.Main;
 
 public class AskLocation extends AppCompatActivity implements View.OnClickListener {
 
-    Button nextBtn;
+    Button nextBtn, prevBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +33,10 @@ public class AskLocation extends AppCompatActivity implements View.OnClickListen
 //        Location[] locationList = new Location[numberOfPlaces];
 
         nextBtn = findViewById(R.id.askLocation_nextPageBtn);
-        nextBtn.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         nextBtn.setOnClickListener(this);
+
+        prevBtn = findViewById(R.id.askLocation_prevPageBtn);
+        prevBtn.setOnClickListener(this);
 
 //        for(int i=0; i<numberOfPlaces; i++){
 //            String name = placeFileName[i];
@@ -111,6 +113,9 @@ public class AskLocation extends AppCompatActivity implements View.OnClickListen
         switch (v.getId()){
             case R.id.askLocation_nextPageBtn:
                 startActivity(new Intent(AskLocation.this, Main.class));
+                break;
+            case R.id.askLocation_prevPageBtn:
+                onBackPressed();
                 break;
         }
     }
