@@ -19,14 +19,14 @@ public class MyDiary extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mydiary);
 
-        RelativeLayout button = (RelativeLayout) findViewById(R.id.button);
+//        RelativeLayout button = (RelativeLayout) findViewById(R.id.button);
 
-        button.setBackgroundColor(getResources().getColor(R.color.mainBlue));
-
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction transaction = fm.beginTransaction();
-        transaction.add(R.id.button, new MyPagePlansFragment());
-        transaction.commit();
+//        button.setBackgroundColor(getResources().getColor(R.color.mainBlue));
+//
+//        FragmentManager fm = getSupportFragmentManager();
+//        FragmentTransaction transaction = fm.beginTransaction();
+//        transaction.add(R.id.button, new MyPagePlansFragment());
+//        transaction.commit();
 //        Fragment fragment1 = new MyPagePlansFragment();
 //        fragmentTransaction.add(R.id.mypage_container, fragment1);
 //        fragmentTransaction.commit();

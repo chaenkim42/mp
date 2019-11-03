@@ -72,13 +72,13 @@ public class GridViewTextAdapter  extends BaseAdapter implements CompoundButton.
         tb.setTextOn("#"+hashtags[position]);
         tb.setTextOff("#"+hashtags[position]);
         tb.setWidth(172);
-        tb.setHeight(36);
+        tb.setHeight(45);
         tb.setOnCheckedChangeListener(this);
         tb.setId(position+100);
         tb.setChecked(false);
-        tb.setTextSize(19);
+        tb.setTextSize(18);
         tb.setTextColor(mContext.getResources().getColor(R.color.black));
-        tb.setBackground(mContext.getDrawable(R.drawable.hash_unselected2));
+        tb.setBackground(mContext.getDrawable(R.drawable.box_unselected));
         return tb;
     }
 
@@ -87,18 +87,19 @@ public class GridViewTextAdapter  extends BaseAdapter implements CompoundButton.
         //클릭될 때마다 background resource(버튼 배경) 바꾸고 selectedBoolean에 반영
         if(isChecked){
             selectedHash ++;
-            buttonView.setBackgroundResource(R.drawable.hash_selected2);
+            buttonView.setBackgroundResource(R.drawable.box_selected);
             buttonView.setTextColor(mContext.getResources().getColor(R.color.white));
             selectedBoolean[Integer.valueOf(buttonView.getId())-100] = 1;
         }else{
             selectedHash --;
-            buttonView.setBackgroundResource(R.drawable.hash_unselected2);
+            buttonView.setBackgroundResource(R.drawable.box_unselected);
+            buttonView.setTextColor(mContext.getResources().getColor(R.color.black));
             selectedBoolean[Integer.valueOf(buttonView.getId())-100] = 0;
         }
         if(selectedHash >=5){
-            nextBtn.setBackgroundColor(mContext.getResources().getColor(R.color.design_default_color_primary));
+//            nextBtn.setBackgroundColor(mContext.getResources().getColor(R.color.design_default_color_primary));
         }else{
-            nextBtn.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
+//            nextBtn.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
         }
         //test 용 코드
         String s = "";

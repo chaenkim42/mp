@@ -39,7 +39,7 @@ public class AskPreference extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_ask_preference);
 
         askPref_nextBtn = findViewById(R.id.askPreference_nextPageBtn);
-        askPref_nextBtn.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+//        askPref_nextBtn.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         askPref_nextBtn.setOnClickListener(this);
 
         ExpandableHeightGridView gridView = (ExpandableHeightGridView) findViewById(R.id.askPreference_gridView);
@@ -131,6 +131,8 @@ public class AskPreference extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         if(selectedHash >= 5){
             startActivity(new Intent(AskPreference.this, AskLocation.class));
+        }else{
+            Toast.makeText(this, "5개 이상 선택하세요.", Toast.LENGTH_SHORT).show();
         }
     }
 }
