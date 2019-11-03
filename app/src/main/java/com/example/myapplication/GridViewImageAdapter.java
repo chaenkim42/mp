@@ -93,9 +93,12 @@ class GridViewImageAdapter extends BaseAdapter implements CompoundButton.OnCheck
         //이미지뷰에 주어진 위치의 이미지를 설정함
 //        tb.setBackgroundResource(imageIds[position]);
 //        tb.set
-//        tb.setWidth(170);
-//        tb.setHeight(170);
-        //tb.setBackgroundDrawable(mContext.getResources().getDrawable(imageIds[position]));
+        tb.setWidth(170);
+        tb.setHeight(300);
+//        tb.setBackgroundDrawable(mContext.getResources().getDrawable(imageIds[position]));
+        tb.setBackgroundColor(mContext.getResources().getColor(R.color.mainBlue));
+//        tb.setScaleX((float) 0.4);
+//        tb.setScaleY((float) 0.4);
 //        tb.setBackgroundColor(mContext.getResources().getColor(R.color.black));
 //        tb.setPadding(10,10,10,10);
 //        tb.setButtonDrawable(imageIds[position]);
