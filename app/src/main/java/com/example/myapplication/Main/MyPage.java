@@ -3,6 +3,7 @@ package com.example.myapplication.Main;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ToggleButton;
 
@@ -34,8 +35,8 @@ public class MyPage extends AppCompatActivity implements CompoundButton.OnChecke
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mypage);
 
-        ToggleButton planTap = (ToggleButton) findViewById(R.id.mypage_userplan_tap);
-        ToggleButton prefTap = (ToggleButton) findViewById(R.id.mypage_userpref_tap);
+        RadioButton planTap = (RadioButton) findViewById(R.id.mypage_userplan_tap);
+        RadioButton prefTap = (RadioButton) findViewById(R.id.mypage_userpref_tap);
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id.mypage_radiogroup);
 //        ConstraintLayout container = (ConstraintLayout) findViewById(R.id.mypage_container);
 
@@ -43,7 +44,7 @@ public class MyPage extends AppCompatActivity implements CompoundButton.OnChecke
             @Override
             public void onCheckedChanged(RadioGroup group, int i) {
                 for (int j = 0; j < group.getChildCount(); j++) {
-                    final ToggleButton view = (ToggleButton) group.getChildAt(j);
+                    final RadioButton view = (RadioButton) group.getChildAt(j);
                     view.setChecked(view.getId() == i);
                 }
             }
@@ -52,9 +53,8 @@ public class MyPage extends AppCompatActivity implements CompoundButton.OnChecke
         prefTap.setOnCheckedChangeListener(this);
 
         radioGroup.check(R.id.mypage_userplan_tap);
-        planTap.setBackgroundColor(getResources().getColor(R.color.mainBlue));
-        planTap.setTextColor(getResources().getColor(R.color.white));
-        prefTap.setBackgroundColor(getResources().getColor(R.color.white));
+//        planTap.setBackgroundResource(R.drawable.tap1_last_plans);
+//        prefTap.setBackgroundResource(R.drawable.tap2_prefer_activity);
 
         //초반 화면은 지난 일정 표시.
         callFragment(FRAGMENT1);
@@ -89,19 +89,25 @@ public class MyPage extends AppCompatActivity implements CompoundButton.OnChecke
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if(isChecked) {
             ((RadioGroup)buttonView.getParent()).check(buttonView.getId());
-            buttonView.setBackgroundColor(getResources().getColor(R.color.mainBlue));
-            buttonView.setTextColor(getResources().getColor(R.color.white));
             switch (buttonView.getId()) {
                 case R.id.mypage_userplan_tap:
+                    buttonView.setBackgroundResource(R.drawable.tap1_selected);
                     callFragment(FRAGMENT1);
                     break;
                 case R.id.mypage_userpref_tap:
+                    buttonView.setBackgroundResource(R.drawable.tap2_selected);
                     callFragment(FRAGMENT2);
                     break;
             }
         }else{
-            buttonView.setBackgroundColor(getResources().getColor(R.color.white));
-            buttonView.setTextColor(getResources().getColor(R.color.black));
+            switch (buttonView.getId()){
+                case R.id.mypage_userplan_tap:
+                    buttonView.setBackgroundResource(R.drawable.tap1_last_plans);
+                    break;
+                case R.id.mypage_userpref_tap:
+                    buttonView.setBackgroundResource(R.drawable.tap2_prefer_activity);
+                    break;
+            }
         }
     }
 }

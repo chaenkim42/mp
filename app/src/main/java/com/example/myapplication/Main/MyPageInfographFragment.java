@@ -52,8 +52,8 @@ public class MyPageInfographFragment extends Fragment {
         mData.add(new RadarHolder("시티투어",5));
         mRadarView.setInteractive(true);
 //        mRadarView.setLabelColor(R.color.colorAccent);
-        mRadarView.setCircleColor(Color.parseColor("#00FFFFFF"));
-//        mRadarView.setPolygonColor(Color.parseColor("#808080"));
+        mRadarView.setCircleColor(Color.parseColor("#c1c7c3"));
+        mRadarView.setPolygonColor(Color.parseColor("#505050"));
         mRadarView.setMaxValue(10);
         mRadarView.setData(mData);
 //        mRadarView.setSelectedValue(30);

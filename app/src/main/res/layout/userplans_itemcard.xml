@@ -2,14 +2,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="400dp"
-    android:layout_height="130dp">
+    android:layout_width="344dp"
+    android:layout_height="116dp">
 
     <com.mikhaellopez.circularimageview.CircularImageView
         android:id="@+id/userplansitem_imageview"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="24dp"
+        android:layout_width="92dp"
+        android:layout_height="92dp"
+        android:layout_marginStart="37dp"
         android:scaleType="centerInside"
         app:civ_border="false"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,10 +21,10 @@
         android:id="@+id/userplansitem_plantitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="17dp"
         android:text="plan title"
-        android:textSize="18sp"
+        android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@+id/userplansitem_imageview"
         app:layout_constraintTop_toTopOf="@+id/userplansitem_imageview" />
 
@@ -32,8 +32,9 @@
         android:id="@+id/userplansitem_plandates"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:text="plan dates"
+        android:textSize="13sp"
         app:layout_constraintStart_toStartOf="@+id/userplansitem_plantitle"
         app:layout_constraintTop_toBottomOf="@+id/userplansitem_plantitle" />
 </androidx.constraintlayout.widget.ConstraintLayout>
