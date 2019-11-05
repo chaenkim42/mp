@@ -18,6 +18,7 @@ import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.Schedule.AskScheduleDate;
@@ -42,7 +43,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
     private Button searchBtn;
     private Button mytripBtn;
-    private ImageButton profile;
+    private ImageView profile;
 
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
@@ -54,8 +55,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        getAppKeyHash();
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -87,13 +86,26 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         ((LinearLayoutManager) layoutManager).setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
 
-        samples.add(new MyData("문정", 0));
-        samples.add(new MyData("찬주", 0));
-        samples.add(new MyData("채은", 0));
+        samples.add(new MyData("서울", R.drawable.doggo));
+        samples.add(new MyData("수원", R.drawable.doggo));
+        samples.add(new MyData("여수", R.drawable.doggo));
+        samples.add(new MyData("서울", R.drawable.doggo));
+        samples.add(new MyData("수원", R.drawable.doggo));
+        samples.add(new MyData("여수", R.drawable.doggo));
+        samples.add(new MyData("서울", R.drawable.doggo));
+        samples.add(new MyData("수원", R.drawable.doggo));
+        samples.add(new MyData("여수", R.drawable.doggo));
 
         adapter = new ScheduleAdapter(this, samples, 0);
         recyclerView.setAdapter(adapter);
 
+        ImageView btn_new_schedule = findViewById(R.id.btn_new_schedule);
+        btn_new_schedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
     }
 
