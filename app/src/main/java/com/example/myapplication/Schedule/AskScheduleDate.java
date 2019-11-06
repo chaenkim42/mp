@@ -32,7 +32,7 @@ public class AskScheduleDate extends AppCompatActivity implements View.OnClickLi
         start_date = findViewById(R.id.start);
         finish_date = findViewById(R.id.finish);
         add_btn = findViewById(R.id.add);
-        datePicker = findViewById(R.id.datePicker);
+//        datePicker = findViewById(R.id.datePicker);
 
         start_date.setOnClickListener(this);
         finish_date.setOnClickListener(this);
@@ -44,23 +44,23 @@ public class AskScheduleDate extends AppCompatActivity implements View.OnClickLi
         });
 
         getCurrentDate();
-        datePicker.init(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day), new DatePicker.OnDateChangedListener() {
-            @Override
-            public void onDateChanged(DatePicker datePicker, int year, int month, int day) {
-
-                if(dateID==start_date.getId())  start_date.setText(year+"-"+month+"-"+day);
-                if(dateID==finish_date.getId()) finish_date.setText(year+"-"+month+"-"+day);
-
-                datePicker.setVisibility(View.GONE);
-                add_btn.setVisibility(View.VISIBLE);
-            }
-        });
+//        datePicker.init(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day), new DatePicker.OnDateChangedListener() {
+//            @Override
+//            public void onDateChanged(DatePicker datePicker, int year, int month, int day) {
+//
+//                if(dateID==start_date.getId())  start_date.setText(year+"-"+month+"-"+day);
+//                if(dateID==finish_date.getId()) finish_date.setText(year+"-"+month+"-"+day);
+//
+//                datePicker.setVisibility(View.GONE);
+//                add_btn.setVisibility(View.VISIBLE);
+//            }
+//        });
 
     }
 
     @Override
     public void onClick(View view) {
-        datePicker.setVisibility(View.VISIBLE);
+//        datePicker.setVisibility(View.VISIBLE);
         add_btn.setVisibility(View.GONE);
         dateID=view.getId();
     }
