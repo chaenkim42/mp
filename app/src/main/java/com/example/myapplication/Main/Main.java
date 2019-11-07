@@ -85,27 +85,18 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         layoutManager = new LinearLayoutManager(this);
         ((LinearLayoutManager) layoutManager).setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.scrollToPosition(samples.size()-1);
 
-        samples.add(new MyData("서울", R.drawable.doggo));
-        samples.add(new MyData("수원", R.drawable.doggo));
-        samples.add(new MyData("여수", R.drawable.doggo));
-        samples.add(new MyData("서울", R.drawable.doggo));
-        samples.add(new MyData("수원", R.drawable.doggo));
-        samples.add(new MyData("여수", R.drawable.doggo));
-        samples.add(new MyData("서울", R.drawable.doggo));
-        samples.add(new MyData("수원", R.drawable.doggo));
-        samples.add(new MyData("여수", R.drawable.doggo));
+        samples.add(new MyData("새로운 스케줄", R.drawable.btn_floating));
+        samples.add(new MyData("아주대", R.drawable.doggo));
+        samples.add(new MyData("스벅", R.drawable.doggo));
+        samples.add(new MyData("커피", R.drawable.doggo));
+        samples.add(new MyData("아주대", R.drawable.doggo));
+        samples.add(new MyData("스벅", R.drawable.doggo));
+        samples.add(new MyData("커피", R.drawable.doggo));
 
         adapter = new ScheduleAdapter(this, samples, 0);
         recyclerView.setAdapter(adapter);
-
-        ImageView btn_new_schedule = findViewById(R.id.btn_new_schedule);
-        btn_new_schedule.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
 
     }
 

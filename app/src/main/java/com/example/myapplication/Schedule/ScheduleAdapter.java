@@ -88,8 +88,6 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemViewType(int position) {
-
-
         return super.getItemViewType(position);
     }
 

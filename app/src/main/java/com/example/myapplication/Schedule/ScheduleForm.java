@@ -141,6 +141,18 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
         schedules.add(new MyData("경주 문화유산 답사기",R.drawable.location5));
         schedules.add(new MyData("여름 평창 여행",R.drawable.location5));
 
+        schedules.add(new MyData("여수 식도락 여행", R.drawable.location0 ));
+        schedules.add(new MyData("데이식스 부산콘 겸 우정여행",R.drawable.location1));
+        schedules.add(new MyData("TianJia와 함께 하는 서울 나들이",R.drawable.location3 ));
+        schedules.add(new MyData("경주 문화유산 답사기",R.drawable.location5));
+        schedules.add(new MyData("여름 평창 여행",R.drawable.location5));
+
+        schedules.add(new MyData("여수 식도락 여행", R.drawable.location0 ));
+        schedules.add(new MyData("데이식스 부산콘 겸 우정여행",R.drawable.location1));
+        schedules.add(new MyData("TianJia와 함께 하는 서울 나들이",R.drawable.location3 ));
+        schedules.add(new MyData("경주 문화유산 답사기",R.drawable.location5));
+        schedules.add(new MyData("여름 평창 여행",R.drawable.location5));
+
         final DrawerLayout drawerLayout = findViewById(R.id.drawerlayout);
         final NavigationView navigationView = findViewById(R.id.navigationview);
 
