@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,7 +45,7 @@ import java.util.List;
 
 //TODO: 스크롤 될 때 목록 자동 접고 펴기
 //TODO: Location 실제 위, 경도 값 받아서 타임라인 표시
-public class ScheduleForm extends AppCompatActivity implements ExpandableListAdapter.OnAdapterInteractionListener {
+public class ScheduleForm extends AppCompatActivity implements ExpandableListAdapter.OnAdapterInteractionListener, ExpandableListAdapter.OnStartDragListener {
     ViewGroup mapContainer;
     private RecyclerView recyclerView;
 
@@ -268,6 +269,16 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
 
 
             SimpleDateFormat transFormat = new SimpleDateFormat("MM/dd E");
+            ExpandableListAdapter.OnStartDragListener startDragListener = new ExpandableListAdapter.OnStartDragListener() {
+                @Override
+                public void onStartDrag(ExpandableListAdapter.ListChildViewHolder listChildViewHolder) {
+                }
+            };
+            ExpandableListAdapter expandableListAdapter = new ExpandableListAdapter(data, this, startDragListener);
+            PlaceItemTouchHelperCallback placeItemTouchHelperCallback = new PlaceItemTouchHelperCallback(expandableListAdapter);
+            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(placeItemTouchHelperCallback);
+            itemTouchHelper.attachToRecyclerView(recyclerView);
+
             for(int i=0; i<thisTrip.getPeriod(); i++){
                 // 먼저 day 수만큼 HEADER 추가
                 if(i==0){
@@ -293,7 +304,7 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
                 }
             }
 
-            recyclerView.setAdapter(new ExpandableListAdapter(data, this));
+            recyclerView.setAdapter(expandableListAdapter);
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -337,4 +348,8 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
         }
     }
 
+    @Override
+    public void onStartDrag(ExpandableListAdapter.ListChildViewHolder listChildViewHolder) {
+
+    }
 }

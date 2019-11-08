@@ -11,7 +11,19 @@ android:paddingEnd="10dp"
 android:paddingRight="10dp">
 
 
-<ImageView
+    <ImageButton
+        android:id="@+id/edit_btn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="300dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/box_selected"
+        app:layout_constraintEnd_toStartOf="@+id/recyclerviewchild_location_title"
+        app:layout_constraintHorizontal_bias="0.289"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
     android:id="@+id/recyclerviewchild_vertical_bar"
     android:layout_width="3dp"
     android:layout_height="64dp"
