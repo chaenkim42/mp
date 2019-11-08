@@ -20,13 +20,13 @@
         <activity android:name=".Schedule.MyDiaryPage">
         </activity>
         <activity android:name=".Schedule.ScheduleForm" >
+        </activity>
+        <activity android:name=".Search.SearchMap" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".Search.SearchMap" >
         </activity>
         <activity android:name=".AskPreference" />
         <activity android:name=".AskLocation" />
@@ -35,21 +35,15 @@
 
         </activity>
         <activity android:name=".Main.Main" >
-
         </activity>
         <activity android:name=".Main.MyPage" >
-
         </activity>
         <activity android:name=".Schedule.AskScheduleDate" >
-
         </activity>
-
         <activity android:name=".LogIn">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
         </activity>
-        <activity android:name=".SignUp"></activity>
+        <activity android:name=".SignUp">
+        </activity>
         <activity android:name=".Schedule.MyDiary">
         </activity>
 

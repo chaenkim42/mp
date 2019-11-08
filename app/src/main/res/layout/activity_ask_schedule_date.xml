@@ -1,103 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:text="새 일정 생성" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout4"
+        android:layout_width="411dp"
+        android:layout_height="91dp"
+        android:background="@drawable/bluebox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="72dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="25dp"
+            android:background="@drawable/map7_btn_back"
+            android:text=" "
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="122dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="121dp"
+            android:layout_marginBottom="26dp"
+            android:text="새 일정 생성"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/signup_photobox"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
+        app:srcCompat="@drawable/photo_empty" />
 
     <LinearLayout
         android:id="@+id/layout_title"
-        android:layout_marginTop="100dp"
-        android:layout_marginLeft="20dp"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signup_photobox">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="58dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="제목" />
+            android:text="제목"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/title"
-            android:layout_width="wrap_content"
+            android:layout_width="264dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Name" />
+            android:text="새 일정 이름"
+            android:textColor="@color/gray"
+            android:textSize="16sp" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_below="@id/layout_title"
         android:id="@+id/layout_date"
-        android:layout_marginLeft="20dp"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_below="@id/layout_title"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/layout_title"
+        app:layout_constraintStart_toStartOf="@+id/layout_title"
+        app:layout_constraintTop_toBottomOf="@+id/layout_title">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="58dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:textSize="20sp"
             android:text="기간" />
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_height="96dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/start"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="TextView" />
+                android:layout_width="264dp"
+                android:layout_height="48dp"
+                android:text="여행 시작일"
+                android:textColor="@color/gray"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/finish"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:layout_width="264dp"
+                android:layout_height="48dp"
+                android:text="여행 종료일"
+                android:textColor="@color/gray"
+                android:textSize="16sp" />
         </LinearLayout>
 
     </LinearLayout>
 
-    <DatePicker
-        android:id="@+id/datePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:visibility="gone"></DatePicker>
+<!--    <DatePicker-->
+<!--        android:id="@+id/datePicker"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_centerInParent="true"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:layout_centerVertical="true"-->
+<!--        android:visibility="gone"></DatePicker>-->
 
     <LinearLayout
-        android:layout_below="@id/layout_date"
-        android:layout_marginLeft="20dp"
+        android:id="@+id/linearLayout"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="48dp"
+        android:layout_below="@id/layout_date"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/layout_date"
+        app:layout_constraintStart_toStartOf="@+id/layout_date"
+        app:layout_constraintTop_toBottomOf="@+id/layout_date">
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="wrap_content"
+            android:layout_width="58dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="일행" />
+            android:layout_gravity="center"
+            android:text="멤버"
+            android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="Button" />
+        <LinearLayout
+            android:layout_width="264dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/add"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="center"
+                android:background="@drawable/map7_btn_addmember"
+                android:text=" " />
+        </LinearLayout>
+
     </LinearLayout>
-</RelativeLayout>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="320dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/map7_btn_create"
+        android:text=" "
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+</androidx.constraintlayout.widget.ConstraintLayout>
