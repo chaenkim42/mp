@@ -22,6 +22,11 @@
         <activity android:name=".Schedule.ScheduleForm" >
         </activity>
         <activity android:name=".Search.SearchMap" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".AskPreference" />
         <activity android:name=".AskLocation" />
@@ -35,11 +40,6 @@
         <activity android:name=".Schedule.AskScheduleDate" >
         </activity>
         <activity android:name=".LogIn">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".SignUp">
         </activity>

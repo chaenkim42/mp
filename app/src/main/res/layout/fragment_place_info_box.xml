@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="380dp"
     android:layout_height="190dp"
-    android:background="@drawable/rectangle_box"
+    android:background="@drawable/map_infobox"
     tools:context=".Search.PlaceInfoBoxFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -17,23 +17,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="8dp"
             android:text="TextView"
-            android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="20sp"
+            android:textColor="#707070"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/fragment_place_info_box_distance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="00km"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/fragment_place_info_box_placeName"
-            app:layout_constraintStart_toEndOf="@+id/fragment_place_info_box_placeName"
-            app:layout_constraintTop_toTopOf="@+id/fragment_place_info_box_placeName" />
 
         <ToggleButton
             android:id="@+id/fragment_place_info_box_starToggleBtn"
@@ -50,11 +39,11 @@
 
         <ImageButton
             android:id="@+id/fragment_place_info_box_downArrowBtn"
-            android:layout_width="30dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/down_arrow"
+            android:layout_width="19dp"
+            android:layout_height="18dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="13dp"
+            android:background="@drawable/map_downarrow"
             android:src="@color/WHITE"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -63,9 +52,10 @@
             android:id="@+id/fragment_place_info_box_addressLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="12dp"
             android:layout_marginTop="16dp"
             android:text="주소"
+            android:textColor="#707070"
             app:layout_constraintStart_toStartOf="@+id/fragment_place_info_box_placeName"
             app:layout_constraintTop_toBottomOf="@+id/fragment_place_info_box_placeName" />
 
@@ -100,13 +90,13 @@
             android:id="@+id/fragment_place_info_box_gotoDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="1dp"
             android:text="상세보기>"
-            android:textColor="#3F51B5"
-            app:layout_constraintBottom_toBottomOf="@+id/fragment_place_info_box_distance"
-            app:layout_constraintStart_toEndOf="@+id/fragment_place_info_box_distance"
-            app:layout_constraintTop_toTopOf="@+id/fragment_place_info_box_distance"
-            app:layout_constraintVertical_bias="0.0" />
+            android:textColor="#707070"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_place_info_box_placeName"
+            app:layout_constraintStart_toEndOf="@+id/fragment_place_info_box_placeName" />
 
         <TextView
             android:id="@+id/fragment_place_info_box_address"
@@ -149,6 +139,17 @@
             android:text="TextView"
             app:layout_constraintStart_toEndOf="@+id/fragment_place_info_box_enterFeeLabel"
             app:layout_constraintTop_toBottomOf="@+id/fragment_place_info_box_openTime" />
+
+        <Button
+            android:id="@+id/fragment_place_info_box_btnAddToList"
+            android:layout_width="152dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/map_btn_addtolist"
+            android:text=" "
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
