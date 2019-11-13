@@ -24,6 +24,7 @@ import android.widget.ListView;
 import android.widget.Toolbar;
 import android.widget.Toast;
 
+import com.example.myapplication.Database.Day;
 import com.example.myapplication.Location;
 import com.example.myapplication.R;
 import com.google.android.material.navigation.NavigationView;
@@ -49,7 +50,7 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
     ViewGroup mapContainer;
     private RecyclerView recyclerView;
 
-    //TODO: 별도 class로 분리한다. Trip, Day 클래스를.
+    //TODO: 별도 class 로 분리한다. Trip, Day 클래스를.
     public static class Trip{
         private String title;
         private int period;
@@ -85,40 +86,6 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
 
     }
 
-    public static class Day{
-        private int order;
-        private List<Location> spots = new ArrayList<>();
-
-        public Day(int order){
-            this.order = order;
-        }
-
-        public Day(int order,  List<Location> locationList){
-            this.order = order;
-            this.spots = locationList;
-        }
-
-        public void addSpot(int onWhichIndex, Location location){
-            this.spots.add(onWhichIndex, location);
-//            int newSpotLength = spots.length + 1;
-//            Location newSpots[] = new Location[newSpotLength];
-//            for(int i=0; i<onWhichOrder; i++){
-//                if(i == onWhichOrder-1){
-//                    newSpots[i] = location;
-//                }else{
-//                    newSpots[i] = this.spots[i];
-//                }
-//            }
-//            for(int i=onWhichOrder; i<newSpotLength; i++){
-//                newSpots[i] = this.spots[i-1];
-//            }
-//            this.spots = newSpots;
-        }
-
-        public List<Location> getSpots() {
-            return spots;
-        }
-    }
 
     public static ViewGroup mapViewContainer;
     public static MapView mapView;

@@ -10,13 +10,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.Database.Diary;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MyDiary_Adapter extends RecyclerView.Adapter {
-    List<MyDiary.Diary> diaryList = new ArrayList<>();
+    List<Diary> diaryList = new ArrayList<>();
     Context context;
     public TextView title, contents_text;
     public ImageView rep_photo;
@@ -27,7 +28,7 @@ public class MyDiary_Adapter extends RecyclerView.Adapter {
         }
     }
 
-    public MyDiary_Adapter(List<MyDiary.Diary> diaryList, Context context){
+    public MyDiary_Adapter(List<Diary> diaryList, Context context){
         this.diaryList = diaryList;
         this.context = context;
     }
