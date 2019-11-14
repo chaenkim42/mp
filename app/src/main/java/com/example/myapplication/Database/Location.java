@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.Database;
 
 public class Location {
     private String name;

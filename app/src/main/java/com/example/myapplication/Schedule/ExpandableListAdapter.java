@@ -15,7 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.DragStartHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.Location;
+import com.example.myapplication.Database.Location;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
