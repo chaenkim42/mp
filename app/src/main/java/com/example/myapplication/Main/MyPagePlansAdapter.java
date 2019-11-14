@@ -8,15 +8,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.Schedule.ScheduleAdapter;
 import com.example.myapplication.Schedule.ScheduleForm.Trip;
-import com.example.myapplication.Schedule.ScheduleForm.Day;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;

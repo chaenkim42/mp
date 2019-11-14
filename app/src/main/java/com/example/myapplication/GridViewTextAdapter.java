@@ -11,7 +11,7 @@ import android.widget.ToggleButton;
 
 import static com.example.myapplication.AskPreference.askPref_nextBtn;
 
-public class GridViewTextAdapter  extends BaseAdapter implements CompoundButton.OnCheckedChangeListener{
+public class GridViewTextAdapter extends BaseAdapter implements CompoundButton.OnCheckedChangeListener{
     public static int selectedHash = 0;
     Button nextBtn;
     private Context mContext;

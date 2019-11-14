@@ -15,7 +15,6 @@
       },
       "oauth_client": [
         {
-<<<<<<< HEAD
           "client_id": "618745677522-0mlu5hrsj684r3nb1g57si659ofkl2v6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -25,9 +24,9 @@
         },
         {
           "client_id": "618745677522-54svc8gm3o0a9j3pbo636hglol6m5gub.apps.googleusercontent.com",
-=======
+
           "client_id": "615088675574-mtpln6547d032cd0b4f38099mn65bj5s.apps.googleusercontent.com",
->>>>>>> master
+
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.myapplication",

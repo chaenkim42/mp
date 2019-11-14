@@ -1,7 +1,5 @@
 package com.example.myapplication.Schedule;
 
-import android.graphics.drawable.Drawable;
-
 public class MyData {
     String text;
     int imgNum;

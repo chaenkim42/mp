@@ -1,27 +1,17 @@
 package com.example.myapplication.Main;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.ToggleButton;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.Schedule.MyData;
-import com.example.myapplication.Schedule.ScheduleAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MyPage extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 

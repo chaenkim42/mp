@@ -1,18 +1,8 @@
 package com.example.myapplication.Search;
 
-import android.app.Activity;
 import android.content.Context;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,9 +13,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.example.myapplication.R;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
-import org.w3c.dom.Text;
+import com.example.myapplication.R;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 import static com.example.myapplication.Search.SearchMap.locationInformation;

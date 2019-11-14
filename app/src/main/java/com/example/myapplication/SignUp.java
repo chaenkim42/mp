@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,7 +32,7 @@ public class SignUp extends AppCompatActivity {
     public static Button btn_sign_up;
     public static TextView textView;
 
-    DatabaseReference myRef= FirebaseDatabase.getInstance().getReference();
+    DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference user_ref = myRef.child("user");
 
     @Override
@@ -40,21 +41,18 @@ public class SignUp extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         // setting
-        email=findViewById(R.id.signup_email);
-        password=findViewById(R.id.signup_password);
-        password_c=findViewById(R.id.signup_password_confirm);
-        name=findViewById(R.id.signup_name);
-        age=findViewById(R.id.signup_age);
-        sex=findViewById(R.id.signup_sex);
-        btn_sign_up=findViewById(R.id.btn_sign_up);
+        email = findViewById(R.id.signup_email);
+        password = findViewById(R.id.signup_password);
+        password_c = findViewById(R.id.signup_password_confirm);
+        name = findViewById(R.id.signup_name);
+        age = findViewById(R.id.signup_age);
+        sex = findViewById(R.id.signup_sex);
+        btn_sign_up = findViewById(R.id.btn_sign_up);
         textView = findViewById(R.id.textView);
 
         // Write a message to the database
 //        final DatabaseReference password_ref = user_ref.child("password");
 
-<<<<<<< HEAD
-
-=======
 //        ScheduleForm.Trip trip = new ScheduleForm.Trip("new", new Date(2019/11/11),3);
 
 //        myRef.child("1").child("id").setValue("1111");
@@ -88,42 +86,40 @@ public class SignUp extends AppCompatActivity {
 //                JSONObject jsonObject = gson.toJson(value);
                 Log.d("FIREBASE EXAMPLE", "Value is: " + value);
             }
->>>>>>> master
 
-        btn_sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
-<<<<<<< HEAD
-            public void onClick(View view) {
-                DatabaseReference temp_ref = user_ref.push();
-                DatabaseReference email_ref = temp_ref.child("email");
-                DatabaseReference password_ref = temp_ref.child("password");
-                DatabaseReference name_ref = temp_ref.child("name");
-                DatabaseReference age_ref = temp_ref.child("age");
-                DatabaseReference sex_ref = temp_ref.child("sex");
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                String p = password.getText().toString();
-                String pc = password_c.getText().toString();
-
-                if(p.equals(pc)){
-                    email_ref.setValue(email.getText().toString());
-                    password_ref.setValue(password.getText().toString());
-                    name_ref.setValue((name.getText().toString()));
-                    sex_ref.setValue(sex.getText().toString());
-                    age_ref.setValue(age.getText().toString());
-                }else{
-                    Toast.makeText(getApplicationContext(), "Check password again!", Toast.LENGTH_SHORT).show();
-                }
-
-
-=======
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-//                Log.w("FIREBASE EXAMPLE", "Failed to read value.", error.toException());
->>>>>>> master
             }
+
         });
-
-
+//        btn_sign_up.setOnClickListener(new View.OnClickListener()
+//
+//        {
+//            @Override
+//            public void onClick (View view){
+//                DatabaseReference temp_ref = user_ref.push();
+//                DatabaseReference email_ref = temp_ref.child("email");
+//                DatabaseReference password_ref = temp_ref.child("password");
+//                DatabaseReference name_ref = temp_ref.child("name");
+//                DatabaseReference age_ref = temp_ref.child("age");
+//                DatabaseReference sex_ref = temp_ref.child("sex");
+//
+//                String p = password.getText().toString();
+//                String pc = password_c.getText().toString();
+//
+//                if (p.equals(pc)) {
+//                    email_ref.setValue(email.getText().toString());
+//                    password_ref.setValue(password.getText().toString());
+//                    name_ref.setValue((name.getText().toString()));
+//                    sex_ref.setValue(sex.getText().toString());
+//                    age_ref.setValue(age.getText().toString());
+//                } else {
+//                    Toast.makeText(getApplicationContext(), "Check password again!", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//
+//        };
     }
-
 }
