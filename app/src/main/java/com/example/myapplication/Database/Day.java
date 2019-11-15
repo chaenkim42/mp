@@ -5,24 +5,24 @@ import java.util.List;
 public class Day {
 
     private int order;
-    private List<Location> spots;
+    private List<Place> spots;
 
     public Day(int order){
         this.order = order;
     }
 
-    public Day(int order,  List<Location> locationList){
+    public Day(int order,  List<Place> placeList){
         this.order = order;
-        this.spots = locationList;
+        this.spots = placeList;
     }
 
-    public void addSpot(int onWhichIndex, Location location){
-        this.spots.add(onWhichIndex, location);
+    public void addSpot(int onWhichIndex, Place place){
+        this.spots.add(onWhichIndex, place);
 //            int newSpotLength = spots.length + 1;
-//            Location newSpots[] = new Location[newSpotLength];
+//            Place newSpots[] = new Place[newSpotLength];
 //            for(int i=0; i<onWhichOrder; i++){
 //                if(i == onWhichOrder-1){
-//                    newSpots[i] = location;
+//                    newSpots[i] = place;
 //                }else{
 //                    newSpots[i] = this.spots[i];
 //                }
@@ -33,7 +33,7 @@ public class Day {
 //            this.spots = newSpots;
     }
 
-    public List<Location> getSpots() {
+    public List<Place> getSpots() {
         return spots;
     }
 }

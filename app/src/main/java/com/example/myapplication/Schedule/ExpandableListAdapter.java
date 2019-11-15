@@ -15,7 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.DragStartHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.Database.Location;
+import com.example.myapplication.Database.Place;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
@@ -266,10 +266,10 @@ public class ExpandableListAdapter extends RecyclerView.Adapter implements Place
                 this.subTitle = subTitle; // ex "09/01 일"
             }
         }
-        public Item(int type, Location location, int orderOfVisit){
+        public Item(int type, Place place, int orderOfVisit){
             if(type == CHILD){
                 this.type = type;
-                this.title = location.getName(); // 여행장소 이름 ex. "여수엑스포"
+                this.title = place.getName(); // 여행장소 이름 ex. "여수엑스포"
                 this.orderOfVisit= orderOfVisit;
             }
         }

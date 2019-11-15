@@ -19,7 +19,7 @@ public class AskLocation extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.activity_ask_location);
 
 //        int numberOfPlaces = placeName.length;
-//        Location[] locationList = new Location[numberOfPlaces];
+//        Place[] locationList = new Place[numberOfPlaces];
 
         nextBtn = findViewById(R.id.askLocation_nextPageBtn);
         nextBtn.setOnClickListener(this);
@@ -29,7 +29,7 @@ public class AskLocation extends AppCompatActivity implements View.OnClickListen
 
 //        for(int i=0; i<numberOfPlaces; i++){
 //            String name = placeFileName[i];
-//            Location l = new Location(placeName[i], i);
+//            Place l = new Place(placeName[i], i);
 //            l.setName(name);
 //            locationList[i] = l;
 //        }

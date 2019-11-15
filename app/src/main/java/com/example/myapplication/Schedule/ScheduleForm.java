@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.myapplication.Database.Day;
-import com.example.myapplication.Database.Location;
+import com.example.myapplication.Database.Place;
 import com.example.myapplication.R;
 import com.google.android.material.navigation.NavigationView;
 
@@ -33,7 +33,7 @@ import java.util.List;
 
 
 //TODO: 스크롤 될 때 목록 자동 접고 펴기
-//TODO: Location 실제 위, 경도 값 받아서 타임라인 표시
+//TODO: Place 실제 위, 경도 값 받아서 타임라인 표시
 public class ScheduleForm extends AppCompatActivity implements ExpandableListAdapter.OnAdapterInteractionListener, ExpandableListAdapter.OnStartDragListener {
     ViewGroup mapContainer;
     private RecyclerView recyclerView;
@@ -141,19 +141,19 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
 //        mapView.setMapViewEventListener(this);
         //TODO: 1. 특정 데이인 것 구분 후 아래 기능(지도에 마킹) 들어가야 함,
         //       2. 다중 마커 좀 더 효율적으로
-        Location location1 = new Location("여수세계박람회 크루즈공원", 34.753264, 127.754638);
-        Location location2 = new Location("한화아쿠아플라넷 여수", 34.746487, 127.748342);
-        Location location3 = new Location("오동도 유람선터미널", 34.740861, 127.755591);
+        Place place1 = new Place("여수세계박람회 크루즈공원", 34.753264, 127.754638);
+        Place place2 = new Place("한화아쿠아플라넷 여수", 34.746487, 127.748342);
+        Place place3 = new Place("오동도 유람선터미널", 34.740861, 127.755591);
 
         MapPOIItem marker1 = new MapPOIItem();
         MapPOIItem marker2 = new MapPOIItem();
         MapPOIItem marker3 = new MapPOIItem();
-        marker1.setItemName(location1.getName());
-        marker2.setItemName(location2.getName());
-        marker3.setItemName(location3.getName());
-        marker1.setMapPoint(MapPoint.mapPointWithGeoCoord(location1.getLatitude(), location1.getLongitude()));
-        marker2.setMapPoint(MapPoint.mapPointWithGeoCoord(location2.getLatitude(), location2.getLongitude()));
-        marker3.setMapPoint(MapPoint.mapPointWithGeoCoord(location3.getLatitude(), location3.getLongitude()));
+        marker1.setItemName(place1.getName());
+        marker2.setItemName(place2.getName());
+        marker3.setItemName(place3.getName());
+        marker1.setMapPoint(MapPoint.mapPointWithGeoCoord(place1.getLatitude(), place1.getLongitude()));
+        marker2.setMapPoint(MapPoint.mapPointWithGeoCoord(place2.getLatitude(), place2.getLongitude()));
+        marker3.setMapPoint(MapPoint.mapPointWithGeoCoord(place3.getLatitude(), place3.getLongitude()));
         marker1.setMarkerType(MapPOIItem.MarkerType.BluePin);
         marker2.setMarkerType(MapPOIItem.MarkerType.BluePin);
         marker3.setMarkerType(MapPOIItem.MarkerType.BluePin);
@@ -168,9 +168,9 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
         MapPolyline polyline = new MapPolyline();
         polyline.setTag(1000);
         polyline.setLineColor(Color.argb(128, 255, 51, 0));
-        polyline.addPoint(MapPoint.mapPointWithGeoCoord(location1.getLatitude(), location1.getLongitude()));
-        polyline.addPoint(MapPoint.mapPointWithGeoCoord(location2.getLatitude(), location2.getLongitude()));
-        polyline.addPoint(MapPoint.mapPointWithGeoCoord(location3.getLatitude(), location3.getLongitude()));
+        polyline.addPoint(MapPoint.mapPointWithGeoCoord(place1.getLatitude(), place1.getLongitude()));
+        polyline.addPoint(MapPoint.mapPointWithGeoCoord(place2.getLatitude(), place2.getLongitude()));
+        polyline.addPoint(MapPoint.mapPointWithGeoCoord(place3.getLatitude(), place3.getLongitude()));
 
         mapView.addPolyline(polyline);
 
@@ -193,33 +193,33 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
             Date date3=new SimpleDateFormat("yyyy/MM/dd").parse("2019/09/03");
             Date date4=new SimpleDateFormat("yyyy/MM/dd").parse("2019/09/04");
             Trip thisTrip = new Trip("여수 식도락 여행", date1, 4);
-            List<Location> firstDayLocations = new ArrayList<>();
-            firstDayLocations.add(location1);
-            firstDayLocations.add(location2);
-            firstDayLocations.add(location3);
-            List<Location> secondDayLocations = new ArrayList<>();
-            List<Location> thirdDayLocations = new ArrayList<>();
-            thirdDayLocations.add(new Location("유명한 산"));
-            thirdDayLocations.add(new Location("큰 산"));
-            thirdDayLocations.add(new Location("멋진 공원"));
-            thirdDayLocations.add(new Location("작은 공원"));
-            thirdDayLocations.add(new Location("다양한 동물원"));
-            thirdDayLocations.add(new Location("멋진 동물원"));
-            thirdDayLocations.add(new Location("멋진 박물관"));
-            thirdDayLocations.add(new Location("큰 박물관"));
-            List<Location> fourthDayLocations = new ArrayList<>();
-            fourthDayLocations.add(new Location("작은 동물원"));
-            fourthDayLocations.add(new Location("작은 박물관"));
-            fourthDayLocations.add(new Location("멋진 휴양림"));
-            fourthDayLocations.add(new Location("거대한 휴양림"));
+            List<Place> firstDayPlaces = new ArrayList<>();
+            firstDayPlaces.add(place1);
+            firstDayPlaces.add(place2);
+            firstDayPlaces.add(place3);
+            List<Place> secondDayPlaces = new ArrayList<>();
+            List<Place> thirdDayPlaces = new ArrayList<>();
+            thirdDayPlaces.add(new Place("유명한 산"));
+            thirdDayPlaces.add(new Place("큰 산"));
+            thirdDayPlaces.add(new Place("멋진 공원"));
+            thirdDayPlaces.add(new Place("작은 공원"));
+            thirdDayPlaces.add(new Place("다양한 동물원"));
+            thirdDayPlaces.add(new Place("멋진 동물원"));
+            thirdDayPlaces.add(new Place("멋진 박물관"));
+            thirdDayPlaces.add(new Place("큰 박물관"));
+            List<Place> fourthDayPlaces = new ArrayList<>();
+            fourthDayPlaces.add(new Place("작은 동물원"));
+            fourthDayPlaces.add(new Place("작은 박물관"));
+            fourthDayPlaces.add(new Place("멋진 휴양림"));
+            fourthDayPlaces.add(new Place("거대한 휴양림"));
 
-            Day day = new Day(0, firstDayLocations);
+            Day day = new Day(0, firstDayPlaces);
             thisTrip.addDay(0, day);
-            day = new Day(1, secondDayLocations);
+            day = new Day(1, secondDayPlaces);
             thisTrip.addDay(1, day);
-            day = new Day(2, thirdDayLocations);
+            day = new Day(2, thirdDayPlaces);
             thisTrip.addDay(2, day);
-            day = new Day(3, fourthDayLocations);
+            day = new Day(3, fourthDayPlaces);
             thisTrip.addDay(3, day);
 
 
@@ -246,7 +246,7 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
                     data.add(new ExpandableListAdapter.Item(ExpandableListAdapter.HEADER, "Day " + String.valueOf(i+1), transFormat.format(date4)));
                 }
                 // 각 날짜별로 포함된 location 을 CHILD로 추가
-                List<Location> spots = thisTrip.getDay(i).getSpots();
+                List<Place> spots = thisTrip.getDay(i).getSpots();
                 int order = 0;
                 if(spots.isEmpty() || spots == null){
                     data.add(new ExpandableListAdapter.Item(ExpandableListAdapter.EMPTY_CHILD));

@@ -51,9 +51,9 @@ public class SignUp extends AppCompatActivity {
         textView = findViewById(R.id.textView);
 
         // Write a message to the database
-//        final DatabaseReference password_ref = user_ref.child("password");
+        final DatabaseReference password_ref = user_ref.child("password");
 
-//        ScheduleForm.Trip trip = new ScheduleForm.Trip("new", new Date(2019/11/11),3);
+        ScheduleForm.Trip trip = new ScheduleForm.Trip("new", new Date(2019/11/11),3);
 
 //        myRef.child("1").child("id").setValue("1111");
 //        myRef.setValue("안녕하세요");
@@ -82,8 +82,9 @@ public class SignUp extends AppCompatActivity {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
 //                Gson gson = new Gson();
-                String value = dataSnapshot.getKey();
+//                String value = dataSnapshot.getKey();
 //                JSONObject jsonObject = gson.toJson(value);
+                Object value = dataSnapshot.child("records").getValue();
                 Log.d("FIREBASE EXAMPLE", "Value is: " + value);
             }
 

@@ -34,10 +34,8 @@
 
         <EditText
             android:id="@+id/EditText"
-            android:layout_width="300dp"
+            android:layout_width="260dp"
             android:layout_height="44dp"
-            android:layout_marginStart="80dp"
-            android:layout_marginEnd="80dp"
             android:layout_weight="6"
             android:background="@color/WHITE"
             android:singleLine="true"
@@ -45,22 +43,31 @@
             android:textColor="#999999"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageButton2"
             app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginEnd="8dp"
-        android:layout_weight="1"
-        android:background="@drawable/tangerine"
-        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout7"
-        app:layout_constraintEnd_toEndOf="@+id/constraintLayout7"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayout7"
-        app:srcCompat="@android:color/transparent" />
+        <ImageButton
+            android:id="@+id/searchmap_searchBtn"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@color/WHITE"
+            app:layout_constraintBottom_toBottomOf="@+id/EditText"
+            app:layout_constraintStart_toEndOf="@+id/EditText"
+            app:layout_constraintTop_toTopOf="@+id/EditText"
+            app:srcCompat="@android:drawable/ic_menu_search" />
+
+        <ImageButton
+            android:id="@+id/serachmap_tjBtn"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:background="@drawable/tangerine"
+            app:layout_constraintBottom_toBottomOf="@+id/searchmap_searchBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/searchmap_searchBtn"
+            app:layout_constraintTop_toTopOf="@+id/searchmap_searchBtn"
+            app:srcCompat="@android:color/transparent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/gps_btn"
