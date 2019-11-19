@@ -75,6 +75,32 @@ public class SignUp extends AppCompatActivity {
 //            e.printStackTrace();
 //        }
 
+        //회원가입
+        btn_sign_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatabaseReference temp_ref = user_ref.push();
+                DatabaseReference email_ref = temp_ref.child("email");
+                DatabaseReference password_ref = temp_ref.child("password");
+                DatabaseReference name_ref = temp_ref.child("name");
+                DatabaseReference age_ref = temp_ref.child("age");
+                DatabaseReference sex_ref = temp_ref.child("sex");
+
+                String p = password.getText().toString();
+                String pc = password_c.getText().toString();
+
+                if (p.equals(pc)) {
+                    email_ref.setValue(email.getText().toString());
+                    password_ref.setValue(password.getText().toString());
+                    name_ref.setValue((name.getText().toString()));
+                    sex_ref.setValue(sex.getText().toString());
+                    age_ref.setValue(age.getText().toString());
+                } else {
+                    Toast.makeText(getApplicationContext(), "Check password again!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -82,8 +108,6 @@ public class SignUp extends AppCompatActivity {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
 //                Gson gson = new Gson();
-//                String value = dataSnapshot.getKey();
-//                JSONObject jsonObject = gson.toJson(value);
                 Object value = dataSnapshot.child("records").getValue();
                 Log.d("FIREBASE EXAMPLE", "Value is: " + value);
             }
@@ -94,33 +118,6 @@ public class SignUp extends AppCompatActivity {
             }
 
         });
-//        btn_sign_up.setOnClickListener(new View.OnClickListener()
-//
-//        {
-//            @Override
-//            public void onClick (View view){
-//                DatabaseReference temp_ref = user_ref.push();
-//                DatabaseReference email_ref = temp_ref.child("email");
-//                DatabaseReference password_ref = temp_ref.child("password");
-//                DatabaseReference name_ref = temp_ref.child("name");
-//                DatabaseReference age_ref = temp_ref.child("age");
-//                DatabaseReference sex_ref = temp_ref.child("sex");
-//
-//                String p = password.getText().toString();
-//                String pc = password_c.getText().toString();
-//
-//                if (p.equals(pc)) {
-//                    email_ref.setValue(email.getText().toString());
-//                    password_ref.setValue(password.getText().toString());
-//                    name_ref.setValue((name.getText().toString()));
-//                    sex_ref.setValue(sex.getText().toString());
-//                    age_ref.setValue(age.getText().toString());
-//                } else {
-//                    Toast.makeText(getApplicationContext(), "Check password again!", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//
-//        };
+
     }
 }
