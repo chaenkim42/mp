@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -63,6 +65,17 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
     FragmentTransaction fragmentTransaction;
     PlaceInfoBoxFragment placeInfoBoxFragment = new PlaceInfoBoxFragment();
 
+
+    String participants[] = new String[100];
+    StringBuffer sb;
+
+    int version = 1;
+    int count = 0;
+    String sql;
+    Cursor cursor;
+    MyDatabaseOpenHelper helper;
+    SQLiteDatabase database;
+
     public static DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
 
     ArrayList poiData = new ArrayList();
@@ -100,6 +113,8 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
         mapViewContainer.addView(mapView);
         mapView.setMapViewEventListener(this);
 
+        setUp();
+        nameList();
 
 
 //        String string = myRef.child("fields");
@@ -157,6 +172,27 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
         }else {
             checkRunTimePermission();
 
+        }
+    }
+
+    private void setUp() {
+        helper = new MyDatabaseOpenHelper(SearchMap.this, MyDatabaseOpenHelper.tableName, null, version);
+        database = helper.getWritableDatabase();
+    }
+
+    private void nameList(){
+        sql = "select name from "+ helper.tableName;
+        cursor = database.rawQuery(sql, null);
+        if(cursor != null){
+            count = cursor.getCount();
+            for(int i=0; i<count; i++){
+                cursor.moveToNext();
+                String participant = cursor.getString(0);
+                participants[i] = participant;
+                sb.append(participants[i]+" ");
+            }
+            Log.d("sqlite example " ,""+sb);
+            cursor.close();
         }
     }
 
