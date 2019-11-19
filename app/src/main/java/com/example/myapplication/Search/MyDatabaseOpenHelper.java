@@ -49,4 +49,17 @@ public class MyDatabaseOpenHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void deleteAll(SQLiteDatabase db){
+        db.beginTransaction();
+        try{
+            String sql = "delete from "+tableName;
+            db.execSQL(sql);
+            db.setTransactionSuccessful();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            db.endTransaction();
+        }
+    }
+
 }
