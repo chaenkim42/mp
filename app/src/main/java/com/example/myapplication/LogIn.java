@@ -37,7 +37,7 @@ public class LogIn extends AppCompatActivity {
     EditText email_field;
     EditText password_field;
     HashMap<String, String> s;
-    public static final ArrayList<User> users= new ArrayList<>();
+    public User user;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,8 +72,9 @@ public class LogIn extends AppCompatActivity {
                     arr[4] = arr[4].substring(0, arr[4].length()-1);
 
                     //유저 객체 생성
-                    User user = new User(Integer.parseInt(arr[0]), arr[1], arr[2], arr[3], arr[4]);
-                    users.add(user);
+                    // !! 스케줄을 null로 넣을게 아니라 다음에 어떻게 들고오는지 봐야됨 !!
+                    user = User.getInstance();
+                    user.setData(Integer.parseInt(arr[0]), arr[1], arr[2], arr[3], arr[4], null);
 
                     // set 이용해서 회원가입 진행
                     s.put(arr[4], arr[0]);
