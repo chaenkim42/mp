@@ -5,12 +5,14 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.graphics.Point;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,10 +21,13 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.Database.User;
+import com.example.myapplication.LogIn;
 import com.example.myapplication.R;
 import com.example.myapplication.Schedule.AskScheduleDate;
 import com.example.myapplication.Schedule.MyData;
 import com.example.myapplication.Schedule.ScheduleAdapter;
+import com.example.myapplication.Schedule.ScheduleForm;
 import com.example.myapplication.Search.SearchMap;
 
 import java.security.MessageDigest;
@@ -31,17 +36,17 @@ import java.util.ArrayList;
 
 
 public class Main extends AppCompatActivity implements View.OnClickListener {
-
     //뒤로가기
     private BackPressCloseHandler backPress;
 
     //Fragment Manager, Fragment Transaction to handle Fragment
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
-
     private Button searchBtn;
     private Button mytripBtn;
+    private ImageButton addScheBtn;
     private ImageView profile;
+    public User user;
 
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
@@ -72,11 +77,13 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
         searchBtn = findViewById(R.id.main_search_btn);
         mytripBtn = findViewById(R.id.main_mytrip_btn);
+        addScheBtn = findViewById(R.id.main_addSche_btn);
         profile = findViewById(R.id.main_profile_img_btn);
         recyclerView = findViewById(R.id.recyclerView);
 
         searchBtn.setOnClickListener(this);
         mytripBtn.setOnClickListener(this);
+        addScheBtn.setOnClickListener(this);
         profile.setOnClickListener(this);
 
         //recyclerview
@@ -85,16 +92,18 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.scrollToPosition(samples.size()-1);
 
-        samples.add(new MyData("새로운 스케줄", R.drawable.btn_floating));
-        samples.add(new MyData("아주대", R.drawable.doggo));
-        samples.add(new MyData("스벅", R.drawable.doggo));
-        samples.add(new MyData("커피", R.drawable.doggo));
-        samples.add(new MyData("아주대", R.drawable.doggo));
-        samples.add(new MyData("스벅", R.drawable.doggo));
-        samples.add(new MyData("커피", R.drawable.doggo));
 
-        adapter = new ScheduleAdapter(this, samples, 0);
-        recyclerView.setAdapter(adapter);
+
+
+        try{
+            user.getSchedules();
+            samples.add(new MyData("아주대", R.drawable.doggo));
+            adapter = new ScheduleAdapter(this, samples, 0);
+            recyclerView.setAdapter(adapter);
+        }catch (NullPointerException e){
+
+        }
+
 
     }
 
@@ -156,7 +165,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
     }
 
-
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -168,6 +176,9 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 break;
             case R.id.main_profile_img_btn:
                 startActivity(new Intent(Main.this, MyPage.class));
+                break;
+            case R.id.main_addSche_btn:
+                startActivity(new Intent(Main.this, ScheduleForm.class));
                 break;
         }
     }

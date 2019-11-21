@@ -50,11 +50,6 @@ public class SignUp extends AppCompatActivity {
         btn_sign_up = findViewById(R.id.btn_sign_up);
         textView = findViewById(R.id.textView);
 
-        // Write a message to the database
-        final DatabaseReference password_ref = user_ref.child("password");
-
-        ScheduleForm.Trip trip = new ScheduleForm.Trip("new", new Date(2019/11/11),3);
-
 //        myRef.child("1").child("id").setValue("1111");
 //        myRef.setValue("안녕하세요");
 
@@ -85,6 +80,7 @@ public class SignUp extends AppCompatActivity {
                 DatabaseReference name_ref = temp_ref.child("name");
                 DatabaseReference age_ref = temp_ref.child("age");
                 DatabaseReference sex_ref = temp_ref.child("sex");
+                DatabaseReference sche_ref = temp_ref.child("schedules");
 
                 String p = password.getText().toString();
                 String pc = password_c.getText().toString();
@@ -95,29 +91,30 @@ public class SignUp extends AppCompatActivity {
                     name_ref.setValue((name.getText().toString()));
                     sex_ref.setValue(sex.getText().toString());
                     age_ref.setValue(age.getText().toString());
+//                    sche_ref.setValue(null); -> 쓰이지도않음,,
                 } else {
                     Toast.makeText(getApplicationContext(), "Check password again!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-//                Gson gson = new Gson();
-                Object value = dataSnapshot.child("records").getValue();
-                Log.d("FIREBASE EXAMPLE", "Value is: " + value);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-
-        });
+//        // Read from the database
+//        myRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                // This method is called once with the initial value and again
+//                // whenever data at this location is updated.
+////                Gson gson = new Gson();
+//                Object value = dataSnapshot.child("records").getValue();
+//                Log.d("FIREBASE EXAMPLE", "Value is: " + value);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//
+//        });
 
     }
 }

@@ -42,6 +42,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         View view ;
         //리사이클러뷰 여러개에 어뎁터를 재활용하기 위해서 뷰타입으로 어떤 아이템 리스트를 만들건지 지정함
         switch (type){
+
             case 0: // main
                 view = LayoutInflater.from(context).inflate(R.layout.recycler_item, parent, false);
                 return new ViewHolder(view);
