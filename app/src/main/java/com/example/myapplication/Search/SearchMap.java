@@ -68,7 +68,7 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
     ViewGroup mapViewContainer;
     Button gps_btn;
     MapPoint current_mapPoint;
-    ImageButton downArrow;
+    ImageButton downArrow, tjBtn;
     ToggleButton starBtn;
     ConstraintLayout infoContainer;
     Boolean markerIsSelected = false;
@@ -105,15 +105,29 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
 
     InputMethodManager imm;
 
+    boolean[] checkBoolean;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_map);
 
+
+        checkBoolean = SearchFilter.getCheckBoolean();
+        Log.d("filter test map", String.valueOf(checkBoolean[0])+","+
+                String.valueOf(checkBoolean[1])+ ","+
+                String.valueOf(checkBoolean[2])+ ","+
+                String.valueOf(checkBoolean[3])+ ","+
+                String.valueOf(checkBoolean[4])+ ","+
+                String.valueOf(checkBoolean[5]));
+
         gps_btn = findViewById(R.id.gps_btn);
+        tjBtn = findViewById(R.id.serachmap_tjBtn);
+        tjBtn.setOnClickListener(this);
         mapViewContainer = findViewById(R.id.map_view);
         mapView = new MapView(this);
         mapView.setCurrentLocationEventListener(this);
+        mapView.setZoomLevel(11, false);
         mapViewContainer.addView(mapView);
         mapView.setMapViewEventListener(this);
         searchBox = findViewById(R.id.searchmap_searchBox);
@@ -124,7 +138,7 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
         imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
         setUp();
-        nameList();
+//        nameList();
 
         clearBtn.setOnClickListener(this);
 
@@ -249,11 +263,17 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
         {
             case R.id.gps_btn:
 //                Toast.makeText(this, String.valueOf(mapView.getZoomLevel()), Toast.LENGTH_SHORT).show();
-                if(mapView.getZoomLevel()>=2){
-                    mapView.setZoomLevel(2,false);
-                }
+//                if(mapView.getZoomLevel()>=2){
+//                    mapView.setZoomLevel(2,false);
+//                }
                 mapView.setMapCenterPoint(current_mapPoint, false);
                 mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
+                break;
+            case R.id.serachmap_tjBtn:
+                Intent intent = new Intent(SearchMap.this, SearchFilter.class);
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(intent);
+                finish();
                 break;
             case R.id.search_map_info_container:
 //                Log.e("infocontainer","clicked");
@@ -324,32 +344,32 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
             }
             InputStream is2 = getAssets().open("전국박물관미술관정보표준데이터.json");
             int size2 = is2.available();
-            byte[] buffe2 = new byte[size];
-            is2.read(buffer);
+            byte[] buffer2 = new byte[size2];
+            is2.read(buffer2);
             is2.close();
-            json = new String (buffer, "UTF-8");
+            json = new String (buffer2, "UTF-8");
             obj = new JSONObject(json);
             recordArray = obj.getJSONArray("records");
-            for(int i=0; i<recordArray.length(); i++){
+            for(int i=0; i<200; i++){
                 JSONObject placeObj = recordArray.getJSONObject(i);
                 Place place = new Place(placeObj.getString("시설명"),
                         Double.parseDouble(placeObj.getString("위도")),
                         Double.parseDouble(placeObj.getString("경도")),
                         "tmp-소재지 도로명주소",
-                        placeObj.getString("관리기관전화번호"),
+                        placeObj.getString("운영기관전화번호"),
                         "전시관람");
                 placeList.add(place);
                 Log.d("sqlite PLACE LIST", String.valueOf(place.getName()));
             }
             InputStream is6 = getAssets().open("전국야영(캠핑)장표준데이터.json");
             int size6 = is6.available();
-            byte[] buffer6 = new byte[size];
-            is6.read(buffer);
+            byte[] buffer6 = new byte[size6];
+            is6.read(buffer6);
             is6.close();
-            json = new String (buffer, "UTF-8");
+            json = new String (buffer6, "UTF-8");
             obj = new JSONObject(json);
             recordArray = obj.getJSONArray("records");
-            for(int i=0; i<recordArray.length(); i++){
+            for(int i=0; i<200; i++){
                 JSONObject placeObj = recordArray.getJSONObject(i);
                 Place place = new Place(placeObj.getString("야영(캠핑)장명"),
                         Double.parseDouble(placeObj.getString("위도")),
@@ -362,10 +382,10 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
             }
             InputStream is3 = getAssets().open("전국휴양림표준데이터.json");
             int size3 = is3.available();
-            byte[] buffer3 = new byte[size];
-            is3.read(buffer);
+            byte[] buffer3 = new byte[size3];
+            is3.read(buffer3);
             is3.close();
-            json = new String (buffer, "UTF-8");
+            json = new String (buffer3, "UTF-8");
             obj = new JSONObject(json);
             recordArray = obj.getJSONArray("records");
             for(int i=0; i<recordArray.length(); i++){
@@ -381,13 +401,13 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
             }
             InputStream is4 = getAssets().open("전국향토문화유적표준데이터.json");
             int size4 = is4.available();
-            byte[] buffer4 = new byte[size];
-            is4.read(buffer);
+            byte[] buffer4 = new byte[size4];
+            is4.read(buffer4);
             is4.close();
-            json = new String (buffer, "UTF-8");
+            json = new String (buffer4, "UTF-8");
             obj = new JSONObject(json);
             recordArray = obj.getJSONArray("records");
-            for(int i=0; i<recordArray.length(); i++){
+            for(int i=0; i<200; i++){
                 JSONObject placeObj = recordArray.getJSONObject(i);
                 Place place = new Place(placeObj.getString("향토문화유적명"),
                         Double.parseDouble(placeObj.getString("위도")),
@@ -400,10 +420,10 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
             }
             InputStream is5 = getAssets().open("전국지역특화거리표준데이터.json");
             int size5 = is5.available();
-            byte[] buffer5 = new byte[size];
-            is5.read(buffer);
+            byte[] buffer5 = new byte[size5];
+            is5.read(buffer5);
             is5.close();
-            json = new String (buffer, "UTF-8");
+            json = new String (buffer5, "UTF-8");
             obj = new JSONObject(json);
             recordArray = obj.getJSONArray("records");
             for(int i=0; i<recordArray.length(); i++){
@@ -436,20 +456,20 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
         }
     }
 
-    private void nameList(){
-        sql = "select name from "+ helper.tableName;
-        cursor = database.rawQuery(sql, null);
-        if(cursor != null){
-            count = cursor.getCount();
-            for(int i=0; i<count; i++){
-                cursor.moveToNext();
-                String participant = cursor.getString(0);
-                participants[i] = participant;
-                sb.append("\n"+participants[i]);
-            }
-            cursor.close();
-        }
-    }
+//    private void nameList(){
+//        sql = "select name from "+ helper.tableName;
+//        cursor = database.rawQuery(sql, null);
+//        if(cursor != null){
+//            count = cursor.getCount();
+//            for(int i=0; i<count; i++){
+//                cursor.moveToNext();
+//                String participant = cursor.getString(0);
+//                participants[i] = participant;
+//                sb.append("\n"+participants[i]);
+//            }
+//            cursor.close();
+//        }
+//    }
 
     public ArrayList<Place> getData(){
         // 전체 place 가 담긴 placeList 전달

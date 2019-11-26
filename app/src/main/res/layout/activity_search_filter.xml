@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Search.SearchFilter">
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/filter_titlebox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/searchfilter_next_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/WHITE"
+        android:src="@drawable/button_next"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView8"
+        app:layout_constraintEnd_toEndOf="@+id/imageView8"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:text="원하는 활동에\n체크해주세요."
+        android:textColor="#696969"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+
+    <ToggleButton
+        android:id="@+id/searchfilter_t1"
+        android:layout_width="172dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="39dp"
+        android:background="@drawable/box_map3"
+        android:checked="false"
+        android:text="관광지"
+        android:textOff="관광지"
+        android:textOn="관광지"
+        android:textSize="28sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <ToggleButton
+        android:id="@+id/searchfilter_t2"
+        android:layout_width="172dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/box_map3"
+        android:checked="false"
+        android:text="전시관람"
+        android:textOff="전시관람"
+        android:textOn="전시관람"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toBottomOf="@+id/searchfilter_t1"
+        app:layout_constraintStart_toEndOf="@+id/searchfilter_t1"
+        app:layout_constraintTop_toTopOf="@+id/searchfilter_t1" />
+
+    <ToggleButton
+        android:id="@+id/searchfilter_t3"
+        android:layout_width="172dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/box_map3"
+        android:checked="false"
+        android:text="자연휴양"
+        android:textOff="자연휴양"
+        android:textOn="자연휴양"
+        android:textSize="28sp"
+        app:layout_constraintStart_toStartOf="@+id/searchfilter_t1"
+        app:layout_constraintTop_toBottomOf="@+id/searchfilter_t1" />
+
+    <ToggleButton
+        android:id="@+id/searchfilter_t4"
+        android:layout_width="172dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/box_map3"
+        android:checked="false"
+        android:text="캠핑"
+        android:textOff="캠핑"
+        android:textOn="캠핑"
+        android:textSize="28sp"
+        app:layout_constraintStart_toEndOf="@+id/searchfilter_t3"
+        app:layout_constraintTop_toBottomOf="@+id/searchfilter_t2" />
+
+    <ToggleButton
+        android:id="@+id/searchfilter_t5"
+        android:layout_width="172dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/box_map3"
+        android:checked="false"
+        android:text="역사유적"
+        android:textOff="역사유적"
+        android:textOn="역사유적"
+        android:textSize="28sp"
+        app:layout_constraintStart_toStartOf="@+id/searchfilter_t3"
+        app:layout_constraintTop_toBottomOf="@+id/searchfilter_t3" />
+
+    <ToggleButton
+        android:id="@+id/searchfilter_t6"
+        android:layout_width="172dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/box_map3"
+        android:checked="false"
+        android:text="지역특화거리"
+        android:textOff="지역특화거리"
+        android:textOn="지역특화거리"
+        android:textSize="28sp"
+        app:layout_constraintStart_toEndOf="@+id/searchfilter_t5"
+        app:layout_constraintTop_toBottomOf="@+id/searchfilter_t4" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
