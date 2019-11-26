@@ -8,19 +8,22 @@ import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
+import com.example.myapplication.Database.User;
+
 class GridViewImageAdapter extends BaseAdapter implements CompoundButton.OnCheckedChangeListener {
 
     private Context mContext;
     private int displayWidth; //화면크기
     private int size; //이미지 크기
     private int pad; //패딩
+    public User user = User.getInstance();
 
     public String[] placeName = {
-            "서울","경주","통영",
-            "부산","대왕릉","제주도",
-            "강릉","인천","서울","경주","통영",
-            "부산","대왕릉","제주도",
-            "강릉","인천"
+            "서울","여수","전주",
+            "경주","평창","부산",
+            "어디지","제주도","서울","여수","전주",
+            "경주","평창","부산",
+            "어디지","제주도"
     };
 
     int[] selectedBoolean = new int[placeName.length];
@@ -87,7 +90,7 @@ class GridViewImageAdapter extends BaseAdapter implements CompoundButton.OnCheck
         }
         //이미지뷰에 주어진 위치의 이미지를 설정함
         tb.setBackgroundResource(imageIds[position]);
-        tb.setText("");
+        tb.setText(placeName[position]);
         tb.setTextOn("선택됨");
         tb.setTextOff("");
         tb.setOnCheckedChangeListener(this);
@@ -103,15 +106,13 @@ class GridViewImageAdapter extends BaseAdapter implements CompoundButton.OnCheck
         if(isChecked){
 //            buttonView.setTextColor(mContext.getResources().getColor(R.color.colorAccent));
             selectedBoolean[Integer.valueOf(buttonView.getId())-200] = 1;
+            Log.d("clicked: ", placeName[Integer.valueOf(buttonView.getId())-200]);
+            user.locations.add( placeName[Integer.valueOf(buttonView.getId())-200]);
         }else{
 //            buttonView.setTextColor(mContext.getResources().getColor(R.color.white));
             selectedBoolean[Integer.valueOf(buttonView.getId())-200] = 0;
+            user.locations.remove( placeName[Integer.valueOf(buttonView.getId())-200]);
         }
-        //test 용 코드
-        String s = "";
-        for(int i=0; i< selectedBoolean.length; i++){
-            s+= String.valueOf(selectedBoolean[i]);
-        }
-        Log.e("select",s);
+
     }
 }

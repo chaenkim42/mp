@@ -10,8 +10,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.Database.Trip;
 import com.example.myapplication.R;
-import com.example.myapplication.Schedule.ScheduleForm.Trip;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,6 +45,8 @@ public class MyPagePlansFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager( getActivity(), RecyclerView.VERTICAL, false));
         {
             try {
+
+
                 trip1 = new Trip("개강기념 여수 식도락 여행", new SimpleDateFormat("yyyy/MM/dd").parse("2018/09/01"), 4);
                 trip2 = new Trip("제주도 with 마미", new SimpleDateFormat("yyyy/MM/dd").parse("2019/05/05"),6);
                 trip3= new Trip("부산 당일치기", new SimpleDateFormat("yyyy/MM/dd").parse("2019/08/14"),1);

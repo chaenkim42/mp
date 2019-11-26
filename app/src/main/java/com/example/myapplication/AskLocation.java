@@ -7,11 +7,15 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapplication.Database.User;
 import com.example.myapplication.Main.Main;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class AskLocation extends AppCompatActivity implements View.OnClickListener {
-
     Button nextBtn, prevBtn;
+    DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference user_ref = myRef.child("user");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +105,33 @@ public class AskLocation extends AppCompatActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.askLocation_nextPageBtn:
+                // user의 정보를 디비에 넣는다
+                User user = User.getInstance();
+
+                    DatabaseReference temp_ref = user_ref.push();
+                    DatabaseReference email_ref = temp_ref.child("email");
+                    DatabaseReference password_ref = temp_ref.child("password");
+                    DatabaseReference name_ref = temp_ref.child("name");
+                    DatabaseReference age_ref = temp_ref.child("age");
+                    DatabaseReference sex_ref = temp_ref.child("sex");
+                    DatabaseReference sche_ref = temp_ref.child("schedules");
+                    DatabaseReference pref_ref = temp_ref.child("preferences");
+                    DatabaseReference loca_ref = temp_ref.child("locations");
+                    email_ref.setValue(user.getEmail());
+                    password_ref.setValue(user.getPassword());
+                    name_ref.setValue(user.getName());
+                    sex_ref.setValue(user.getSex());
+                    age_ref.setValue(user.getAge());
+
+                    for(int i=0; i<user.preferences.size(); i++){
+                        pref_ref.push().setValue(user.preferences.get(i));
+                    }
+
+                for(int i=0; i<user.locations.size(); i++){
+                    loca_ref.push().setValue(user.locations.get(i));
+                }
+
+                // 메인 화면으로 넘어간다
                 startActivity(new Intent(AskLocation.this, Main.class));
                 break;
             case R.id.askLocation_prevPageBtn:

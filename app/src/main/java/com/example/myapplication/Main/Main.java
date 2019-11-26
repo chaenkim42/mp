@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -44,9 +45,11 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     private FragmentTransaction fragmentTransaction;
     private Button searchBtn;
     private Button mytripBtn;
+    private TextView name;
     private ImageButton addScheBtn;
     private ImageView profile;
     public User user;
+
 
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
@@ -75,6 +78,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
 
+        name = findViewById(R.id.main_username_txt);
         searchBtn = findViewById(R.id.main_search_btn);
         mytripBtn = findViewById(R.id.main_mytrip_btn);
         addScheBtn = findViewById(R.id.main_addSche_btn);
@@ -92,8 +96,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.scrollToPosition(samples.size()-1);
 
-
-
+        name.setText(user.getName());
 
         try{
             user.getSchedules();
@@ -178,7 +181,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 startActivity(new Intent(Main.this, MyPage.class));
                 break;
             case R.id.main_addSche_btn:
-                startActivity(new Intent(Main.this, ScheduleForm.class));
+                startActivity(new Intent(Main.this, AskScheduleDate.class));
                 break;
         }
     }
