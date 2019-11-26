@@ -317,9 +317,107 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
                         Double.parseDouble(placeObj.getString("위도")),
                         Double.parseDouble(placeObj.getString("경도")),
                         "tmp-소재지 도로명주소",
-                        placeObj.getString("관리기관전화번호"));
+                        placeObj.getString("관리기관전화번호"),
+                        "관광지");
+                placeList.add(place);
+//                Log.d("sqlite PLACE LIST", String.valueOf(place.getName()));
+            }
+            InputStream is2 = getAssets().open("전국박물관미술관정보표준데이터.json");
+            int size2 = is2.available();
+            byte[] buffe2 = new byte[size];
+            is2.read(buffer);
+            is2.close();
+            json = new String (buffer, "UTF-8");
+            obj = new JSONObject(json);
+            recordArray = obj.getJSONArray("records");
+            for(int i=0; i<recordArray.length(); i++){
+                JSONObject placeObj = recordArray.getJSONObject(i);
+                Place place = new Place(placeObj.getString("시설명"),
+                        Double.parseDouble(placeObj.getString("위도")),
+                        Double.parseDouble(placeObj.getString("경도")),
+                        "tmp-소재지 도로명주소",
+                        placeObj.getString("관리기관전화번호"),
+                        "전시관람");
                 placeList.add(place);
                 Log.d("sqlite PLACE LIST", String.valueOf(place.getName()));
+            }
+            InputStream is6 = getAssets().open("전국야영(캠핑)장표준데이터.json");
+            int size6 = is6.available();
+            byte[] buffer6 = new byte[size];
+            is6.read(buffer);
+            is6.close();
+            json = new String (buffer, "UTF-8");
+            obj = new JSONObject(json);
+            recordArray = obj.getJSONArray("records");
+            for(int i=0; i<recordArray.length(); i++){
+                JSONObject placeObj = recordArray.getJSONObject(i);
+                Place place = new Place(placeObj.getString("야영(캠핑)장명"),
+                        Double.parseDouble(placeObj.getString("위도")),
+                        Double.parseDouble(placeObj.getString("경도")),
+                        "tmp-소재지 도로명주소",
+                        placeObj.getString("관리기관전화번호"),
+                        "캠핑");
+                placeList.add(place);
+                Log.d("sqlite PLACE LIST", String.valueOf(place.getName()));
+            }
+            InputStream is3 = getAssets().open("전국휴양림표준데이터.json");
+            int size3 = is3.available();
+            byte[] buffer3 = new byte[size];
+            is3.read(buffer);
+            is3.close();
+            json = new String (buffer, "UTF-8");
+            obj = new JSONObject(json);
+            recordArray = obj.getJSONArray("records");
+            for(int i=0; i<recordArray.length(); i++){
+                JSONObject placeObj = recordArray.getJSONObject(i);
+                Place place = new Place(placeObj.getString("휴양림명"),
+                        Double.parseDouble(placeObj.getString("위도")),
+                        Double.parseDouble(placeObj.getString("경도")),
+                        "tmp-소재지 도로명주소",
+                        placeObj.getString("휴양림전화번호"),
+                        "자연휴양");
+                placeList.add(place);
+                Log.d("sqlite PLACE LIST", String.valueOf(place.getName()));
+            }
+            InputStream is4 = getAssets().open("전국향토문화유적표준데이터.json");
+            int size4 = is4.available();
+            byte[] buffer4 = new byte[size];
+            is4.read(buffer);
+            is4.close();
+            json = new String (buffer, "UTF-8");
+            obj = new JSONObject(json);
+            recordArray = obj.getJSONArray("records");
+            for(int i=0; i<recordArray.length(); i++){
+                JSONObject placeObj = recordArray.getJSONObject(i);
+                Place place = new Place(placeObj.getString("향토문화유적명"),
+                        Double.parseDouble(placeObj.getString("위도")),
+                        Double.parseDouble(placeObj.getString("경도")),
+                        "tmp-소재지 도로명주소",
+                        placeObj.getString("관리기관전화번호"),
+                        "역사유적");
+                placeList.add(place);
+                Log.d("sqlite PLACE LIST", String.valueOf(place.getName()));
+            }
+            InputStream is5 = getAssets().open("전국지역특화거리표준데이터.json");
+            int size5 = is5.available();
+            byte[] buffer5 = new byte[size];
+            is5.read(buffer);
+            is5.close();
+            json = new String (buffer, "UTF-8");
+            obj = new JSONObject(json);
+            recordArray = obj.getJSONArray("records");
+            for(int i=0; i<recordArray.length(); i++){
+                JSONObject placeObj = recordArray.getJSONObject(i);
+                if(placeObj.getString("위도") != null && placeObj.getString("위도").length() != 0) {
+                    Place place = new Place(placeObj.getString("거리명"),
+                            Double.parseDouble(placeObj.getString("위도")),
+                            Double.parseDouble(placeObj.getString("경도")),
+                            "tmp-소재지 도로명주소",
+                            placeObj.getString("관리기관전화번호"),
+                            "지역특화거리");
+                    placeList.add(place);
+                    Log.d("sqlite PLACE LIST", String.valueOf(place.getName()));
+                }
             }
 //            Log.d("sqlite JSONObject ", String.valueOf(obj));
         }catch (IOException e){

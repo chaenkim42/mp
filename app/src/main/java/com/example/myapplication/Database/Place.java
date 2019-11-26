@@ -8,6 +8,7 @@ public class Place {
     private String tel;
     private String time;
     private String fee;
+    private String code = "default"; // 전시관람, 자연휴양, 캠핑, 관광지, 역사유적, 지역특화거리
 
     private int id;
     private int drawableId; // should be R.drawable.blahblah
@@ -23,12 +24,20 @@ public class Place {
         this.longitude = lon;
     }
 
-    public Place(String name, double lat, double lon, String address,String tel){
+    public Place(String name, double lat, double lon, String code){
+        this.name = name;
+        this.latitude = lat;
+        this.longitude = lon;
+        this.code = code;
+    }
+
+    public Place(String name, double lat, double lon, String address,String tel, String code){
         this.name = name;
         this.latitude = lat;
         this.longitude = lon;
         this.address = address;
         this.tel = tel;
+        this.code = code;
     }
     public Place(){
         this.name = "tmp";
@@ -36,6 +45,7 @@ public class Place {
         this.longitude = 127.579537;
         this.address = "tmp";
         this.tel = "tmp";
+        this.code = "tmp";
     }
 
     public Place(String name, int id){
