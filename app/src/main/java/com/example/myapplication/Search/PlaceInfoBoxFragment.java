@@ -38,8 +38,9 @@ public class PlaceInfoBoxFragment extends Fragment implements  View.OnClickListe
     }
 
     public OnInputListener mOnInputListener;
-    private ArrayList<Place> poiData = new ArrayList<Place>(30);
-    private int poiDataIndex;
+    private ArrayList<Place> poiData = new ArrayList<Place>();
+    private String selectedPoiName;
+    private Place selectedPlace = new Place();
 
     public PlaceInfoBoxFragment() {
         // Required empty public constructor
@@ -68,9 +69,9 @@ public class PlaceInfoBoxFragment extends Fragment implements  View.OnClickListe
         TextView enterFee = getView().findViewById(R.id.fragment_place_info_box_enterFee);
 
 
-        placeName.setText(poiData.get(poiDataIndex).getName());
-        address.setText(poiData.get(poiDataIndex).getAddress());
-        tel.setText(poiData.get(poiDataIndex).getTel());
+        placeName.setText(selectedPlace.getName());
+        address.setText(selectedPlace.getAddress());
+        tel.setText(selectedPlace.getTel());
         openTime.setText(" ");
         enterFee.setText(" ");
 
@@ -102,8 +103,13 @@ public class PlaceInfoBoxFragment extends Fragment implements  View.OnClickListe
         }
         if(getActivity() != null && getActivity() instanceof SearchMap){
             poiData = ((SearchMap)getActivity()).getData();
-            poiDataIndex = ((SearchMap)getActivity()).getDataIndex();
-            Log.d("get poidata index", String.valueOf(poiDataIndex));
+            selectedPoiName = ((SearchMap)getActivity()).getPoiName();
+            for(int i=0; i<poiData.size(); i++){
+                if(poiData.get(i).getName() == selectedPoiName){
+                    selectedPlace = poiData.get(i);
+                    break;
+                }
+            }
         }
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;

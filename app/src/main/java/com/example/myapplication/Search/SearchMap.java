@@ -9,10 +9,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -36,8 +41,15 @@ import com.google.firebase.database.ValueEventListener;
 
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
+import net.daum.mf.map.api.MapPointBounds;
 import net.daum.mf.map.api.MapView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -66,6 +78,8 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
     PlaceInfoBoxFragment placeInfoBoxFragment = new PlaceInfoBoxFragment();
 
 
+    ArrayList<Place> placeList = new ArrayList<Place>();
+
     String participants[] = new String[100];
     StringBuffer sb;
 
@@ -80,26 +94,16 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
 
     ArrayList poiData = new ArrayList();
     //index ... 0.name 1.lat 2.lon 3.address 4.tel 5.time 6.fee
-    ArrayList<Place> places = new ArrayList<>(Arrays.asList(
-            new Place(),new Place(),new Place(),new Place(),new Place()
-            ,new Place(),new Place(),new Place(),new Place(),new Place()
-            ,new Place(),new Place(),new Place(),new Place(),new Place()
-            ,new Place(),new Place(),new Place(),new Place(),new Place()
-            ,new Place(),new Place(),new Place(),new Place(),new Place()
-
-            ,new Place(),new Place(),new Place(),new Place(),new Place()
-            ,new Place(),new Place(),new Place(),new Place(),new Place()
-            ,new Place(),new Place(),new Place(),new Place(),new Place()
-            ,new Place(),new Place(),new Place(),new Place(),new Place()
-            ,new Place(),new Place(),new Place(),new Place(),new Place()
-
-            ,new Place(),new Place(),new Place(),new Place(),new Place()
-            ,new Place(),new Place(),new Place(),new Place(),new Place()
-            ,new Place(),new Place(),new Place(),new Place(),new Place()
-            ,new Place(),new Place(),new Place(),new Place(),new Place()
-            ,new Place(),new Place(),new Place(),new Place(),new Place()));
 
     int poiDataIndex=-1;
+    String poiName = "";
+
+    private EditText searchBox;
+    private ImageButton searchBtn;
+    private Button clearBtn;
+    private ArrayList<Place> searchResult = new ArrayList();
+
+    InputMethodManager imm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,9 +116,69 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
         mapView.setCurrentLocationEventListener(this);
         mapViewContainer.addView(mapView);
         mapView.setMapViewEventListener(this);
+        searchBox = findViewById(R.id.searchmap_searchBox);
+        searchBtn = findViewById(R.id.searchmap_searchBtn);
+        searchBtn.setOnClickListener(this);
+        clearBtn = findViewById(R.id.searchmap_clear);
+
+        imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
         setUp();
         nameList();
+
+        clearBtn.setOnClickListener(this);
+
+        searchBox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String input = s.toString();
+                if(s.length() == 0){
+                    searchResult.clear();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        searchBox.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                //Enter key Action
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    String input = String.valueOf(searchBox.getText());
+                    fm = getSupportFragmentManager();
+                    fragmentTransaction = fm.beginTransaction();
+                    fragmentTransaction.remove(placeInfoBoxFragment);
+                    fragmentTransaction.commit();
+                    mapView.removeAllPOIItems();
+                    if(input.length() != 0){
+                        for(int i=0; i<placeList.size(); i++){
+                            if(placeList.get(i).getName().contains(input)){
+                                searchResult.add(placeList.get(i));
+                            }
+                        }
+                        for(int i=0; i<searchResult.size(); i++){
+                            MapPOIItem marker = new MapPOIItem();
+                            marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+                            marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
+                            marker.setItemName(searchResult.get(i).getName());
+                            marker.setMapPoint(MapPoint.mapPointWithGeoCoord(searchResult.get(i).getLatitude(),searchResult.get(i).getLongitude()));
+                            marker.setTag(i);
+                            mapView.addPOIItem(marker);
+                        }
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
 
 
 //        String string = myRef.child("fields");
@@ -122,47 +186,49 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
 
 
 
-        for(int i=11; i<25; i++) {
-            final DatabaseReference fieldRef = myRef.child("records").child(String.valueOf(i));
-            final int finalI = i-11;
-            fieldRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    // 마커 추가
-                    MapPOIItem marker = new MapPOIItem();
-                    marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
-                    marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
-                    Object name = (String) dataSnapshot.child("거리명").getValue();
-                    Object lat = dataSnapshot.child("위도").getValue();
-                    Object lon = dataSnapshot.child("경도").getValue();
-                    Object address = dataSnapshot.child("소재지도로명").getValue();
-                    Object tel = dataSnapshot.child("관리기관전화번호").getValue();
-                    Place place = new Place(name.toString(), Double.parseDouble(lat.toString()),
-                            Double.parseDouble(lon.toString()), address.toString(), tel.toString());
+//        for(int i=11; i<25; i++) {
+//            final DatabaseReference fieldRef = myRef.child("records").child(String.valueOf(i));
+//            final int finalI = i-11;
+//            fieldRef.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                    // 마커 추가
+//                    MapPOIItem marker = new MapPOIItem();
+//                    marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+//                    marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
+//                    Object name = (String) dataSnapshot.child("거리명").getValue();
+//                    Object lat = dataSnapshot.child("위도").getValue();
+//                    Object lon = dataSnapshot.child("경도").getValue();
+//                    Object address = dataSnapshot.child("소재지도로명").getValue();
+//                    Object tel = dataSnapshot.child("관리기관전화번호").getValue();
+//                    Place place = new Place(name.toString(), Double.parseDouble(lat.toString()),
+//                            Double.parseDouble(lon.toString()), address.toString(), tel.toString());
+//
+//                    places.set(finalI, place);
+//                    marker.setItemName(name.toString());
+//                    marker.setMapPoint(MapPoint.mapPointWithGeoCoord(Double.parseDouble(lat.toString()), Double.parseDouble(lon.toString())));
+//                    marker.setTag(finalI);
+//                    mapView.addPOIItem(marker);
+//                    Log.d("get settag", name + "," + String.valueOf(finalI));
+//
+////                    poiData.add(0, name.toString());
+////                    poiData.add(1, lat.toString());
+////                    poiData.add(2, lon.toString());
+////                    poiData.add(3, address.toString());
+////                    poiData.add(4, tel.toString());
+////                Log.d("ref test", value.toString());
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                }
+//            });
+//        }
 
-                    places.set(finalI, place);
-                    marker.setItemName(name.toString());
-                    marker.setMapPoint(MapPoint.mapPointWithGeoCoord(Double.parseDouble(lat.toString()), Double.parseDouble(lon.toString())));
-                    marker.setTag(finalI);
-                    mapView.addPOIItem(marker);
-                    Log.d("get settag", name + "," + String.valueOf(finalI));
 
-//                    poiData.add(0, name.toString());
-//                    poiData.add(1, lat.toString());
-//                    poiData.add(2, lon.toString());
-//                    poiData.add(3, address.toString());
-//                    poiData.add(4, tel.toString());
-//                Log.d("ref test", value.toString());
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-        }
         mapView.setPOIItemEventListener(this);
-
         gps_btn.setOnClickListener(this);
 
         infoContainer = findViewById(R.id.search_map_info_container);
@@ -175,9 +241,101 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
         }
     }
 
+
+    @Override
+    //Button.OnClickListener
+    public void onClick(View view) {
+        switch (view.getId())
+        {
+            case R.id.gps_btn:
+//                Toast.makeText(this, String.valueOf(mapView.getZoomLevel()), Toast.LENGTH_SHORT).show();
+                if(mapView.getZoomLevel()>=2){
+                    mapView.setZoomLevel(2,false);
+                }
+                mapView.setMapCenterPoint(current_mapPoint, false);
+                mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
+                break;
+            case R.id.search_map_info_container:
+//                Log.e("infocontainer","clicked");
+                break;
+            case R.id.searchmap_searchBtn:
+                //키보드 내리기
+                imm.hideSoftInputFromWindow(searchBox.getWindowToken(),0);
+                fm = getSupportFragmentManager();
+                fragmentTransaction = fm.beginTransaction();
+                fragmentTransaction.remove(placeInfoBoxFragment);
+                fragmentTransaction.commit();
+                mapView.removeAllPOIItems();
+                String input = String.valueOf(searchBox.getText());
+                if(input.length() != 0) {
+                    for (int i = 0; i < placeList.size(); i++) {
+                        if (placeList.get(i).getName().contains(input)) {
+                            searchResult.add(placeList.get(i));
+                        }
+                    }
+                    for (int i = 0; i < searchResult.size(); i++) {
+                        MapPOIItem marker = new MapPOIItem();
+                        marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+                        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
+                        marker.setItemName(searchResult.get(i).getName());
+                        marker.setMapPoint(MapPoint.mapPointWithGeoCoord(searchResult.get(i).getLatitude(), searchResult.get(i).getLongitude()));
+                        marker.setTag(i);
+                        mapView.addPOIItem(marker);
+                    }
+                }
+                break;
+            case R.id.searchmap_clear:
+                searchResult.clear();
+                searchBox.setText("");
+                // 키보드 올리기
+                imm.showSoftInput(searchBox,0);
+                break;
+        }
+
+    }
+
+
+
     private void setUp() {
         helper = new MyDatabaseOpenHelper(SearchMap.this, MyDatabaseOpenHelper.tableName, null, version);
         database = helper.getWritableDatabase();
+        String json = null;
+        JSONObject obj = null;
+        JSONArray recordArray = null;
+        try{
+            InputStream is = getAssets().open("전국관광지정보표준데이터.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String (buffer, "UTF-8");
+            obj = new JSONObject(json);
+            recordArray = obj.getJSONArray("records");
+            for(int i=0; i<recordArray.length(); i++){
+                JSONObject placeObj = recordArray.getJSONObject(i);
+                Place place = new Place(placeObj.getString("관광지명"),
+                        Double.parseDouble(placeObj.getString("위도")),
+                        Double.parseDouble(placeObj.getString("경도")),
+                        "tmp-소재지 도로명주소",
+                        placeObj.getString("관리기관전화번호"));
+                placeList.add(place);
+                Log.d("sqlite PLACE LIST", String.valueOf(place.getName()));
+            }
+//            Log.d("sqlite JSONObject ", String.valueOf(obj));
+        }catch (IOException e){
+            e.printStackTrace();
+            Log.d("sqlite exception", "IOException");
+        }catch (JSONException e){
+            e.printStackTrace();
+            Log.d("sqlite exception", "JSONException");
+        }
+//        Log.d("sqlite JSON ", json);
+        sb = new StringBuffer();
+        if(database != null){
+//            helper.deleteAll(database);
+//            helper.insertName(database, "example_chaenkim");
+//            helper.insertName(database, "example_clairesong");
+        }
     }
 
     private void nameList(){
@@ -189,18 +347,23 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
                 cursor.moveToNext();
                 String participant = cursor.getString(0);
                 participants[i] = participant;
-                sb.append(participants[i]+" ");
+                sb.append("\n"+participants[i]);
             }
-            Log.d("sqlite example " ,""+sb);
             cursor.close();
         }
     }
 
     public ArrayList<Place> getData(){
-        return places;
+        // 전체 place 가 담긴 placeList 전달
+        return placeList;
     }
     public int getDataIndex(){
+        // 클릭한 데이터의 placList 상의 인덱스 전달
         return poiDataIndex;
+    }
+
+    public String getPoiName(){
+        return poiName;
     }
 
 
@@ -359,26 +522,6 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
     }
 
 
-    @Override
-    //Button.OnClickListener
-    public void onClick(View view) {
-        switch (view.getId())
-        {
-            case R.id.gps_btn:
-//                Toast.makeText(this, String.valueOf(mapView.getZoomLevel()), Toast.LENGTH_SHORT).show();
-                if(mapView.getZoomLevel()>=2){
-                    mapView.setZoomLevel(2,false);
-                }
-                mapView.setMapCenterPoint(current_mapPoint, false);
-                mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
-                break;
-            case R.id.search_map_info_container:
-//                Log.e("infocontainer","clicked");
-                break;
-        }
-
-    }
-
 
     @Override //MapView.POIItemEventListener
     public void onPOIItemSelected(MapView mapView, MapPOIItem mapPOIItem) {
@@ -400,10 +543,10 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
         fragmentTransaction.add(R.id.search_map_info_container, placeInfoBoxFragment);
         fragmentTransaction.commit();
         poiDataIndex = mapPOIItem.getTag();
-        Log.d("gettag", String.valueOf(mapPOIItem.getTag()));
-        for(int i=0; i<places.size(); i++){
-            Log.d("getall", String.valueOf(places.get(i).getName()));
-        }
+        poiName = mapPOIItem.getItemName();
+//        for(int i=0; i<placeList.size(); i++){
+//            Log.d("sqlite getall", String.valueOf(places.get(i).getName()));
+//        }
 //        poiName = mapPOIItem.getItemName();
     }
 
