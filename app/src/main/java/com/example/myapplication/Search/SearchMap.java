@@ -13,12 +13,15 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -77,8 +80,13 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
     FragmentTransaction fragmentTransaction;
     PlaceInfoBoxFragment placeInfoBoxFragment = new PlaceInfoBoxFragment();
 
-
-    ArrayList<Place> placeList = new ArrayList<Place>();
+    ArrayList<Place> placeList = new ArrayList<Place>(); //전체 placelist (1~6)
+    ArrayList<Place> placeList1 = new ArrayList<Place>(); //관광지
+    ArrayList<Place> placeList2 = new ArrayList<Place>(); //전시관람
+    ArrayList<Place> placeList3 = new ArrayList<Place>(); //자연휴양
+    ArrayList<Place> placeList4 = new ArrayList<Place>(); //캠핑
+    ArrayList<Place> placeList5 = new ArrayList<Place>(); //역사유적
+    ArrayList<Place> placeList6 = new ArrayList<Place>(); //지역특화거리
 
     String participants[] = new String[100];
     StringBuffer sb;
@@ -102,10 +110,13 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
     private ImageButton searchBtn;
     private Button clearBtn;
     private ArrayList<Place> searchResult = new ArrayList();
+    private ArrayList<Place> allPlace = new ArrayList();
 
     InputMethodManager imm;
 
     boolean[] checkBoolean;
+    LinearLayout filterBox;
+    boolean filterChecked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,8 +148,85 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
 
         imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
+        filterBox = findViewById(R.id.searchmap_filterLinearLayout);
+
         setUp();
-//        nameList();
+
+        for(int i=0; i<6; i++){
+            if(checkBoolean[i]){
+                filterChecked = true;
+                if(i==0){
+                    String infService = this.LAYOUT_INFLATER_SERVICE;
+                    LayoutInflater li = (LayoutInflater) this.getSystemService(infService);
+                    View v = li.inflate(R.layout.custom_button_searchfilter, filterBox, false);
+                    Button b = v.findViewById(R.id.filterbox);
+                    b.setText("관광지");
+                    filterBox.addView(v);
+                    for(int j=0; j<placeList1.size(); j++){
+                        allPlace.add(placeList1.get(j));
+                    }
+                }
+                if(i==1){
+                    String infService = this.LAYOUT_INFLATER_SERVICE;
+                    LayoutInflater li = (LayoutInflater) this.getSystemService(infService);
+                    View v = li.inflate(R.layout.custom_button_searchfilter, filterBox, false);
+                    Button b = v.findViewById(R.id.filterbox);
+                    b.setText("전시관람");
+                    filterBox.addView(v);
+                    for(int j=0; j<placeList2.size(); j++){
+                        allPlace.add(placeList2.get(j));
+                    }
+                }
+                if(i==2){
+                    String infService = this.LAYOUT_INFLATER_SERVICE;
+                    LayoutInflater li = (LayoutInflater) this.getSystemService(infService);
+                    View v = li.inflate(R.layout.custom_button_searchfilter, filterBox, false);
+                    Button b = v.findViewById(R.id.filterbox);
+                    b.setText("자연휴양");
+                    filterBox.addView(v);
+                    for(int j=0; j<placeList3.size(); j++){
+                        allPlace.add(placeList3.get(j));
+                    }
+                }
+                if(i==3){
+                    String infService = this.LAYOUT_INFLATER_SERVICE;
+                    LayoutInflater li = (LayoutInflater) this.getSystemService(infService);
+                    View v = li.inflate(R.layout.custom_button_searchfilter, filterBox, false);
+                    Button b = v.findViewById(R.id.filterbox);
+                    b.setText("캠핑");
+                    filterBox.addView(v);
+                    for(int j=0; j<placeList4.size(); j++){
+                        allPlace.add(placeList4.get(j));
+                    }
+                }
+                if(i==4){
+                    String infService = this.LAYOUT_INFLATER_SERVICE;
+                    LayoutInflater li = (LayoutInflater) this.getSystemService(infService);
+                    View v = li.inflate(R.layout.custom_button_searchfilter, filterBox, false);
+                    Button b = v.findViewById(R.id.filterbox);
+                    b.setText("역사유적");
+                    filterBox.addView(v);
+                    for(int j=0; j<placeList5.size(); j++){
+                        allPlace.add(placeList5.get(j));
+                    }
+                }
+                if(i==5){
+                    String infService = this.LAYOUT_INFLATER_SERVICE;
+                    LayoutInflater li = (LayoutInflater) this.getSystemService(infService);
+                    View v = li.inflate(R.layout.custom_button_searchfilter, filterBox, false);
+                    Button b = v.findViewById(R.id.filterbox);
+                    b.setText("지역특화거리");
+                    filterBox.addView(v);
+                    for(int j=0; j<placeList6.size(); j++){
+                        allPlace.add(placeList6.get(j));
+                    }
+                }
+            }
+        }
+
+        if(!filterChecked){
+            allPlace = placeList;
+        }
 
         clearBtn.setOnClickListener(this);
 
@@ -151,7 +239,7 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String input = s.toString();
-                if(s.length() == 0){
+                if(s.length() == 0 && !filterChecked){
                     searchResult.clear();
                 }
             }
@@ -172,10 +260,10 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
                     fragmentTransaction.remove(placeInfoBoxFragment);
                     fragmentTransaction.commit();
                     mapView.removeAllPOIItems();
-                    if(input.length() != 0){
-                        for(int i=0; i<placeList.size(); i++){
-                            if(placeList.get(i).getName().contains(input)){
-                                searchResult.add(placeList.get(i));
+                    if(input.length() != 0 || filterChecked){
+                        for(int i=0; i<allPlace.size(); i++){
+                            if(allPlace.get(i).getName().contains(input)){
+                                searchResult.add(allPlace.get(i));
                             }
                         }
                         for(int i=0; i<searchResult.size(); i++){
@@ -287,10 +375,10 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
                 fragmentTransaction.commit();
                 mapView.removeAllPOIItems();
                 String input = String.valueOf(searchBox.getText());
-                if(input.length() != 0) {
-                    for (int i = 0; i < placeList.size(); i++) {
-                        if (placeList.get(i).getName().contains(input)) {
-                            searchResult.add(placeList.get(i));
+                if(input.length() != 0 || filterChecked) {
+                    for (int i = 0; i < allPlace.size(); i++) {
+                        if (allPlace.get(i).getName().contains(input)) {
+                            searchResult.add(allPlace.get(i));
                         }
                     }
                     for (int i = 0; i < searchResult.size(); i++) {
@@ -340,6 +428,7 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
                         placeObj.getString("관리기관전화번호"),
                         "관광지");
                 placeList.add(place);
+                placeList1.add(place);
 //                Log.d("sqlite PLACE LIST", String.valueOf(place.getName()));
             }
             InputStream is2 = getAssets().open("전국박물관미술관정보표준데이터.json");
@@ -359,6 +448,7 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
                         placeObj.getString("운영기관전화번호"),
                         "전시관람");
                 placeList.add(place);
+                placeList2.add(place);
                 Log.d("sqlite PLACE LIST", String.valueOf(place.getName()));
             }
             InputStream is6 = getAssets().open("전국야영(캠핑)장표준데이터.json");
@@ -378,6 +468,7 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
                         placeObj.getString("관리기관전화번호"),
                         "캠핑");
                 placeList.add(place);
+                placeList4.add(place);
                 Log.d("sqlite PLACE LIST", String.valueOf(place.getName()));
             }
             InputStream is3 = getAssets().open("전국휴양림표준데이터.json");
@@ -397,6 +488,7 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
                         placeObj.getString("휴양림전화번호"),
                         "자연휴양");
                 placeList.add(place);
+                placeList3.add(place);
                 Log.d("sqlite PLACE LIST", String.valueOf(place.getName()));
             }
             InputStream is4 = getAssets().open("전국향토문화유적표준데이터.json");
@@ -416,6 +508,7 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
                         placeObj.getString("관리기관전화번호"),
                         "역사유적");
                 placeList.add(place);
+                placeList5.add(place);
                 Log.d("sqlite PLACE LIST", String.valueOf(place.getName()));
             }
             InputStream is5 = getAssets().open("전국지역특화거리표준데이터.json");
@@ -436,6 +529,7 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
                             placeObj.getString("관리기관전화번호"),
                             "지역특화거리");
                     placeList.add(place);
+                    placeList6.add(place);
                     Log.d("sqlite PLACE LIST", String.valueOf(place.getName()));
                 }
             }

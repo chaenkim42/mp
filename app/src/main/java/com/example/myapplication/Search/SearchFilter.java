@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class SearchFilter extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
-    ImageButton nextBtn, backBtn;
+    ImageButton nextBtn;
     // 1.관광지 2.전시관람 3.자연휴양 4.캠핑 5.역사유적 6.지역특화거리
     ToggleButton t1, t2, t3, t4, t5, t6;
     static boolean[] checkBoolean ={false, false, false, false, false, false};
@@ -29,7 +29,6 @@ public class SearchFilter extends AppCompatActivity implements View.OnClickListe
         checkBoolean = new boolean[]{false, false, false, false, false, false};
 
         nextBtn = findViewById(R.id.searchfilter_next_btn);
-//        backBtn = findViewById(R.id.searchfilter_back_btn);
         t1 = findViewById(R.id.searchfilter_t1);
         t2 = findViewById(R.id.searchfilter_t2);
         t3 = findViewById(R.id.searchfilter_t3);
@@ -38,7 +37,6 @@ public class SearchFilter extends AppCompatActivity implements View.OnClickListe
         t6 = findViewById(R.id.searchfilter_t6);
 
         nextBtn.setOnClickListener(this);
-//        backBtn.setOnClickListener(this);
         t1.setOnCheckedChangeListener(this);
         t2.setOnCheckedChangeListener(this);
         t3.setOnCheckedChangeListener(this);
@@ -61,9 +59,6 @@ public class SearchFilter extends AppCompatActivity implements View.OnClickListe
                 intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 break;
-//            case R.id.searchfilter_back_btn:
-//                super.onBackPressed();
-//                break;
         }
     }
 
