@@ -47,7 +47,7 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
     private RecyclerView recyclerView;
     String title_str, start_str, finish_str;
     Date start_date, finish_date;
-    TextView title, date;
+    TextView title, date, header_name;
     ImageButton btn_diary,btn_save;
     User user = User.getInstance();
     Trip thisTrip;
@@ -101,60 +101,25 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
         setContentView(R.layout.activity_schedule_form);
         title = findViewById(R.id.title);
         date = findViewById(R.id.date);
+        header_name = findViewById(R.id.header_name);
         btn_diary = findViewById(R.id.scheduleForm_diaryBtn);
         btn_save = findViewById(R.id.btn_save);
+        mapViewContainer = findViewById(R.id.scheduleForm_mapContainer);
         btn_diary.setOnClickListener(this);
         btn_save.setOnClickListener(this);
 
         // 넘어오는 인텐트 받기 -- 새로 만드는거 아니면 인텐트로 받아오는거 없는데 머어쩌지......
-        try{
-            Intent intent = getIntent();
-            Log.d("title: ", intent.getExtras().getString("title"));
-            title_str = intent.getExtras().getString("title");
-            start_str = intent.getExtras().getString("start_date");
-            finish_str = intent.getExtras().getString("finish_date");
-            start_date =new SimpleDateFormat("yyyy/MM/dd").parse(start_str);
-            finish_date  =new SimpleDateFormat("yyyy/MM/dd").parse(finish_str);
+        intentFunc();
 
-            title.setText(title_str);
-            date.setText(start_str+" - "+finish_str);
+        // 드로어 달기
+        setDrawer();
 
-        }catch (Exception e){
-
-        }
-
-        final DrawerLayout drawerLayout = findViewById(R.id.drawerlayout);
-        final NavigationView navigationView = findViewById(R.id.navigationview);
-
-        //drawer toggle 세트로 drawerlayout, toolbar 등 해서 생성 - 드로어 여닫기 완성
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.closed);
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-
-        //
-        ImageView drawer_opener = findViewById(R.id.drawer_opener);
-        drawer_opener.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.openDrawer(navigationView);
-            }
-        });
-
-        // 유저 스케줄 가져오기 -> 드로어용
-        ArrayList<MyData> schedules = new ArrayList<>();
-
-        //drawer recyclerview
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        ((LinearLayoutManager) layoutManager).setOrientation(RecyclerView.VERTICAL);
-        RecyclerView drawer_recyclerview = findViewById(R.id.drawer_recyclerview);
-        drawer_recyclerview.setLayoutManager(layoutManager);
-        ScheduleAdapter scheduleAdapter = new ScheduleAdapter(this, schedules, 2);
-        drawer_recyclerview.setAdapter(scheduleAdapter);
-
-        mapViewContainer = findViewById(R.id.scheduleForm_mapContainer);
+        // 맵 생성
         mapView = new MapView(this);
         mapViewContainer.addView(mapView);
         mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(34.746487,127.748342),false);
         mapView.setZoomLevel(3, false);
+
 //        mapView.setMapViewEventListener(this);
         //TODO: 1. 특정 데이인 것 구분 후 아래 기능(지도에 마킹) 들어가야 함,
         //       2. 다중 마커 좀 더 효율적으로
@@ -197,21 +162,22 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
         mapView.moveCamera(CameraUpdateFactory.newMapPointBounds(mapPointBounds, padding));
 
 
+        // 장소 리사이클러뷰 ------------------------------------------------------------------
+
         recyclerView = findViewById(R.id.scheduleForm_planRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
 
         List<ExpandableListAdapter.Item> data = new ArrayList<>();
 
         try {
-            period = (int)(start_date.getTime() - finish_date.getTime())/(24*60*60*1000);
+            // 플레이스 장소 정보 가져오기
             thisTrip = new Trip(title_str, start_date, period);
 
             for(int i=0; i<period; i++){
                 List<Place> fourthDayPlaces = new ArrayList<>();
-            fourthDayPlaces.add(new Place("작은 동물원"));
-            fourthDayPlaces.add(new Place("작은 박물관"));
-            fourthDayPlaces.add(new Place("멋진 휴양림"));
-            fourthDayPlaces.add(new Place("거대한 휴양림"));
+                fourthDayPlaces.add(new Place("여수세계박람회 크루즈공원", 34.753264, 127.754638));
+                fourthDayPlaces.add(new Place("한화아쿠아플라넷 여수", 34.746487, 127.748342));
+                fourthDayPlaces.add(new Place("오동도 유람선터미널", 34.740861, 127.755591));
                 thisTrip.addDay(i, new Day(i, fourthDayPlaces));
             }
 
@@ -231,7 +197,7 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
             for(int i=0; i<thisTrip.getPeriod(); i++){
                 // 먼저 day 수만큼 HEADER 추가
                 data.add(new ExpandableListAdapter.Item(ExpandableListAdapter.HEADER, "Day "+String.valueOf(i+1), transFormat.format(dummy_date)));
-                dummy_date = new Date(dummy_date.getTime() +(1000*60*60*24*-1));
+                dummy_date = new Date(dummy_date.getTime() +(1000*60*60*24*1));
 
                 // 각 날짜별로 포함된 location 을 CHILD로 추가
                 List<Place> spots = thisTrip.getDay(i).getSpots();
@@ -272,4 +238,65 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
 
     }
 
+    public void intentFunc(){
+        Intent intent = getIntent();
+        int sche_n = intent.getExtras().getInt("sche_n");
+
+        if(sche_n==0){ // 새로 만드는 일정
+            save_flag = false;
+
+            try{ // 인텐트 받아오기
+
+                title_str = intent.getExtras().getString("title");
+                start_str = intent.getExtras().getString("start_date");
+                finish_str = intent.getExtras().getString("finish_date");
+                start_date =new SimpleDateFormat("yyyy/MM/dd").parse(start_str);
+                finish_date  =new SimpleDateFormat("yyyy/MM/dd").parse(finish_str);
+                period = (int)(finish_date.getTime() - start_date.getTime())/(24*60*60*1000)+1;
+
+                Log.d("title: ", title_str);
+                Log.d("start_ str: ", start_str);
+                Log.d("finish_str  ", finish_str);
+                Log.d("period:  ", String.valueOf(period));
+
+                title.setText(title_str);
+                date.setText(start_str+" - "+finish_str);
+
+            }catch (Exception e){
+            }
+
+        }else{ // 불러오는 일정
+            save_flag = true;
+        }
+
+    }
+
+    public void setDrawer(){
+        final DrawerLayout drawerLayout = findViewById(R.id.drawerlayout);
+        final NavigationView navigationView = findViewById(R.id.navigationview);
+
+        //drawer toggle 세트로 drawerlayout, toolbar 등 해서 생성 - 드로어 여닫기 완성
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.closed);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+
+        //
+        ImageView drawer_opener = findViewById(R.id.drawer_opener);
+        drawer_opener.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.openDrawer(navigationView);
+            }
+        });
+
+        // 유저 스케줄 가져오기 -> 드로어용
+        ArrayList<MyData> schedules = new ArrayList<>();
+
+        //drawer recyclerview
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        ((LinearLayoutManager) layoutManager).setOrientation(RecyclerView.VERTICAL);
+        RecyclerView drawer_recyclerview = findViewById(R.id.drawer_recyclerview);
+        drawer_recyclerview.setLayoutManager(layoutManager);
+        ScheduleAdapter scheduleAdapter = new ScheduleAdapter(this, schedules, 2);
+        drawer_recyclerview.setAdapter(scheduleAdapter);
+    }
 }

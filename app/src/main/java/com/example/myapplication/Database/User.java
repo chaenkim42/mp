@@ -14,9 +14,9 @@ public class User {
     public String name;
     public String sex;
     public int age;
-    public ArrayList<String>  schedules_id;
-    public ArrayList<String>  preferences;
-    public ArrayList<String>  locations;
+    public ArrayList<String>  schedules_id = new ArrayList<>();
+    public ArrayList<String>  preferences = new ArrayList<>();
+    public ArrayList<String>  locations = new ArrayList<>();
 
     private User(){}
 //    private User(int age, String email, String name, String password, String sex, ArrayList<String> schedule_id){
@@ -33,9 +33,6 @@ public class User {
     public static User getInstance(){
         if(user==null){
             user = new User();
-            user.preferences = new ArrayList<>();
-            user.schedules_id = new ArrayList<>();
-            user.locations = new ArrayList<>();
         }
         return user;
     }
@@ -47,12 +44,15 @@ public class User {
         this.name = name;
         this.sex = sex;
         this.age = age;
+
     }
 
     public void setLocations(ArrayList<String> locations_id){
         //로케이션 아이디로 받아오는 코드
     }
-
+    public void setPreferences(String preference){
+        user.preferences.add(preference);
+    }
     public String getU_id(){ return user.u_id;}
 
     public String getEmail(){

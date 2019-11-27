@@ -73,21 +73,25 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
                                             temp.child("age").getValue();
 
                                             user.setU_id(temp.getKey());
-
                                             user.setData(Integer.parseInt(temp.child("age").getValue().toString()), given_email,
                                                     temp.child("name").getValue().toString(), given_password, temp.child("sex").getValue().toString());
+                                            Log.d("name: ", user.getName());
+                                            Iterator<DataSnapshot> pref_iterator = temp.child("preferences").getChildren().iterator();
+                                            while(pref_iterator.hasNext()){
+                                                user.setPreferences(pref_iterator.next().getValue().toString()); // 아이터레이터로 받기!!
+                                            }
 
                                         }
                                     }
 
                                 }
                             }
-
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
 
                             }
                         });
+
                         startActivity(new Intent(getApplicationContext(), Main.class));
                 break;
 

@@ -48,24 +48,22 @@ public class AskScheduleDate extends AppCompatActivity implements View.OnClickLi
         btn_make_sche.setOnClickListener(this);
         getCurrentDate();
 
-
     }
 
     @Override
     public void onClick(View view) {
-
         switch (view.getId()){
             case R.id.title:
                 title.setText("");
                 break;
+
             case R.id.start:
                 DatePickerDialog.OnDateSetListener callback = new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int y, int m, int d) {
-                        start_date.setText(y + "." + m + "." + d + ".");
+                        start_date.setText(y + "/" + m + "/" + d );
                     }
                 };
-
                 DatePickerDialog dialog = new DatePickerDialog(this, callback, year, month, day);
                 dialog.show();
 
@@ -74,20 +72,22 @@ public class AskScheduleDate extends AppCompatActivity implements View.OnClickLi
                 DatePickerDialog.OnDateSetListener callback_f = new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int y, int m, int d) {
-                        finish_date.setText(y + "/" + m + "/" + d + "/");
+                        finish_date.setText(y + "/" + m + "/" + d );
                     }
                 };
-
                 DatePickerDialog dialog_f = new DatePickerDialog(this, callback_f, year, month, day);
                 dialog_f.show();
                 break;
+
             case R.id.add_user:
                 break;
+
             case R.id.btn_make_sche:
                 Intent intent = new Intent(AskScheduleDate.this, ScheduleForm.class);
                 intent.putExtra("title", title.getText().toString());
                 intent.putExtra("start_date", start_date.getText().toString());
                 intent.putExtra("finish_date", finish_date.getText().toString());
+                intent.putExtra("sche_n", 0);
                 startActivity(intent);
                 break;
         }

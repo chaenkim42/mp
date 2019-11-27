@@ -28,13 +28,11 @@ public class MyPage extends AppCompatActivity implements CompoundButton.OnChecke
         setContentView(R.layout.activity_mypage);
 
         User user = User.getInstance();
-
         name = findViewById(R.id.mypage_username);
+        name.setText(user.getName());
         RadioButton planTap = (RadioButton) findViewById(R.id.mypage_userplan_tap);
         RadioButton prefTap = (RadioButton) findViewById(R.id.mypage_userpref_tap);
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id.mypage_radiogroup);
-
-        name.setText(user.getName());
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
