@@ -43,7 +43,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
-        android:id="@+id/signup_photobox"
+        android:id="@+id/sche_photo"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="32dp"
@@ -60,7 +60,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signup_photobox">
+        app:layout_constraintTop_toBottomOf="@+id/sche_photo">
 
         <TextView
             android:layout_width="58dp"
@@ -152,7 +152,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/add"
+                android:id="@+id/add_user"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:layout_gravity="center"
@@ -163,7 +163,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_make_sche"
         android:layout_width="320dp"
         android:layout_height="40dp"
         android:layout_marginTop="8dp"

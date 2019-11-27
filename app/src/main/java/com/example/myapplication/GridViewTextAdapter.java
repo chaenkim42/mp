@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
+import com.example.myapplication.Database.User;
+
 import static com.example.myapplication.AskPreference.askPref_nextBtn;
 
 public class GridViewTextAdapter extends BaseAdapter implements CompoundButton.OnCheckedChangeListener{
@@ -18,6 +20,7 @@ public class GridViewTextAdapter extends BaseAdapter implements CompoundButton.O
     private int displayWidth; //화면크기
     private int size; //이미지 크기
     private int pad; //패딩
+    public User user = User.getInstance();
 
     public String[] hashtags = {
             "드라이브","해수욕장","미술관","수산물시장","역사탐방",
@@ -90,22 +93,32 @@ public class GridViewTextAdapter extends BaseAdapter implements CompoundButton.O
             buttonView.setBackgroundResource(R.drawable.box_selected);
             buttonView.setTextColor(mContext.getResources().getColor(R.color.white));
             selectedBoolean[Integer.valueOf(buttonView.getId())-100] = 1;
+
+            // user preference 더해줌
+            user.preferences.add(buttonView.getText().toString());
+//            Log.d("preferences: - add ", buttonView.getText().toString());
         }else{
             selectedHash --;
             buttonView.setBackgroundResource(R.drawable.box_unselected);
             buttonView.setTextColor(mContext.getResources().getColor(R.color.black));
             selectedBoolean[Integer.valueOf(buttonView.getId())-100] = 0;
+//            Log.d("preferences: - remove ", buttonView.getText().toString());
+
+            // user preference 빼줌
+            user.preferences.remove(buttonView.getText().toString());
         }
+
         if(selectedHash >=5){
 //            nextBtn.setBackgroundColor(mContext.getResources().getColor(R.color.design_default_color_primary));
         }else{
 //            nextBtn.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
         }
+
         //test 용 코드
-        String s = "";
-        for(int i=0; i< selectedBoolean.length; i++){
-            s+= String.valueOf(selectedBoolean[i]);
-        }
-        Log.e("select",s);
+//        String s = "";
+//        for(int i=0; i< selectedBoolean.length; i++){
+//            s+= String.valueOf(selectedBoolean[i]);
+//        }
+//        Log.e("select",s);
     }
 }

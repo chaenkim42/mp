@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import static com.example.myapplication.GridViewTextAdapter.selectedHash;
 
 public class AskPreference extends AppCompatActivity implements View.OnClickListener {
-
 //    int selected = 0;
     public static Button askPref_nextBtn;
 

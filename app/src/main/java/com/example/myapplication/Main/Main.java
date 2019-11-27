@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -44,9 +45,9 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     private FragmentTransaction fragmentTransaction;
     private Button searchBtn;
     private Button mytripBtn;
+    private TextView name;
     private ImageButton addScheBtn;
     private ImageView profile;
-    public User user;
 
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
@@ -75,6 +76,10 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
 
+        User user = User.getInstance();
+        name = findViewById(R.id.main_username_txt);
+        name.setText(user.getName());
+
         searchBtn = findViewById(R.id.main_search_btn);
         mytripBtn = findViewById(R.id.main_mytrip_btn);
         addScheBtn = findViewById(R.id.main_addSche_btn);
@@ -91,9 +96,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         ((LinearLayoutManager) layoutManager).setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.scrollToPosition(samples.size()-1);
-
-
-
 
         try{
             user.getSchedules();
@@ -124,32 +126,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
         }
     }
-//    private void getAppKeyHash() {
-//        try {
-//            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNING_CERTIFICATES);
-//            //Log.e("Hash key", info.signingInfo.getApkContentsSigners());
-//            Signature[] signatures = info.signingInfo.getApkContentsSigners();
-//            MessageDigest md = MessageDigest.getInstance("SHA");
-//            for(Signature signature:signatures){
-//                md.update(signature.toByteArray());
-//                final String signatureBase64 = new String(Base64.encode(md.digest(),Base64.DEFAULT));
-//                Log.d("Signature Base 64", signatureBase64);
-//            }
-//            /*for (Signature signature : info.signingInfo.getApkContentsSigners()) {
-//                MessageDigest md;
-//                md = MessageDigest.getInstance("SHA");
-//                md.update(signature.toByteArray());
-//                String something = new String(Base64.encode(md.digest(), 0));
-//                Log.e("Hash key", something);
-//                System.out.println(something);
-//                System.out.println(something);
-//            }*/
-//        } catch (Exception e) {
-//            // TODO Auto-generated catch block
-//            Log.e("name not found", e.toString());
-//        }
-//    }
-
     //뒤로가기 버튼
     @Override
     public void onBackPressed() {
@@ -178,7 +154,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 startActivity(new Intent(Main.this, MyPage.class));
                 break;
             case R.id.main_addSche_btn:
-                startActivity(new Intent(Main.this, ScheduleForm.class));
+                startActivity(new Intent(Main.this, AskScheduleDate.class));
                 break;
         }
     }

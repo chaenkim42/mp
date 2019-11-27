@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,13 +12,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.myapplication.Database.User;
 import com.example.myapplication.R;
 
 public class MyPage extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
+    TextView name;
     public final static int FRAGMENT1 = 1;
     public final static int FRAGMENT2 = 2;
-    FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
 
     @Override
@@ -25,10 +27,12 @@ public class MyPage extends AppCompatActivity implements CompoundButton.OnChecke
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mypage);
 
+        User user = User.getInstance();
+        name = findViewById(R.id.mypage_username);
+        name.setText(user.getName());
         RadioButton planTap = (RadioButton) findViewById(R.id.mypage_userplan_tap);
         RadioButton prefTap = (RadioButton) findViewById(R.id.mypage_userpref_tap);
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id.mypage_radiogroup);
-//        ConstraintLayout container = (ConstraintLayout) findViewById(R.id.mypage_container);
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -43,18 +47,9 @@ public class MyPage extends AppCompatActivity implements CompoundButton.OnChecke
         prefTap.setOnCheckedChangeListener(this);
 
         radioGroup.check(R.id.mypage_userplan_tap);
-//        planTap.setBackgroundResource(R.drawable.tap1_last_plans);
-//        prefTap.setBackgroundResource(R.drawable.tap2_prefer_activity);
 
         //초반 화면은 지난 일정 표시.
         callFragment(FRAGMENT1);
-//        fragmentManager = getSupportFragmentManager();
-//        fragmentTransaction = fragmentManager.beginTransaction();
-//        Fragment fragment1 = new MyPagePlansFragment();
-//        fragmentTransaction.add(R.id.mypage_container, fragment1);
-//        fragmentTransaction.commit();
-
-
     }
 
     private void callFragment(int fragmentId) {

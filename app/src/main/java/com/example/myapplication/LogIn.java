@@ -31,13 +31,11 @@ import java.util.Iterator;
 import java.util.StringTokenizer;
 
 
-public class LogIn extends AppCompatActivity {
+public class LogIn extends AppCompatActivity implements View.OnClickListener {
     DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference user_ref = myRef.child("user");
     EditText email_field;
     EditText password_field;
-    HashMap<String, String> s;
-    public User user;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,50 +43,11 @@ public class LogIn extends AppCompatActivity {
         setContentView(R.layout.activity_askaccount);
 
         Button login = findViewById(R.id.btn_login);
-        Button checking = findViewById(R.id.btn_print);
         email_field = findViewById(R.id.field_email);
         password_field = findViewById(R.id.field_password);
-
-       s = new HashMap<>();
-
-        user_ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                Iterator<DataSnapshot> child = dataSnapshot.getChildren().iterator();
-
-                while(child.hasNext()){
-                    DataSnapshot temp = child.next(); //각각의 유저 객체
-
-                    // 파싱
-                    StringTokenizer tk = new StringTokenizer(temp.getValue().toString(), ", ");
-                    String[] arr = new String[5];
-                    int i=0;
-                    while(tk.hasMoreTokens()){
-                        String[] dummy = tk.nextToken().split("=");
-                        arr[i] = dummy[1];
-                        i++;
-                    }
-                    arr[4] = arr[4].substring(0, arr[4].length()-1);
-
-                    //유저 객체 생성
-                    // !! 스케줄을 null로 넣을게 아니라 다음에 어떻게 들고오는지 봐야됨 !!
-                    user = User.getInstance();
-                    user.setData(Integer.parseInt(arr[0]), arr[1], arr[2], arr[3], arr[4], null);
-
-                    // set 이용해서 회원가입 진행
-                    s.put(arr[4], arr[0]);
-//                    Log.d("e: ", arr[4]);
-//                    Log.d("p: ", arr[0]);
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+        email_field.setOnClickListener(this);
+        password_field.setOnClickListener(this);
+        login.setOnClickListener(this);
 
 
     }
@@ -96,22 +55,56 @@ public class LogIn extends AppCompatActivity {
     public void onClick(View view){
         switch (view.getId()){
             case R.id.btn_login:
-                String given_email = email_field.getText().toString();
-                String given_password = password_field.getText().toString();
+                final String given_email = email_field.getText().toString();
+                final String given_password = password_field.getText().toString();
 
-                if(s.keySet().contains(given_email)){
-                    if(s.get(given_email).equals(given_password)){
+                        user_ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                Iterator<DataSnapshot> child = dataSnapshot.getChildren().iterator();
+
+                                while(child.hasNext()){
+                                    DataSnapshot temp = child.next(); //각각의 유저 객체
+
+                                    if(temp.child("email").getValue().toString().equals(given_email)){
+                                        if(temp.child("password").getValue().toString().equals(given_password)){
+                                            // 유저 정한다
+                                            User user = User.getInstance();
+                                            temp.child("age").getValue();
+
+                                            user.setU_id(temp.getKey());
+                                            user.setData(Integer.parseInt(temp.child("age").getValue().toString()), given_email,
+                                                    temp.child("name").getValue().toString(), given_password, temp.child("sex").getValue().toString());
+                                            Log.d("name: ", user.getName());
+                                            Iterator<DataSnapshot> pref_iterator = temp.child("preferences").getChildren().iterator();
+                                            while(pref_iterator.hasNext()){
+                                                user.setPreferences(pref_iterator.next().getValue().toString()); // 아이터레이터로 받기!!
+                                            }
+
+                                        }
+                                    }
+
+                                }
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
                         startActivity(new Intent(getApplicationContext(), Main.class));
-                    }
-                }else{
-                    Log.d("error: ", "noooo");
-                }
-
                 break;
 
             case R.id.btn_ask_sign_up:
                 Intent intent = new Intent(LogIn.this, SignUp.class);
                 startActivity(intent);
+                break;
+            case R.id.field_email:
+                email_field.setText("");
+                break;
+            case R.id.field_password:
+                password_field.setText("");
+                break;
         }
     }
 }

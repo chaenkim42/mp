@@ -89,6 +89,7 @@
             android:checked="false"
             android:textColor="#efefef"
             android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
@@ -99,6 +100,7 @@
             android:text="비밀번호 찾기"
             android:textColor="#efefef"
             android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
@@ -109,6 +111,7 @@
             android:text="자동로그인"
             android:textColor="#efefef"
             android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/checkBox" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -140,13 +143,6 @@
             android:layout_height="40dp"
             android:background="@drawable/btn_signup"
             android:text=" " />
-
-        <Button
-            android:id="@+id/btn_print"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="onClick"
-            android:text="print" />
 
 
     </LinearLayout>
