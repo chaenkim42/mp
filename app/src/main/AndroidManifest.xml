@@ -15,14 +15,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Schedule.MyDiaryEditPage">
+        <activity android:name=".Search.AddToList">
         </activity>
-        <activity android:name=".Schedule.MyDiaryPage">
-        </activity>
-        <activity android:name=".Schedule.ScheduleForm" >
-        </activity>
-        <activity android:name=".Search.SearchMap" >
-
+        <activity android:name=".Search.SearchFilter"></activity>
+        <activity android:name=".Schedule.MyDiaryEditPage" />
+        <activity android:name=".Schedule.MyDiaryPage" />
+        <activity android:name=".Schedule.ScheduleForm" />
+        <activity android:name=".Search.SearchMap">
         </activity>
         <activity android:name=".AskPreference" />
         <activity android:name=".AskLocation">
@@ -30,11 +29,10 @@
         </activity>
         <activity android:name=".Search.SearchPage" />
         <activity android:name=".Splash" >
-
         </activity>
         <activity android:name=".Main.Main" >
-
         </activity>
+<<<<<<< Updated upstream
         <activity android:name=".Main.MyPage" >
 
         </activity>
@@ -42,8 +40,20 @@
 
         </activity>
         <activity android:name=".LogIn">
+=======
+        <activity android:name=".Main.MyPage" />
+        <activity android:name=".Schedule.AskScheduleDate" />
+        <activity android:name=".LogIn" >
+        </activity>
+        <activity android:name=".SignUp" >
+        </activity>
+        <activity android:name=".Schedule.MyDiary">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+>>>>>>> Stashed changes
 
         </activity>
+<<<<<<< Updated upstream
         <activity android:name=".SignUp">
 
         </activity>
@@ -54,6 +64,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+=======
+>>>>>>> Stashed changes
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

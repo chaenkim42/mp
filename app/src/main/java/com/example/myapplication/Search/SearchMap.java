@@ -125,12 +125,12 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
 
 
         checkBoolean = SearchFilter.getCheckBoolean();
-        Log.d("filter test map", String.valueOf(checkBoolean[0])+","+
-                String.valueOf(checkBoolean[1])+ ","+
-                String.valueOf(checkBoolean[2])+ ","+
-                String.valueOf(checkBoolean[3])+ ","+
-                String.valueOf(checkBoolean[4])+ ","+
-                String.valueOf(checkBoolean[5]));
+//        Log.d("filter test map", String.valueOf(checkBoolean[0])+","+
+//                String.valueOf(checkBoolean[1])+ ","+
+//                String.valueOf(checkBoolean[2])+ ","+
+//                String.valueOf(checkBoolean[3])+ ","+
+//                String.valueOf(checkBoolean[4])+ ","+
+//                String.valueOf(checkBoolean[5]));
 
         gps_btn = findViewById(R.id.gps_btn);
         tjBtn = findViewById(R.id.serachmap_tjBtn);
@@ -261,6 +261,7 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
                     fragmentTransaction.commit();
                     mapView.removeAllPOIItems();
                     if(input.length() != 0 || filterChecked){
+                        searchResult.clear();
                         for(int i=0; i<allPlace.size(); i++){
                             if(allPlace.get(i).getName().contains(input)){
                                 searchResult.add(allPlace.get(i));
@@ -281,53 +282,6 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
                 return false;
             }
         });
-
-
-//        String string = myRef.child("fields");
-//        Log.d("ref test", String.valueOf(fieldRef.getDatabase()));
-
-
-
-//        for(int i=11; i<25; i++) {
-//            final DatabaseReference fieldRef = myRef.child("records").child(String.valueOf(i));
-//            final int finalI = i-11;
-//            fieldRef.addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                    // 마커 추가
-//                    MapPOIItem marker = new MapPOIItem();
-//                    marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
-//                    marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
-//                    Object name = (String) dataSnapshot.child("거리명").getValue();
-//                    Object lat = dataSnapshot.child("위도").getValue();
-//                    Object lon = dataSnapshot.child("경도").getValue();
-//                    Object address = dataSnapshot.child("소재지도로명").getValue();
-//                    Object tel = dataSnapshot.child("관리기관전화번호").getValue();
-//                    Place place = new Place(name.toString(), Double.parseDouble(lat.toString()),
-//                            Double.parseDouble(lon.toString()), address.toString(), tel.toString());
-//
-//                    places.set(finalI, place);
-//                    marker.setItemName(name.toString());
-//                    marker.setMapPoint(MapPoint.mapPointWithGeoCoord(Double.parseDouble(lat.toString()), Double.parseDouble(lon.toString())));
-//                    marker.setTag(finalI);
-//                    mapView.addPOIItem(marker);
-//                    Log.d("get settag", name + "," + String.valueOf(finalI));
-//
-////                    poiData.add(0, name.toString());
-////                    poiData.add(1, lat.toString());
-////                    poiData.add(2, lon.toString());
-////                    poiData.add(3, address.toString());
-////                    poiData.add(4, tel.toString());
-////                Log.d("ref test", value.toString());
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                }
-//            });
-//        }
-
 
 
         mapView.setPOIItemEventListener(this);
@@ -375,6 +329,7 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
                 fragmentTransaction.commit();
                 mapView.removeAllPOIItems();
                 String input = String.valueOf(searchBox.getText());
+                searchResult.clear();
                 if(input.length() != 0 || filterChecked) {
                     for (int i = 0; i < allPlace.size(); i++) {
                         if (allPlace.get(i).getName().contains(input)) {
@@ -429,7 +384,6 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
                         "관광지");
                 placeList.add(place);
                 placeList1.add(place);
-//                Log.d("sqlite PLACE LIST", String.valueOf(place.getName()));
             }
             InputStream is2 = getAssets().open("전국박물관미술관정보표준데이터.json");
             int size2 = is2.available();
@@ -449,7 +403,6 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
                         "전시관람");
                 placeList.add(place);
                 placeList2.add(place);
-                Log.d("sqlite PLACE LIST", String.valueOf(place.getName()));
             }
             InputStream is6 = getAssets().open("전국야영(캠핑)장표준데이터.json");
             int size6 = is6.available();
@@ -469,7 +422,6 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
                         "캠핑");
                 placeList.add(place);
                 placeList4.add(place);
-                Log.d("sqlite PLACE LIST", String.valueOf(place.getName()));
             }
             InputStream is3 = getAssets().open("전국휴양림표준데이터.json");
             int size3 = is3.available();
@@ -489,7 +441,6 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
                         "자연휴양");
                 placeList.add(place);
                 placeList3.add(place);
-                Log.d("sqlite PLACE LIST", String.valueOf(place.getName()));
             }
             InputStream is4 = getAssets().open("전국향토문화유적표준데이터.json");
             int size4 = is4.available();
@@ -509,7 +460,6 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
                         "역사유적");
                 placeList.add(place);
                 placeList5.add(place);
-                Log.d("sqlite PLACE LIST", String.valueOf(place.getName()));
             }
             InputStream is5 = getAssets().open("전국지역특화거리표준데이터.json");
             int size5 = is5.available();
@@ -530,7 +480,6 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
                             "지역특화거리");
                     placeList.add(place);
                     placeList6.add(place);
-                    Log.d("sqlite PLACE LIST", String.valueOf(place.getName()));
                 }
             }
 //            Log.d("sqlite JSONObject ", String.valueOf(obj));
