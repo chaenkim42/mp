@@ -5,7 +5,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.graphics.Point;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -22,6 +21,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.myapplication.Database.User;
 import com.example.myapplication.LogIn;
 import com.example.myapplication.R;
@@ -30,10 +30,13 @@ import com.example.myapplication.Schedule.MyData;
 import com.example.myapplication.Schedule.ScheduleAdapter;
 import com.example.myapplication.Schedule.ScheduleForm;
 import com.example.myapplication.Search.SearchMap;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+
 
 
 public class Main extends AppCompatActivity implements View.OnClickListener {
@@ -66,25 +69,30 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         double width = size.x;
         double height = size.y;
 
-        Log.e("size", String.valueOf(width));
-        Log.e("size", String.valueOf(height));
-
-
         //뒤로가기
         backPress = new BackPressCloseHandler(this);
 
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
 
-        User user = User.getInstance();
         name = findViewById(R.id.main_username_txt);
-        name.setText(user.getName());
-
         searchBtn = findViewById(R.id.main_search_btn);
         mytripBtn = findViewById(R.id.main_mytrip_btn);
         addScheBtn = findViewById(R.id.main_addSche_btn);
         profile = findViewById(R.id.main_profile_img_btn);
         recyclerView = findViewById(R.id.recyclerView);
+
+        User user = User.getInstance();
+        name.setText(user.getName());
+//        Log.d("main u_id ", user.u_id);
+
+//        gs://test-mp0731.appspot.com/-LuktFbngNsrzFDL1QIL/user_img
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+//        StorageReference temp_ref = storageRef.child("-LuktFbngNsrzFDL1QIL/user_img.jpg");
+        Glide.with(this /* context */)
+                .load("gs://test-mp0731.appspot.com/-LuktFbngNsrzFDL1QIL/user_img")
+                .into(profile);
+//        profile.setImageBitmap(user.getUser_image());
 
         searchBtn.setOnClickListener(this);
         mytripBtn.setOnClickListener(this);

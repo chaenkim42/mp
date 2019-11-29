@@ -107,11 +107,11 @@ class GridViewImageAdapter extends BaseAdapter implements CompoundButton.OnCheck
 //            buttonView.setTextColor(mContext.getResources().getColor(R.color.colorAccent));
             selectedBoolean[Integer.valueOf(buttonView.getId())-200] = 1;
             Log.d("clicked: ", placeName[Integer.valueOf(buttonView.getId())-200]);
-            user.locations.add( placeName[Integer.valueOf(buttonView.getId())-200]);
+            user.getLocations().add( placeName[Integer.valueOf(buttonView.getId())-200]);
         }else{
 //            buttonView.setTextColor(mContext.getResources().getColor(R.color.white));
             selectedBoolean[Integer.valueOf(buttonView.getId())-200] = 0;
-            user.locations.remove( placeName[Integer.valueOf(buttonView.getId())-200]);
+            user.getLocations().remove( placeName[Integer.valueOf(buttonView.getId())-200]);
         }
 
     }

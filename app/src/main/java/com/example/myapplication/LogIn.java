@@ -3,7 +3,10 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -15,15 +18,29 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.myapplication.Database.User;
 import com.example.myapplication.Main.Main;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -36,6 +53,8 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
     DatabaseReference user_ref = myRef.child("user");
     EditText email_field;
     EditText password_field;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    User user = User.getInstance();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,8 +67,6 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
         email_field.setOnClickListener(this);
         password_field.setOnClickListener(this);
         login.setOnClickListener(this);
-
-
     }
 
     public void onClick(View view){
@@ -68,19 +85,17 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
 
                                     if(temp.child("email").getValue().toString().equals(given_email)){
                                         if(temp.child("password").getValue().toString().equals(given_password)){
-                                            // 유저 정한다
-                                            User user = User.getInstance();
-                                            temp.child("age").getValue();
+
 
                                             user.setU_id(temp.getKey());
-                                            user.setData(Integer.parseInt(temp.child("age").getValue().toString()), given_email,
-                                                    temp.child("name").getValue().toString(), given_password, temp.child("sex").getValue().toString());
-                                            Log.d("name: ", user.getName());
+                                            user.setData(given_email, given_password, temp.child("name").getValue().toString(),
+                                                    Integer.parseInt(temp.child("age").getValue().toString()), temp.child("sex").getValue().toString());
+
                                             Iterator<DataSnapshot> pref_iterator = temp.child("preferences").getChildren().iterator();
                                             while(pref_iterator.hasNext()){
                                                 user.setPreferences(pref_iterator.next().getValue().toString()); // 아이터레이터로 받기!!
                                             }
-
+                                            break;
                                         }
                                     }
 
@@ -92,7 +107,48 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
                             }
                         });
 
-                        startActivity(new Intent(getApplicationContext(), Main.class));
+
+//                    temp_ref.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<Uri> task) {
+//                            try{
+//                                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), task.getResult());
+//                                user.setUser_image(bitmap);
+//                            }catch (Exception e){
+//                                Log.d("bitmap: ", e.getMessage());
+//                            }
+//                        }
+//                    });
+
+
+//                storageRef.child("-LuktFbngNsrzFDL1QIL/user_img").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                    @Override
+//                    public void onSuccess(Uri uri) {
+//                        // Got the download URL for 'users/me/profile.png'
+//                        Bitmap bitmap = null;
+//                        try {
+//                            bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+//                            user.setUser_image(bitmap);
+//                        } catch (FileNotFoundException e) {
+//                            // TODO Auto-generated catch block
+//                            e.printStackTrace();
+//                            Log.d("bitmap: ", e.getMessage());
+//                        } catch (IOException e) {
+//                            // TODO Auto-generated catch block
+//                            e.printStackTrace();
+//                            Log.d("bitmap: ", e.getMessage());
+//                        }
+//                    }
+//                }).addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception exception) {
+//                        // Handle any errors
+//                    }
+//                });
+
+                        Intent i = new Intent(getApplicationContext(), Main.class);
+//                        intent.putExtra("u_id", );
+                        startActivity(i);
                 break;
 
             case R.id.btn_ask_sign_up:
@@ -106,5 +162,31 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
                 password_field.setText("");
                 break;
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            // do your stuff
+        } else {
+            signInAnonymously();
+        }
+    }
+
+    private void signInAnonymously() {
+        mAuth.signInAnonymously().addOnSuccessListener(this, new  OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
+                // do your stuff
+            }
+        })
+                .addOnFailureListener(this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        Log.d("error: ", "exception");
+                    }
+                });
     }
 }
