@@ -3,6 +3,7 @@ package com.example.myapplication.Schedule;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -108,7 +109,7 @@ public class ExpandableListAdapter extends RecyclerView.Adapter implements Place
                 itemController.refferalItem = item; // 지금 가르키는거
                 itemController.header_title.setText(item.title);
                 itemController.header_date.setText(item.subTitle);
-                itemController.saveBtn.setVisibility(View.INVISIBLE);
+//                itemController.saveBtn.setVisibility(View.INVISIBLE);
 
                 if (item.invisibleChildren == null) {
                     itemController.btn_expand_toggle.setImageResource(R.drawable.up_arrow);
@@ -143,25 +144,25 @@ public class ExpandableListAdapter extends RecyclerView.Adapter implements Place
                     }
                 });
 
-                // edit btn 눌렀을때 아이콘 보이기
-                itemController.editBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        // edit btn 안보이게
-                        itemController.editBtn.setVisibility(View.INVISIBLE);
-                        // save btn 보이게
-                        itemController.saveBtn.setVisibility(View.VISIBLE);
-                    }
-                });
-
-                // save btn 눌렀을 때
-                itemController.saveBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        itemController.saveBtn.setVisibility(View.INVISIBLE);
-                        itemController.editBtn.setVisibility(View.VISIBLE);
-                    }
-                });
+//                // edit btn 눌렀을때 아이콘 보이기
+//                itemController.editBtn.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        // edit btn 안보이게
+//                        itemController.editBtn.setVisibility(View.INVISIBLE);
+//                        // save btn 보이게
+//                        itemController.saveBtn.setVisibility(View.VISIBLE);
+//                    }
+//                });
+//
+//                // save btn 눌렀을 때
+//                itemController.saveBtn.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        itemController.saveBtn.setVisibility(View.INVISIBLE);
+//                        itemController.editBtn.setVisibility(View.VISIBLE);
+//                    }
+//                });
                 break;
             case CHILD:
                 final ListChildViewHolder controller = (ListChildViewHolder) holder;
@@ -220,8 +221,6 @@ public class ExpandableListAdapter extends RecyclerView.Adapter implements Place
         public TextView header_date;
         public ConstraintLayout toggleBtn_constraintLayout;
         public ImageView btn_expand_toggle;
-        public Button budgetBtn;
-        public Button editBtn, saveBtn;
         public Item refferalItem;
 
         public ListHeaderViewHolder(View itemView) {
@@ -230,9 +229,6 @@ public class ExpandableListAdapter extends RecyclerView.Adapter implements Place
             header_date = (TextView) itemView.findViewById(R.id.recyclerviewheader_date);
             toggleBtn_constraintLayout = (ConstraintLayout) itemView.findViewById(R.id.recyclerviewheader_toggleBtn_constraintLayout);
             btn_expand_toggle = (ImageView) itemView.findViewById(R.id.recyclerviewheader_btn_expand_toggle);
-            budgetBtn = (Button) itemView.findViewById(R.id.recyclerviewheader_budgetBtn);
-            editBtn = (Button) itemView.findViewById(R.id.recyclerviewheader_editBtn);
-            saveBtn = itemView.findViewById(R.id.recyclerviewheader_saveBtn);
         }
     }
 

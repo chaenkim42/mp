@@ -71,6 +71,8 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
 
     NewPlace newPlace;
 
+    private int overallXScroll = 0;
+
 
     DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
 
@@ -126,7 +128,22 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
         // 장소 리사이클러뷰 ------------------------------------------------------------------
 
         recyclerView = findViewById(R.id.scheduleForm_planRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+//        final LinearLayoutManager manager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+//        recyclerView.setLayoutManager(manager);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL, false));
+
+        //final LinearLayoutManager manager = (LinearLayoutManager)recyclerView.getLayoutManager();
+
+//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+////                overallXScroll = overallXScroll + dy; // 스크롤위치 좌표값
+//
+//                Log.d("scroll test item", String.valueOf(manager.findFirstVisibleItemPosition()));
+//                super.onScrolled(recyclerView, dx, dy);
+//            }
+//        });
 
         List<ExpandableListAdapter.Item> data = new ArrayList<>();
 
@@ -140,12 +157,10 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
                 }
             };
             ExpandableListAdapter expandableListAdapter = new ExpandableListAdapter(data, this, startDragListener);
-            PlaceItemTouchHelperCallback placeItemTouchHelperCallback = new PlaceItemTouchHelperCallback(expandableListAdapter);
-            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(placeItemTouchHelperCallback);
-            itemTouchHelper.attachToRecyclerView(recyclerView);
             expandableListAdapter.setOnItemClickListener(new ExpandableListAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View v, int position) {
+                    Log.d("scroll position", position+"");
                     //position 계산
                     int sumOfSpots = 0;
                     for(int dayCalculating=1; dayCalculating<=thisTrip.getPeriod(); dayCalculating++){
@@ -168,6 +183,11 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
                     }
                 }
             });
+
+
+            PlaceItemTouchHelperCallback placeItemTouchHelperCallback = new PlaceItemTouchHelperCallback(expandableListAdapter);
+            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(placeItemTouchHelperCallback);
+            itemTouchHelper.attachToRecyclerView(recyclerView);
 
 
             Date calculating_date = start_date;
