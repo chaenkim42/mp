@@ -128,22 +128,37 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
         // 장소 리사이클러뷰 ------------------------------------------------------------------
 
         recyclerView = findViewById(R.id.scheduleForm_planRecyclerView);
-//        final LinearLayoutManager manager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-//        recyclerView.setLayoutManager(manager);
+        final LinearLayoutManager manager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        recyclerView.setLayoutManager(manager);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL, false));
+        //recyclerView.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL, false));
 
         //final LinearLayoutManager manager = (LinearLayoutManager)recyclerView.getLayoutManager();
 
-//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-////                overallXScroll = overallXScroll + dy; // 스크롤위치 좌표값
-//
-//                Log.d("scroll test item", String.valueOf(manager.findFirstVisibleItemPosition()));
-//                super.onScrolled(recyclerView, dx, dy);
-//            }
-//        });
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                Log.d("scroll newState", newState+"");
+                int firstVisibleItemPosition = manager.findFirstVisibleItemPosition();
+                Log.d("scroll firstVisible", firstVisibleItemPosition+"");
+                int sumOfSpots = 0;
+                for(int dayCalculating=1; dayCalculating<=thisTrip.getPeriod(); dayCalculating++){
+                    if(dayCalculating==1){
+                        sumOfSpots += (thisTrip.days.get(dayCalculating-1).getSpots().size() + 1);
+                    }else if(dayCalculating>1){
+                        sumOfSpots += (thisTrip.days.get(dayCalculating-1).getSpots().size() + 2);
+                    }
+                    if(firstVisibleItemPosition < sumOfSpots){
+                        //position은 daycalculating 번째 데이(1부터 시작)
+                        setMapPOI(dayCalculating-1);
+                        break;
+                    }
+                }
+            }
+        });
+
 
         List<ExpandableListAdapter.Item> data = new ArrayList<>();
 
@@ -255,7 +270,8 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
 
     public void intentFunc(){
         newPlace = NewPlace.getInstance();
-        newPlace.setSelectedTripName("55");//임시
+        Log.d("newPlace name", newPlace.getSelectedTripName());
+        newPlace.setSelectedTripName("오오");//임시
         if(newPlace.getSelectedTripName() != "tmp") {
             title_str = newPlace.getSelectedTripName();
             DatabaseReference schedulesRef = myRef.child("schedules");
@@ -293,7 +309,6 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
                                 }
                                 i++;
                             }
-                            setMapPOI();
                             setScheduleRecyclerView();
                             break;
                         }
@@ -307,16 +322,15 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
             });
 
         }else{
-            setMapPOI();
             setScheduleRecyclerView();
         }
     }
-    public void setMapPOI(){
+    public void setMapPOI(int dayNum){
         //TODO: 1. 특정 데이인 것 구분 후 아래 기능(지도에 마킹) 들어가야 함,
         //       2. 다중 마커 좀 더 효율적으로
 //        thisTrip.getDay(0).getSpots();//List<Place>
         if(thisTrip.getDays() != null) {
-            Iterator<Place> spots = thisTrip.getDay(0).getSpots().iterator();
+            Iterator<Place> spots = thisTrip.getDay(dayNum).getSpots().iterator();
             Place tmpPlace;
             while (spots.hasNext()) {
                 tmpPlace = spots.next();
@@ -326,7 +340,7 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
                 marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
                 mapView.addPOIItem(marker);
             }
-            if(thisTrip.getDay(0).getSpots().size() > 0) {
+            if(thisTrip.getDay(dayNum).getSpots().size() > 0) {
                 MapPolyline polyline = new MapPolyline();
                 polyline.setTag(1000);
                 polyline.setLineColor(Color.argb(128, 255, 51, 0));
@@ -334,9 +348,9 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
 //                    tmpPlace = spots.next();
 //                }
 
-                for(int j=0; j<thisTrip.getDay(0).getSpots().size(); j++){
-                    polyline.addPoint(MapPoint.mapPointWithGeoCoord(thisTrip.getDay(0).getSpots().get(j).getLatitude(), thisTrip.getDay(0).getSpots().get(j).getLongitude()));
-                    if(j == thisTrip.getDay(0).getSpots().size()-1){
+                for(int j=0; j<thisTrip.getDay(dayNum).getSpots().size(); j++){
+                    polyline.addPoint(MapPoint.mapPointWithGeoCoord(thisTrip.getDay(dayNum).getSpots().get(j).getLatitude(), thisTrip.getDay(dayNum).getSpots().get(j).getLongitude()));
+                    if(j == thisTrip.getDay(dayNum).getSpots().size()-1){
                         mapView.addPolyline(polyline);
                     }
                 }

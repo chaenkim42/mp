@@ -182,19 +182,19 @@ public class ExpandableListAdapter extends RecyclerView.Adapter implements Place
 
                 break;
             case EMPTY_CHILD:
-                final ListEmptyChildViewHolder emptychild_controller = (ListEmptyChildViewHolder) holder;
-                emptychild_controller.text_constraintLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mListener.addBtnClickedInAdapter(true);
-                    }
-                });
-                emptychild_controller.plusCircle.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mListener.addBtnClickedInAdapter(true);
-                    }
-                });
+//                final ListEmptyChildViewHolder emptychild_controller = (ListEmptyChildViewHolder) holder;
+//                emptychild_controller.text_constraintLayout.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        mListener.addBtnClickedInAdapter(true);
+//                    }
+//                });
+//                emptychild_controller.plusCircle.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        mListener.addBtnClickedInAdapter(true);
+//                    }
+//                });
                 break;
         }
     }

@@ -124,7 +124,7 @@ public class AskScheduleDate extends AppCompatActivity implements View.OnClickLi
     //                intent.putExtra("sche_n", 0);
                     Date startDate = new SimpleDateFormat("yyyy/MM/dd").parse(String.valueOf(start_date.getText()));
                     Date endDate  =new SimpleDateFormat("yyyy/MM/dd").parse(String.valueOf(finish_date.getText()));
-                    int period = (int)(endDate.getTime() - startDate.getTime())/(24*60*60*1000)+1;
+                    int period = (int)(startDate.getTime() - endDate.getTime())/(24*60*60*1000)+1;
                     ScheduleDb tmp = new ScheduleDb(title.getText().toString(),
                                                      String.valueOf(start_date.getText()),
                                                     String.valueOf(finish_date.getText()),
