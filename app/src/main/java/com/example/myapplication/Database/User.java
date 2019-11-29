@@ -1,5 +1,6 @@
 package com.example.myapplication.Database;
 
+import android.graphics.Bitmap;
 import android.location.Location;
 
 import java.lang.reflect.Array;
@@ -9,83 +10,85 @@ public class User {
     private static User user = null;
 
     public String u_id;
-    public String email;
-    public String password;
-    public String name;
-    public String sex;
-    public int age;
-    public ArrayList<String>  schedules_id = new ArrayList<>();
-    public ArrayList<String>  preferences = new ArrayList<>();
-    public ArrayList<String>  locations = new ArrayList<>();
+    private String email;
+    private String password;
+    private String name;
+    private String sex;
+    private int age;
+    private ArrayList<String>  schedules_id = new ArrayList<>();
+    private ArrayList<String>  preferences = new ArrayList<>();
+    private ArrayList<String>  locations = new ArrayList<>();
+    private Bitmap user_image= null;
 
-    private User(){}
-//    private User(int age, String email, String name, String password, String sex, ArrayList<String> schedule_id){
-//        schedules = new ArrayList<>();
-//        // 스케줄 아이디에 따라서 스케줄을 넣어준다
-//
-//        this.email = email;
-//        this.password = password;
-//        this.name = name;
-//        this.sex = sex;
-//        this.age = age;
-//    }
+    private User(){
 
-    public static User getInstance(){
-        if(user==null){
-            user = new User();
-        }
-        return user;
     }
 
-    public void setData(int age, String email, String name, String password, String sex){
-        this.u_id = u_id;
-        this.email = email;
-        this.password = password;
-        this.name = name;
-        this.sex = sex;
-        this.age = age;
+    private static class LazyHolder {
+        public static final User user = new User();
+    }
+    public static User getInstance() {
+        return LazyHolder.user;
+    }
 
+    public void setData(String email, String password, String name, int age, String sex){
+                this.email = email;
+                this.password = password;
+                this.name = name;
+                this.age = age;
+                this.sex = sex;
+//                this.u_id = u_id;
+    }
+
+    public void setUser_image(Bitmap img){
+        this.user_image = img;
     }
 
     public void setLocations(ArrayList<String> locations_id){
         //로케이션 아이디로 받아오는 코드
     }
     public void setPreferences(String preference){
-        user.preferences.add(preference);
+        this.preferences.add(preference);
     }
-    public String getU_id(){ return user.u_id;}
+    public String getU_id(){ return this.u_id;}
 
     public String getEmail(){
-        return user.email;
+        return this.email;
     }
 
     public String getPassword(){
-        return user.password;
+        return this.password;
     }
 
     public String getName(){
-        return user.name;
+        return this.name;
     }
 
     public int getAge(){
-        return user.age;
+        return this.age;
     }
 
     public String getSex(){
-        return user.sex;
+        return this.sex;
     }
 
     public ArrayList<String> getSchedules(){
-        return user.schedules_id;
+        return this.schedules_id;
     }
 
     public ArrayList<String> getPreferences(){
-        return user.preferences;
+        return this.preferences;
     }
 
     public ArrayList<String> getLocations(){
-        return user.locations;
+        return this.locations;
     }
 
-    public void setU_id(String key){ user.u_id = key;}
+    public Bitmap getUser_image(){return this.user_image;}
+
+    public void setU_id(String key){ this.u_id = key;}
+
+    public void getUserInfo(){
+        System.out.println(this.email+" , "+this.password+" , "+this.name);
+    }
 }

@@ -95,7 +95,7 @@ public class GridViewTextAdapter extends BaseAdapter implements CompoundButton.O
             selectedBoolean[Integer.valueOf(buttonView.getId())-100] = 1;
 
             // user preference 더해줌
-            user.preferences.add(buttonView.getText().toString());
+            user.getPreferences().add(buttonView.getText().toString());
 //            Log.d("preferences: - add ", buttonView.getText().toString());
         }else{
             selectedHash --;
@@ -105,7 +105,7 @@ public class GridViewTextAdapter extends BaseAdapter implements CompoundButton.O
 //            Log.d("preferences: - remove ", buttonView.getText().toString());
 
             // user preference 빼줌
-            user.preferences.remove(buttonView.getText().toString());
+            user.getPreferences().remove(buttonView.getText().toString());
         }
 
         if(selectedHash >=5){

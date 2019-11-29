@@ -1,7 +1,9 @@
 package com.example.myapplication.Main;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -18,6 +20,7 @@ import com.example.myapplication.R;
 public class MyPage extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
     TextView name;
+    ImageView user_img;
     public final static int FRAGMENT1 = 1;
     public final static int FRAGMENT2 = 2;
     FragmentTransaction fragmentTransaction;
@@ -29,7 +32,10 @@ public class MyPage extends AppCompatActivity implements CompoundButton.OnChecke
 
         User user = User.getInstance();
         name = findViewById(R.id.mypage_username);
+        user_img = findViewById(R.id.mypage_profileImg);
         name.setText(user.getName());
+        user_img.setImageBitmap(user.getUser_image());
+
         RadioButton planTap = (RadioButton) findViewById(R.id.mypage_userplan_tap);
         RadioButton prefTap = (RadioButton) findViewById(R.id.mypage_userpref_tap);
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id.mypage_radiogroup);

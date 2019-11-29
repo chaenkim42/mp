@@ -21,16 +21,37 @@ public class MyDiary_Adapter extends RecyclerView.Adapter {
     Context context;
     public TextView title, contents_text;
     public ImageView rep_photo;
+    private ItemClick itemClick;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(View view){
             super(view);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int pos = getAdapterPosition();
+                    if(pos!=RecyclerView.NO_POSITION){
+                        if(itemClick!=null){
+                            itemClick.onClick(view, pos);
+                        }
+                    }
+                }
+            });
         }
     }
 
     public MyDiary_Adapter(List<Diary> diaryList, Context context){
         this.diaryList = diaryList;
         this.context = context;
+    }
+
+    public interface ItemClick{
+        public void onClick(View view, int position);
+    }
+
+    public void setItemClick(ItemClick itemClick){
+        this.itemClick = itemClick;
     }
 
 

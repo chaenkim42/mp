@@ -81,7 +81,7 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
                     }
 
                     //유저한테도 더해준다
-                    user.schedules_id.add(schedule.getKey());
+                    user.getSchedules().add(schedule.getKey());
                     Log.d("sche key: ", schedule.getKey());
 
                 }else{ //저장 -> 편집

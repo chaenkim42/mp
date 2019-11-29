@@ -1,7 +1,10 @@
 package com.example.myapplication.Schedule;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
@@ -18,12 +21,18 @@ import com.example.myapplication.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyDiary extends AppCompatActivity {
+public class MyDiary extends AppCompatActivity implements View.OnClickListener {
+    ImageButton add_diary;
+    ImageButton edit_diary;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mydiary);
+        add_diary = findViewById(R.id.mydiary_btn_add);
+        edit_diary = findViewById(R.id.mydiary_btn_edit);
+        add_diary.setOnClickListener(this);
+        edit_diary.setOnClickListener(this);
 
         List<Diary> tmpDiaryList = new ArrayList<>();
         List<String> emptyString = new ArrayList<>();
@@ -43,8 +52,29 @@ public class MyDiary extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.mydiary_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager( this, RecyclerView.VERTICAL, false));
-        recyclerView.setAdapter(new MyDiary_Adapter( tmpDiaryList,this));
+        MyDiary_Adapter adapter = new MyDiary_Adapter( tmpDiaryList,this);
+        recyclerView.setAdapter(adapter);
+
+        adapter.setItemClick(new MyDiary_Adapter.ItemClick() {
+            @Override
+            public void onClick(View view, int position) {
+                startActivity(new Intent(MyDiary.this, MyDiaryPage.class));
+            }
+        });
 
 
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.mydiary_btn_add:
+                startActivity(new Intent(MyDiary.this, MyDiaryEditPage.class));
+                break;
+            case R.id.mydiary_btn_edit:
+                // 삭제할수있는게 뜸
+                break;
+        }
     }
 }
