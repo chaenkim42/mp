@@ -53,7 +53,7 @@ import java.util.List;
 
 //TODO: 스크롤 될 때 목록 자동 접고 펴기
 //TODO: Place 실제 위, 경도 값 받아서 타임라인 표시
-public class ScheduleForm extends AppCompatActivity implements ExpandableListAdapter.OnStartDragListener, View.OnClickListener {
+public class ScheduleForm extends AppCompatActivity implements ExpandableListAdapter.OnAdapterInteractionListener,ExpandableListAdapter.OnStartDragListener, View.OnClickListener {
     private RecyclerView recyclerView;
     String title_str, start_str, finish_str;
     Date start_date, finish_date;
@@ -140,6 +140,9 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
                 }
             };
             ExpandableListAdapter expandableListAdapter = new ExpandableListAdapter(data, this, startDragListener);
+            PlaceItemTouchHelperCallback placeItemTouchHelperCallback = new PlaceItemTouchHelperCallback(expandableListAdapter);
+            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(placeItemTouchHelperCallback);
+            itemTouchHelper.attachToRecyclerView(recyclerView);
             expandableListAdapter.setOnItemClickListener(new ExpandableListAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View v, int position) {
@@ -165,9 +168,7 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
                     }
                 }
             });
-            PlaceItemTouchHelperCallback placeItemTouchHelperCallback = new PlaceItemTouchHelperCallback(expandableListAdapter);
-            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(placeItemTouchHelperCallback);
-            itemTouchHelper.attachToRecyclerView(recyclerView);
+
 
             Date calculating_date = start_date;
             for(int i=0; i<thisTrip.getPeriod(); i++){
@@ -436,5 +437,8 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
     }
 
 
+    @Override
+    public void addBtnClickedInAdapter(boolean isClicked) {
 
+    }
 }

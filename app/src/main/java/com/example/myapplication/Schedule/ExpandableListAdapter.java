@@ -42,11 +42,16 @@ public class ExpandableListAdapter extends RecyclerView.Adapter implements Place
     }
 
     private final OnStartDragListener startDragListener;
+    private OnAdapterInteractionListener mListener;
+
+    public interface OnAdapterInteractionListener{
+        void addBtnClickedInAdapter(boolean isClicked);
+    }
 
 
     public ExpandableListAdapter(List<Item> data, Context context, OnStartDragListener onStartDragListener){
         this.data = data;
-//        mListener = (OnAdapterInteractionListener) context;
+        mListener = (OnAdapterInteractionListener) context;
         startDragListener = onStartDragListener;
     }
 
@@ -56,10 +61,10 @@ public class ExpandableListAdapter extends RecyclerView.Adapter implements Place
         void onItemClick(View v, int position);
     }
 
-    private OnItemClickListener mListener = null;
+    private OnItemClickListener mmListener = null;
 
     public void setOnItemClickListener(OnItemClickListener listener){
-        this.mListener = listener;
+        this.mmListener = listener;
     }
 
     @NonNull
@@ -177,6 +182,18 @@ public class ExpandableListAdapter extends RecyclerView.Adapter implements Place
                 break;
             case EMPTY_CHILD:
                 final ListEmptyChildViewHolder emptychild_controller = (ListEmptyChildViewHolder) holder;
+                emptychild_controller.text_constraintLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mListener.addBtnClickedInAdapter(true);
+                    }
+                });
+                emptychild_controller.plusCircle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mListener.addBtnClickedInAdapter(true);
+                    }
+                });
                 break;
         }
     }
@@ -251,8 +268,8 @@ public class ExpandableListAdapter extends RecyclerView.Adapter implements Place
                 public void onClick(View v) {
                     int pos = getAdapterPosition();
                     if(pos != RecyclerView.NO_POSITION){
-                        if(mListener != null){
-                            mListener.onItemClick(v,pos);
+                        if(mmListener != null){
+                            mmListener.onItemClick(v,pos);
                         }
                     }
                 }
