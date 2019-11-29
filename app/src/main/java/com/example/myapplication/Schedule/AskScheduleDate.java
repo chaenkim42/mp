@@ -46,10 +46,10 @@ public class AskScheduleDate extends AppCompatActivity implements View.OnClickLi
     Button add_btn, btn_make_sche;
     int dateID;
     int year, month, day;
+    User user = User.getInstance();
 
     DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
     InputMethodManager imm;
-
 
 
     @Override
@@ -129,7 +129,7 @@ public class AskScheduleDate extends AppCompatActivity implements View.OnClickLi
                                                      String.valueOf(start_date.getText()),
                                                     String.valueOf(finish_date.getText()),
                                                     period,
-                                                    UserDb.getInstance());
+                                                    user.getU_id());
                     DatabaseReference schedulesRef = myRef.child("schedules");
                     DatabaseReference thisScheduleRef = schedulesRef.push();
                     thisScheduleRef.setValue(tmp);
