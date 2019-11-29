@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.Database.Day;
 import com.example.myapplication.Database.DayDb;
+import com.example.myapplication.Database.NewPlace;
 import com.example.myapplication.Database.Place;
 import com.example.myapplication.Database.ScheduleDb;
 import com.example.myapplication.Database.User;
@@ -118,7 +119,6 @@ public class AskScheduleDate extends AppCompatActivity implements View.OnClickLi
             case R.id.btn_make_sche:
                 try {
                     Intent intent = new Intent(AskScheduleDate.this, ScheduleForm.class);
-                    intent.putExtra("title", title.getText().toString());
     //                intent.putExtra("start_date", start_date.getText().toString());
     //                intent.putExtra("finish_date", finish_date.getText().toString());
     //                intent.putExtra("sche_n", 0);
@@ -135,21 +135,12 @@ public class AskScheduleDate extends AppCompatActivity implements View.OnClickLi
                     thisScheduleRef.setValue(tmp);
                     DatabaseReference scheduleDaysRef = thisScheduleRef.child("days");
                     for(int i=0; i<period; i++){
-                        ArrayList<Place> places = new ArrayList<Place>();
-                        Place place1 = new Place("여수세계박람회 크루즈공원",34.753264, 127.754638);
-                        Place place2 = new Place("한화아쿠아플라넷 여수", 34.746487, 127.748342);
-                        Place place3 = new Place("오동도 유람선터미널", 34.740861, 127.755591);
-                        places.add(place1);
-                        places.add(place2);
-                        places.add(place3);
                         DayDb day = new DayDb(i+1);
                         DatabaseReference dayRef = scheduleDaysRef.push();
                         dayRef.setValue(day);
-                        DatabaseReference spotsRef = dayRef.child("spots");
-                        spotsRef.push().setValue(place1);
-                        spotsRef.push().setValue(place2);
-                        spotsRef.push().setValue(place3);
                     }
+                    NewPlace newPlace = NewPlace.getInstance();
+                    newPlace.setSelectedTripName(title.getText().toString());
                     startActivity(intent);
                 } catch (ParseException e) {
                     e.printStackTrace();

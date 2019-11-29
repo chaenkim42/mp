@@ -83,16 +83,6 @@ public class ExpandableListAdapter extends RecyclerView.Adapter implements Place
                 ListChildViewHolder child = new ListChildViewHolder(view);
 
                 return child;
-            // CHILD 인 경우에는 TextView만 생성
-//                TextView itemTextView = new TextView(context);
-//                itemTextView.setPadding(subItemPaddingLeft, subItemPaddingTopAndBottom, 0, subItemPaddingTopAndBottom);
-//                itemTextView.setTextColor(0x88000000);
-//                itemTextView.setLayoutParams(
-//                        new ViewGroup.LayoutParams(
-//                                ViewGroup.LayoutParams.MATCH_PARENT,
-//                                ViewGroup.LayoutParams.WRAP_CONTENT));
-//                return new RecyclerView.ViewHolder(itemTextView) {
-//                };
             case EMPTY_CHILD:
                 inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 view = inflater.inflate(R.layout.scheduleform_recyclerview_empty_child, parent, false);

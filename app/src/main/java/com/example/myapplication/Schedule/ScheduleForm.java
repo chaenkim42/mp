@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.service.autofill.Dataset;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.Database.Day;
+import com.example.myapplication.Database.NewPlace;
 import com.example.myapplication.Database.Place;
 import com.example.myapplication.Database.Trip;
 import com.example.myapplication.Database.User;
@@ -67,15 +69,7 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
     public static MapView mapView;
 //    private MapPoint mapPoint;
 
-    static int selectedDay=-1;
-    static String tripName = "";
-
-    public static int getSelectedDay(){
-        return selectedDay;
-    }
-    public static String getTripName(){
-        return tripName;
-    }
+    NewPlace newPlace;
 
 
     DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
@@ -93,8 +87,14 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
         btn_diary.setOnClickListener(this);
         btn_save.setOnClickListener(this);
 
+        // 맵 생성
+        mapView = new MapView(this);
+        mapViewContainer.addView(mapView);
+
+
         // 넘어오는 인텐트 받기 -- 새로 만드는거 아니면 인텐트로 받아오는거 없는데 머어쩌지......
-        intentFunc();
+        checkDaySelected();
+//        intentFunc();
         //tmp user
 //        user.setData(24, "chaen42@ajou.ac.kr", "김채은", "12345","F");
 //        user.preferences.add("#계곡");
@@ -109,55 +109,12 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
         // 드로어 달기
         setDrawer();
 
-        // 맵 생성
-        mapView = new MapView(this);
-        mapViewContainer.addView(mapView);
-        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.555212, 126.970573), false);
-        mapView.setZoomLevel(3, false);
 
-//        mapView.setMapViewEventListener(this);
-        //TODO: 1. 특정 데이인 것 구분 후 아래 기능(지도에 마킹) 들어가야 함,
-        //       2. 다중 마커 좀 더 효율적으로
-//        Place place1 = new Place("여수세계박람회 크루즈공원", 34.753264, 127.754638);
-//        Place place2 = new Place("한화아쿠아플라넷 여수", 34.746487, 127.748342);
-//        Place place3 = new Place("오동도 유람선터미널", 34.740861, 127.755591);
-//
-//        MapPOIItem marker1 = new MapPOIItem();
-//        MapPOIItem marker2 = new MapPOIItem();
-//        MapPOIItem marker3 = new MapPOIItem();
-//        marker1.setItemName(place1.getName());
-//        marker2.setItemName(place2.getName());
-//        marker3.setItemName(place3.getName());
-//        marker1.setMapPoint(MapPoint.mapPointWithGeoCoord(place1.getLatitude(), place1.getLongitude()));
-//        marker2.setMapPoint(MapPoint.mapPointWithGeoCoord(place2.getLatitude(), place2.getLongitude()));
-//        marker3.setMapPoint(MapPoint.mapPointWithGeoCoord(place3.getLatitude(), place3.getLongitude()));
-//        marker1.setMarkerType(MapPOIItem.MarkerType.BluePin);
-//        marker2.setMarkerType(MapPOIItem.MarkerType.BluePin);
-//        marker3.setMarkerType(MapPOIItem.MarkerType.BluePin);
-//        marker1.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
-//        marker2.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
-//        marker3.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
-//
-//        mapView.addPOIItem(marker1);
-//        mapView.addPOIItem(marker2);
-//        mapView.addPOIItem(marker3);
-//
-//        MapPolyline polyline = new MapPolyline();
-//        polyline.setTag(1000);
-//        polyline.setLineColor(Color.argb(128, 255, 51, 0));
-//        polyline.addPoint(MapPoint.mapPointWithGeoCoord(place1.getLatitude(), place1.getLongitude()));
-//        polyline.addPoint(MapPoint.mapPointWithGeoCoord(place2.getLatitude(), place2.getLongitude()));
-//        polyline.addPoint(MapPoint.mapPointWithGeoCoord(place3.getLatitude(), place3.getLongitude()));
-//
-//        mapView.addPolyline(polyline);
-//
-//        // 지도뷰의 중심좌표와 줌레벨을 polyline이 모두 나오도록 조정.
-//        MapPointBounds mapPointBounds = new MapPointBounds(polyline.getMapPoints());
-//        int padding = 100; //px
-//        mapView.moveCamera(CameraUpdateFactory.newMapPointBounds(mapPointBounds, padding));
+
 
 
     }
+
 
 
     @Override
@@ -196,7 +153,8 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
                         }
                         if(position == sumOfSpots){
                             //position은 daycalculating 번째 데이(1부터 시작)
-                            selectedDay = dayCalculating;
+                            newPlace = NewPlace.getInstance();
+                            newPlace.setSelectedDay(dayCalculating);
                             Intent intent = new Intent(ScheduleForm.this, SearchMap.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                             mapViewContainer.removeAllViews();
@@ -238,90 +196,176 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
         }
     }
 
-    public void intentFunc(){
-//        Intent intent = getIntent();
-//        title_str = intent.getExtras().getString("title");
-
-        if(SearchMap.getSelectedDay() != -1){
-
-        }
-        title_str = "국구가가";
-        tripName = title_str;
-        DatabaseReference schedulesRef = myRef.child("schedules");
-        schedulesRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Iterator<DataSnapshot> child = dataSnapshot.getChildren().iterator();
-
-                while(child.hasNext()){
-                    DataSnapshot temp = child.next(); //각각의 schedule 객체
-                    if(temp.child("title").getValue().toString().equals(title_str)){
-                        start_str = temp.child("start_date").getValue(String.class);
-                        finish_str = temp.child("end_date").getValue(String.class);
-                        period = temp.child("period").getValue(Integer.class);
-                        title.setText(title_str);
-                        date.setText(start_str + " - " +finish_str);
-                        try {
-                            start_date =new SimpleDateFormat("yyyy/MM/dd").parse(start_str);
-                            finish_date  =new SimpleDateFormat("yyyy/MM/dd").parse(finish_str);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        thisTrip = new Trip(title_str, start_date, period);
-                        Iterator<DataSnapshot> days = temp.child("days").getChildren().iterator();
-                        int i=0;
-                        while(days.hasNext()){
-                            DataSnapshot tmpday = days.next();
-                            Iterator<DataSnapshot> spots = tmpday.child("spots").getChildren().iterator();
-                            while(spots.hasNext()){
-                                DataSnapshot tmpspot = spots.next();
-                                Place tmpplace = new Place(tmpspot.child("name").getValue(String.class),
-                                                            tmpspot.child("latitude").getValue(Double.class),
-                                                            tmpspot.child("longitude").getValue(Double.class));
-                                thisTrip.days.get(i).addSpot(tmpplace);
+    public void checkDaySelected(){
+        newPlace = NewPlace.getInstance();
+        if(newPlace.getSelectedDay() != -1){
+            DatabaseReference schedulesRef = myRef.child("schedules");
+            schedulesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Iterator<DataSnapshot> child = dataSnapshot.getChildren().iterator();
+                    while(child.hasNext()){
+                        DataSnapshot tmpSchedule = child.next();
+                        if(tmpSchedule.child("title").getValue(String.class).equals(newPlace.getSelectedTripName())){
+                            Iterator<DataSnapshot> days = tmpSchedule.child("days").getChildren().iterator();
+                            while(days.hasNext()){
+                                DataSnapshot tmpDay = days.next();
+                                if(tmpDay.child("order").getValue(Integer.class) == newPlace.getSelectedDay()){
+                                    DatabaseReference spots = tmpDay.child("spots").getRef();
+                                    spots.push().setValue(newPlace.getSelectedPlace());
+                                    break;
+                                }
                             }
-                            i++;
+                            break;
                         }
-                        setScheduleRecyclerView();
-                        break;
+                        intentFunc();
                     }
                 }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }else{
+            intentFunc();
+        }
+    }
+
+    public void intentFunc(){
+        newPlace = NewPlace.getInstance();
+        newPlace.setSelectedTripName("55");//임시
+        if(newPlace.getSelectedTripName() != "tmp") {
+            title_str = newPlace.getSelectedTripName();
+            DatabaseReference schedulesRef = myRef.child("schedules");
+            schedulesRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Iterator<DataSnapshot> child = dataSnapshot.getChildren().iterator();
+
+                    while (child.hasNext()) {
+                        DataSnapshot temp = child.next(); //각각의 schedule 객체
+                        if (temp.child("title").getValue().toString().equals(title_str)) {
+                            start_str = temp.child("start_date").getValue(String.class);
+                            finish_str = temp.child("end_date").getValue(String.class);
+                            period = temp.child("period").getValue(Integer.class);
+                            title.setText(title_str);
+                            date.setText(start_str + " - " + finish_str);
+                            try {
+                                start_date = new SimpleDateFormat("yyyy/MM/dd").parse(start_str);
+                                finish_date = new SimpleDateFormat("yyyy/MM/dd").parse(finish_str);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            thisTrip = new Trip(title_str, start_date, period);
+                            Iterator<DataSnapshot> days = temp.child("days").getChildren().iterator();
+                            int i = 0;
+                            while (days.hasNext()) {
+                                DataSnapshot tmpday = days.next();
+                                Iterator<DataSnapshot> spots = tmpday.child("spots").getChildren().iterator();
+                                while (spots.hasNext()) {
+                                    DataSnapshot tmpspot = spots.next();
+                                    Place tmpplace = new Place(tmpspot.child("name").getValue(String.class),
+                                            tmpspot.child("latitude").getValue(Double.class),
+                                            tmpspot.child("longitude").getValue(Double.class));
+                                    thisTrip.days.get(i).addSpot(tmpplace);
+                                }
+                                i++;
+                            }
+                            setMapPOI();
+                            setScheduleRecyclerView();
+                            break;
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+        }else{
+            setMapPOI();
+            setScheduleRecyclerView();
+        }
+    }
+    public void setMapPOI(){
+        //TODO: 1. 특정 데이인 것 구분 후 아래 기능(지도에 마킹) 들어가야 함,
+        //       2. 다중 마커 좀 더 효율적으로
+//        thisTrip.getDay(0).getSpots();//List<Place>
+        if(thisTrip.getDays() != null) {
+            Iterator<Place> spots = thisTrip.getDay(0).getSpots().iterator();
+            Place tmpPlace;
+            while (spots.hasNext()) {
+                tmpPlace = spots.next();
+                MapPOIItem marker = new MapPOIItem();
+                marker.setItemName(tmpPlace.getName());
+                marker.setMapPoint(MapPoint.mapPointWithGeoCoord(tmpPlace.getLatitude(), tmpPlace.getLongitude()));
+                marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+                mapView.addPOIItem(marker);
             }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            if(thisTrip.getDay(0).getSpots().size() > 0) {
+                MapPolyline polyline = new MapPolyline();
+                polyline.setTag(1000);
+                polyline.setLineColor(Color.argb(128, 255, 51, 0));
+//                while (spots.hasNext()) {
+//                    tmpPlace = spots.next();
+//                }
 
+                for(int j=0; j<thisTrip.getDay(0).getSpots().size(); j++){
+                    polyline.addPoint(MapPoint.mapPointWithGeoCoord(thisTrip.getDay(0).getSpots().get(j).getLatitude(), thisTrip.getDay(0).getSpots().get(j).getLongitude()));
+                    if(j == thisTrip.getDay(0).getSpots().size()-1){
+                        mapView.addPolyline(polyline);
+                    }
+                }
+
+                // 지도뷰의 중심좌표와 줌레벨을 polyline이 모두 나오도록 조정.
+                MapPointBounds mapPointBounds = new MapPointBounds(polyline.getMapPoints());
+                int padding = 100; //px
+                mapView.moveCamera(CameraUpdateFactory.newMapPointBounds(mapPointBounds, padding));
             }
-        });
-
-//        int sche_n = intent.getExtras().getInt("sche_n");
+//        Place place1 = new Place("여수세계박람회 크루즈공원", 34.753264, 127.754638);
+//        Place place2 = new Place("한화아쿠아플라넷 여수", 34.746487, 127.748342);
+//        Place place3 = new Place("오동도 유람선터미널", 34.740861, 127.755591);
 //
-//        if(sche_n==0){ // 새로 만드는 일정
-//            save_flag = false;
+//        MapPOIItem marker1 = new MapPOIItem();
+//        MapPOIItem marker2 = new MapPOIItem();
+//        MapPOIItem marker3 = new MapPOIItem();
+//        marker1.setItemName(place1.getName());
+//        marker2.setItemName(place2.getName());
+//        marker3.setItemName(place3.getName());
+//        marker1.setMapPoint(MapPoint.mapPointWithGeoCoord(place1.getLatitude(), place1.getLongitude()));
+//        marker2.setMapPoint(MapPoint.mapPointWithGeoCoord(place2.getLatitude(), place2.getLongitude()));
+//        marker3.setMapPoint(MapPoint.mapPointWithGeoCoord(place3.getLatitude(), place3.getLongitude()));
+//        marker1.setMarkerType(MapPOIItem.MarkerType.BluePin);
+//        marker2.setMarkerType(MapPOIItem.MarkerType.BluePin);
+//        marker3.setMarkerType(MapPOIItem.MarkerType.BluePin);
+//        marker1.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
+//        marker2.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
+//        marker3.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
 //
-//            try{ // 인텐트 받아오기
+//        mapView.addPOIItem(marker1);
+//        mapView.addPOIItem(marker2);
+//        mapView.addPOIItem(marker3);
 //
-//                title_str = intent.getExtras().getString("title");
-//                start_str = intent.getExtras().getString("start_date");
-//                finish_str = intent.getExtras().getString("finish_date");
-//                start_date =new SimpleDateFormat("yyyy/MM/dd").parse(start_str);
-//                finish_date  =new SimpleDateFormat("yyyy/MM/dd").parse(finish_str);
-//                period = (int)(finish_date.getTime() - start_date.getTime())/(24*60*60*1000)+1;
+//        MapPolyline polyline = new MapPolyline();
+//        polyline.setTag(1000);
+//        polyline.setLineColor(Color.argb(128, 255, 51, 0));
+//        polyline.addPoint(MapPoint.mapPointWithGeoCoord(place1.getLatitude(), place1.getLongitude()));
+//        polyline.addPoint(MapPoint.mapPointWithGeoCoord(place2.getLatitude(), place2.getLongitude()));
+//        polyline.addPoint(MapPoint.mapPointWithGeoCoord(place3.getLatitude(), place3.getLongitude()));
 //
-//                Log.d("title: ", title_str);
-//                Log.d("start_ str: ", start_str);
-//                Log.d("finish_str  ", finish_str);
-//                Log.d("period:  ", String.valueOf(period));
+//        mapView.addPolyline(polyline);
 //
-//                title.setText(title_str);
-//                date.setText(start_str+" - "+finish_str);
-//
-//            }catch (Exception e){
-//            }
-//
-//        }else{ // 불러오는 일정
-//            save_flag = true;
-//        }
-
+//        // 지도뷰의 중심좌표와 줌레벨을 polyline이 모두 나오도록 조정.
+//        MapPointBounds mapPointBounds = new MapPointBounds(polyline.getMapPoints());
+//        int padding = 100; //px
+//        mapView.moveCamera(CameraUpdateFactory.newMapPointBounds(mapPointBounds, padding));
+        } else{
+            mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.555212, 126.970573), false); //서울역
+            mapView.setZoomLevel(3, false);
+        }
     }
 
     public void setDrawer(){
@@ -381,7 +425,7 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
                     }
 
                     //유저한테도 더해준다
-                    user.schedules_id.add(schedule.getKey());
+                    user.getSchedules().add(schedule.getKey());
                     Log.d("sche key: ", schedule.getKey());
 
                 }else{ //저장 -> 편집

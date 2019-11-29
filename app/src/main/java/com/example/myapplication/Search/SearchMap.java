@@ -34,8 +34,10 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.myapplication.Database.NewPlace;
 import com.example.myapplication.Database.Place;
 import com.example.myapplication.R;
+import com.example.myapplication.Schedule.Schedule;
 import com.example.myapplication.Schedule.ScheduleForm;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -716,13 +718,14 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
         placeInfoBoxFragment.setOnItemClickListener(new PlaceInfoBoxFragment.OnItemClickListener() {
             @Override
             public void onItemClick(View v, Place selectedPlace, int selectedDay, String selectedTripName) {
-                selectedPlace = selectedPlace;
-                selectedDay = selectedDay;
-                selectedTripName = selectedTripName;
+                NewPlace newPlace = NewPlace.getInstance();
+                newPlace.setSelectedDay(selectedDay);
+                newPlace.setSelectedPlace(selectedPlace);
+                newPlace.setSelectedTripName(selectedTripName);
                 Intent intent = new Intent(SearchMap.this, ScheduleForm.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 mapContainer = findViewById(R.id.searchmap);
                 mapContainer.removeAllViews();
-                finish();
                 startActivity(intent);
             }
         });

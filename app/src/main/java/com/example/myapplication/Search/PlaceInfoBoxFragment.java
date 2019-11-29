@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import com.example.myapplication.Database.NewPlace;
 import com.example.myapplication.Database.Place;
 import com.example.myapplication.R;
 import com.example.myapplication.Schedule.ScheduleForm;
@@ -53,13 +54,6 @@ public class PlaceInfoBoxFragment extends Fragment implements  View.OnClickListe
     public static String selectedTripName = "";
     public static int selectedDay = -1;
 
-    public static Place getSelectedPlace(){
-        if(ScheduleForm.getSelectedDay() != -1) {
-            return selectedPlace;
-        }else{
-            return null;
-        }
-    }
 
     public static String getSelectedTripName(){
         return selectedTripName;
@@ -100,8 +94,9 @@ public class PlaceInfoBoxFragment extends Fragment implements  View.OnClickListe
         addToListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectedTripName = ScheduleForm.getTripName();
-                selectedDay = ScheduleForm.getSelectedDay();
+                NewPlace newPlace = NewPlace.getInstance();
+                selectedTripName = newPlace.getSelectedTripName();
+                selectedDay = newPlace.getSelectedDay();
                 if( selectedDay != -1 ){
                     if (mmListener != null) {
                         mmListener.onItemClick(v, selectedPlace, selectedDay, selectedTripName);
