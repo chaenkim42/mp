@@ -1,10 +1,13 @@
 package com.example.myapplication.Schedule;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -17,10 +20,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.Database.Place;
 import com.example.myapplication.R;
+import com.example.myapplication.Search.SearchMap;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static androidx.core.content.ContextCompat.startActivity;
 
 public class ExpandableListAdapter extends RecyclerView.Adapter implements PlaceItemTouchHelperCallback.OnItemMoveListener {
     public static final int HEADER = 0;
@@ -28,18 +34,32 @@ public class ExpandableListAdapter extends RecyclerView.Adapter implements Place
     public static final int EMPTY_CHILD = 2;
     public static boolean edit_flag = false;
     private List<Item> data;
+    public static int whichDay=-1;
+
 
     public interface OnStartDragListener{
         void onStartDrag(ListChildViewHolder listChildViewHolder);
     }
 
     private final OnStartDragListener startDragListener;
-    private OnAdapterInteractionListener mListener;
+
 
     public ExpandableListAdapter(List<Item> data, Context context, OnStartDragListener onStartDragListener){
         this.data = data;
-        mListener = (OnAdapterInteractionListener) context;
+//        mListener = (OnAdapterInteractionListener) context;
         startDragListener = onStartDragListener;
+    }
+
+
+    public interface OnItemClickListener{
+        //empty child(장소 추가하기) click listener
+        void onItemClick(View v, int position);
+    }
+
+    private OnItemClickListener mListener = null;
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.mListener = listener;
     }
 
     @NonNull
@@ -79,6 +99,8 @@ public class ExpandableListAdapter extends RecyclerView.Adapter implements Place
                 ListEmptyChildViewHolder emptyChild = new ListEmptyChildViewHolder(view);
                 return emptyChild;
         }
+
+
         return null;
     }
 
@@ -165,18 +187,6 @@ public class ExpandableListAdapter extends RecyclerView.Adapter implements Place
                 break;
             case EMPTY_CHILD:
                 final ListEmptyChildViewHolder emptychild_controller = (ListEmptyChildViewHolder) holder;
-                emptychild_controller.text_constraintLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mListener.addBtnClickedInAdapter(true);
-                    }
-                });
-                emptychild_controller.plusCircle.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mListener.addBtnClickedInAdapter(true);
-                    }
-                });
                 break;
         }
     }
@@ -234,23 +244,36 @@ public class ExpandableListAdapter extends RecyclerView.Adapter implements Place
         }
     }
 
-    private static class ListEmptyChildViewHolder extends  RecyclerView.ViewHolder{
+    private class ListEmptyChildViewHolder extends  RecyclerView.ViewHolder  {
         public TextView textView;
         public TextView plusCircle;
         public ConstraintLayout text_constraintLayout;
         public ImageButton edit_btn;
 
-        public ListEmptyChildViewHolder(View itemView){
+        public ListEmptyChildViewHolder(final View itemView){
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.recyclerviewEmptychild_textView);
             plusCircle = (TextView) itemView.findViewById(R.id.recyclerviewEmptychild_circle);
             text_constraintLayout = (ConstraintLayout) itemView.findViewById(R.id.recyclerviewEmptychild_text_constraintLayout);
             edit_btn = itemView.findViewById(R.id.edit_btn);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition();
+                    if(pos != RecyclerView.NO_POSITION){
+                        if(mListener != null){
+                            mListener.onItemClick(v,pos);
+                        }
+                    }
+                }
+            });
         }
+
     }
 
     public static class Item {
         public int type;
+        public int whichDay; //1부터 시작
         public String title;
         public String subTitle;
         public int orderOfVisit;// for child item.
@@ -273,15 +296,22 @@ public class ExpandableListAdapter extends RecyclerView.Adapter implements Place
                 this.orderOfVisit= orderOfVisit;
             }
         }
-        public Item(int type){
+        public Item(int type, int whichDay){
             if(type == EMPTY_CHILD){
                 this.type = type;
+                this.whichDay = whichDay;
+            }
+        }
+
+        public int getWhichDay() {
+            if(type == EMPTY_CHILD){
+                return this.whichDay;
+            }else{
+                return -1;
             }
         }
     }
 
-    public interface OnAdapterInteractionListener {
-        void addBtnClickedInAdapter(boolean isClicked);
-    }
+
 
 }

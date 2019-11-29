@@ -1,26 +1,22 @@
 package com.example.myapplication.Database;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class Day {
+public class DayDb {
 
     private int order;
-    private List<Place> spots;
+    private String name;
+    private ArrayList<Place> spots;
 
-    public Day(int order){
+    public DayDb(int order){
         this.order = order;
-        this.spots = new ArrayList<Place>();
     }
 
-    public Day(int order,  List<Place> placeList){
+    public DayDb(int order, ArrayList<Place> placeList){
         this.order = order;
         this.spots = placeList;
     }
 
-    public void addSpot(Place place){
-        this.spots.add(place);
-    }
     public void addSpot(int onWhichIndex, Place place){
         this.spots.add(onWhichIndex, place);
 //            int newSpotLength = spots.length + 1;
@@ -38,7 +34,8 @@ public class Day {
 //            this.spots = newSpots;
     }
 
-    public List<Place> getSpots() {
+    public ArrayList<Place> getSpots() {
         return spots;
     }
+    public int getOrder(){return order;}
 }

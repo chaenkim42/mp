@@ -29,11 +29,12 @@
                         android:id="@+id/drawer_opener"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="13dp"
                         android:src="@drawable/btn_floating"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="10dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/map_navbtn" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="200dp"

@@ -3,7 +3,10 @@ package com.example.myapplication.Schedule;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -13,11 +16,26 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapplication.Database.Day;
+import com.example.myapplication.Database.DayDb;
+import com.example.myapplication.Database.Place;
+import com.example.myapplication.Database.ScheduleDb;
+import com.example.myapplication.Database.User;
+import com.example.myapplication.Database.UserDb;
 import com.example.myapplication.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class AskScheduleDate extends AppCompatActivity implements View.OnClickListener {
@@ -28,6 +46,11 @@ public class AskScheduleDate extends AppCompatActivity implements View.OnClickLi
     Button add_btn, btn_make_sche;
     int dateID;
     int year, month, day;
+
+    DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
+    InputMethodManager imm;
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,20 +71,30 @@ public class AskScheduleDate extends AppCompatActivity implements View.OnClickLi
         btn_make_sche.setOnClickListener(this);
         getCurrentDate();
 
+        imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+
+
+        title.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    imm.hideSoftInputFromWindow(title.getWindowToken(),0);
+                }
+                return false;
+            }
+        });
+
+
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.title:
-                title.setText("");
-                break;
-
             case R.id.start:
                 DatePickerDialog.OnDateSetListener callback = new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int y, int m, int d) {
-                        start_date.setText(y + "/" + m + "/" + d );
+                        start_date.setText(y + "/" + (m+1) + "/" + d );
                     }
                 };
                 DatePickerDialog dialog = new DatePickerDialog(this, callback, year, month, day);
@@ -72,7 +105,7 @@ public class AskScheduleDate extends AppCompatActivity implements View.OnClickLi
                 DatePickerDialog.OnDateSetListener callback_f = new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int y, int m, int d) {
-                        finish_date.setText(y + "/" + m + "/" + d );
+                        finish_date.setText(y + "/" + (m+1) + "/" + d );
                     }
                 };
                 DatePickerDialog dialog_f = new DatePickerDialog(this, callback_f, year, month, day);
@@ -83,12 +116,44 @@ public class AskScheduleDate extends AppCompatActivity implements View.OnClickLi
                 break;
 
             case R.id.btn_make_sche:
-                Intent intent = new Intent(AskScheduleDate.this, ScheduleForm.class);
-                intent.putExtra("title", title.getText().toString());
-                intent.putExtra("start_date", start_date.getText().toString());
-                intent.putExtra("finish_date", finish_date.getText().toString());
-                intent.putExtra("sche_n", 0);
-                startActivity(intent);
+                try {
+                    Intent intent = new Intent(AskScheduleDate.this, ScheduleForm.class);
+                    intent.putExtra("title", title.getText().toString());
+    //                intent.putExtra("start_date", start_date.getText().toString());
+    //                intent.putExtra("finish_date", finish_date.getText().toString());
+    //                intent.putExtra("sche_n", 0);
+                    Date startDate = new SimpleDateFormat("yyyy/MM/dd").parse(String.valueOf(start_date.getText()));
+                    Date endDate  =new SimpleDateFormat("yyyy/MM/dd").parse(String.valueOf(finish_date.getText()));
+                    int period = (int)(endDate.getTime() - startDate.getTime())/(24*60*60*1000)+1;
+                    ScheduleDb tmp = new ScheduleDb(title.getText().toString(),
+                                                     String.valueOf(start_date.getText()),
+                                                    String.valueOf(finish_date.getText()),
+                                                    period,
+                                                    UserDb.getInstance());
+                    DatabaseReference schedulesRef = myRef.child("schedules");
+                    DatabaseReference thisScheduleRef = schedulesRef.push();
+                    thisScheduleRef.setValue(tmp);
+                    DatabaseReference scheduleDaysRef = thisScheduleRef.child("days");
+                    for(int i=0; i<period; i++){
+                        ArrayList<Place> places = new ArrayList<Place>();
+                        Place place1 = new Place("여수세계박람회 크루즈공원",34.753264, 127.754638);
+                        Place place2 = new Place("한화아쿠아플라넷 여수", 34.746487, 127.748342);
+                        Place place3 = new Place("오동도 유람선터미널", 34.740861, 127.755591);
+                        places.add(place1);
+                        places.add(place2);
+                        places.add(place3);
+                        DayDb day = new DayDb(i+1);
+                        DatabaseReference dayRef = scheduleDaysRef.push();
+                        dayRef.setValue(day);
+                        DatabaseReference spotsRef = dayRef.child("spots");
+                        spotsRef.push().setValue(place1);
+                        spotsRef.push().setValue(place2);
+                        spotsRef.push().setValue(place3);
+                    }
+                    startActivity(intent);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 break;
         }
     }

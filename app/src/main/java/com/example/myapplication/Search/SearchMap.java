@@ -1,6 +1,7 @@
 package com.example.myapplication.Search;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -21,7 +22,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -36,15 +36,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.myapplication.Database.Place;
 import com.example.myapplication.R;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.example.myapplication.Schedule.ScheduleForm;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
-import net.daum.mf.map.api.MapPointBounds;
 import net.daum.mf.map.api.MapView;
 
 import org.json.JSONArray;
@@ -54,7 +51,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 //지도로 검색결과 나오는 액티비티
 
@@ -67,13 +63,13 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION};
 //    public static String[] locationInformation = {"국립해양박물관","부산 영도구 해양로 301번길 45", "051-309-1500", "평일 09:00-18:00","무료"};
 
-    private MapView mapView;
+    public static MapView mapView;
     ViewGroup mapViewContainer;
     Button gps_btn;
     MapPoint current_mapPoint;
     ImageButton downArrow, tjBtn;
     ToggleButton starBtn;
-    ConstraintLayout infoContainer;
+    ConstraintLayout infoContainer, mapContainer;
     Boolean markerIsSelected = false;
 
     FragmentManager fm;
@@ -106,6 +102,19 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
     int poiDataIndex=-1;
     String poiName = "";
 
+    static Place selectedPlace = null;
+    static int selectedDay = -1;
+    static String selectedTripName = "";
+    public static Place getSelectedPlace(){
+        return selectedPlace;
+    }
+    public static int getSelectedDay(){
+        return selectedDay;
+    }
+    public static String getSelectedTripName(){
+        return selectedTripName;
+    }
+
     private EditText searchBox;
     private ImageButton searchBtn;
     private Button clearBtn;
@@ -132,6 +141,7 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
 //                String.valueOf(checkBoolean[4])+ ","+
 //                String.valueOf(checkBoolean[5]));
 
+        mapContainer = findViewById(R.id.searchmap);
         gps_btn = findViewById(R.id.gps_btn);
         tjBtn = findViewById(R.id.serachmap_tjBtn);
         tjBtn.setOnClickListener(this);
@@ -518,6 +528,8 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
         // 전체 place 가 담긴 placeList 전달
         return placeList;
     }
+
+
     public int getDataIndex(){
         // 클릭한 데이터의 placList 상의 인덱스 전달
         return poiDataIndex;
@@ -701,6 +713,19 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
             fragmentTransaction.remove(placeInfoBoxFragment);
             placeInfoBoxFragment = new PlaceInfoBoxFragment();
         }
+        placeInfoBoxFragment.setOnItemClickListener(new PlaceInfoBoxFragment.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, Place selectedPlace, int selectedDay, String selectedTripName) {
+                selectedPlace = selectedPlace;
+                selectedDay = selectedDay;
+                selectedTripName = selectedTripName;
+                Intent intent = new Intent(SearchMap.this, ScheduleForm.class);
+                mapContainer = findViewById(R.id.searchmap);
+                mapContainer.removeAllViews();
+                finish();
+                startActivity(intent);
+            }
+        });
         fragmentTransaction.add(R.id.search_map_info_container, placeInfoBoxFragment);
         fragmentTransaction.commit();
         poiDataIndex = mapPOIItem.getTag();

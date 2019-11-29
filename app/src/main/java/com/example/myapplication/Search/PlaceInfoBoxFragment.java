@@ -1,29 +1,30 @@
 package com.example.myapplication.Search;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.Database.Place;
 import com.example.myapplication.R;
+import com.example.myapplication.Schedule.ScheduleForm;
 
 import java.util.ArrayList;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 //import static com.example.myapplication.Search.SearchMap.locationInformation;
-import static com.example.myapplication.Search.SearchMap.myRef;
 
 
 public class PlaceInfoBoxFragment extends Fragment implements  View.OnClickListener {
@@ -33,6 +34,14 @@ public class PlaceInfoBoxFragment extends Fragment implements  View.OnClickListe
 
     private OnFragmentInteractionListener mListener;
 
+    public interface OnItemClickListener{
+        void onItemClick(View v, Place selectedPlace,int selectedDay, String selectedTripName);
+    }
+    private OnItemClickListener mmListener = null;
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.mmListener = listener;
+    }
+
     public interface OnInputListener {
         void sendInput(int inputId);
     }
@@ -40,7 +49,26 @@ public class PlaceInfoBoxFragment extends Fragment implements  View.OnClickListe
     public OnInputListener mOnInputListener;
     private ArrayList<Place> poiData = new ArrayList<Place>();
     private String selectedPoiName;
-    private Place selectedPlace = new Place();
+    public static Place selectedPlace = new Place();
+    public static String selectedTripName = "";
+    public static int selectedDay = -1;
+
+    public static Place getSelectedPlace(){
+        if(ScheduleForm.getSelectedDay() != -1) {
+            return selectedPlace;
+        }else{
+            return null;
+        }
+    }
+
+    public static String getSelectedTripName(){
+        return selectedTripName;
+    }
+    public static int getSelectedDay(){
+        return selectedDay;
+    }
+
+
 
     public PlaceInfoBoxFragment() {
         // Required empty public constructor
@@ -68,6 +96,19 @@ public class PlaceInfoBoxFragment extends Fragment implements  View.OnClickListe
         TextView openTime = getView().findViewById(R.id.fragment_place_info_box_openTime);
         TextView enterFee = getView().findViewById(R.id.fragment_place_info_box_enterFee);
 
+        Button addToListBtn = getView().findViewById(R.id.fragment_place_info_box_btnAddToList);
+        addToListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedTripName = ScheduleForm.getTripName();
+                selectedDay = ScheduleForm.getSelectedDay();
+                if( selectedDay != -1 ){
+                    if (mmListener != null) {
+                        mmListener.onItemClick(v, selectedPlace, selectedDay, selectedTripName);
+                    }
+                }
+            }
+        });
 
         placeName.setText(selectedPlace.getName());
         address.setText(selectedPlace.getAddress());

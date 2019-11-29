@@ -23,9 +23,10 @@
 
     <TextView
         android:id="@+id/recyclerviewEmptychild_circle"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:background="@drawable/circle_plus_backfilled"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/schedule_addplacebtn"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="@+id/recyclerviewEmptychild_vertical_bar"
         app:layout_constraintStart_toStartOf="@+id/recyclerviewEmptychild_vertical_bar"

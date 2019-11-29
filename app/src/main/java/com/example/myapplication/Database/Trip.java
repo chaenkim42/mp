@@ -8,7 +8,7 @@ public class Trip {
     private String title;
     private int period;
     private Date startDate;
-    private List<Day> days = new ArrayList<>();
+    public List<Day> days = new ArrayList<>();
 
     public Trip(String title, Date startDate, int period){
         this.title = title;
