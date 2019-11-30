@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -22,6 +23,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.myapplication.Database.DayDb;
+import com.example.myapplication.Database.Place;
+import com.example.myapplication.Database.ScheduleDb;
 import com.example.myapplication.Database.User;
 import com.example.myapplication.LogIn;
 import com.example.myapplication.R;
@@ -30,13 +34,19 @@ import com.example.myapplication.Schedule.MyData;
 import com.example.myapplication.Schedule.ScheduleAdapter;
 import com.example.myapplication.Schedule.ScheduleForm;
 import com.example.myapplication.Search.SearchMap;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-
+import java.util.HashSet;
+import java.util.Iterator;
 
 
 public class Main extends AppCompatActivity implements View.OnClickListener {
@@ -51,6 +61,8 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     private TextView name;
     private ImageButton addScheBtn;
     private ImageView profile;
+
+    User user = User.getInstance();
 
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
@@ -82,17 +94,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         profile = findViewById(R.id.main_profile_img_btn);
         recyclerView = findViewById(R.id.recyclerView);
 
-        User user = User.getInstance();
         name.setText(user.getName());
-//        Log.d("main u_id ", user.u_id);
-
-//        gs://test-mp0731.appspot.com/-LuktFbngNsrzFDL1QIL/user_img
-        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-//        StorageReference temp_ref = storageRef.child("-LuktFbngNsrzFDL1QIL/user_img.jpg");
-        Glide.with(this /* context */)
-                .load("gs://test-mp0731.appspot.com/-LuktFbngNsrzFDL1QIL/user_img")
-                .into(profile);
-//        profile.setImageBitmap(user.getUser_image());
 
         searchBtn.setOnClickListener(this);
         mytripBtn.setOnClickListener(this);
@@ -105,15 +107,8 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.scrollToPosition(samples.size()-1);
 
-        try{
-            user.getSchedules();
-            samples.add(new MyData("아주대", R.drawable.doggo));
-            adapter = new ScheduleAdapter(this, samples, 0);
-            recyclerView.setAdapter(adapter);
-        }catch (NullPointerException e){
-
-        }
-
+        adapter = new ScheduleAdapter(this, 0);
+        recyclerView.setAdapter(adapter);
 
     }
 

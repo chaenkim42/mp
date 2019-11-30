@@ -13,7 +13,6 @@ public class MyData {
 
     public MyData(String text){
         this.text = text;
-        this.viewType = viewType;
     }
 
     public String getText(){

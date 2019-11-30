@@ -10,8 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.Database.User;
 import com.example.myapplication.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -20,18 +22,33 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     List<MyData> datas;
     TextView main_title, drawer_schedule_title;
     ImageView drawer_schedule_img, main_img;
+    User user = User.getInstance();
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ViewHolder(View view){
             super(view);
 
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int pos = getAdapterPosition();
+                    if(pos != RecyclerView.NO_POSITION){
 
+                    }
+                }
+            });
         }
     }
 
-    public ScheduleAdapter(Context context, List<MyData> datas, int viewType){
+    public ScheduleAdapter(Context context, int viewType){
         this.context = context;
-        this.datas = datas;
+        datas = new ArrayList<>();
+
+        for(int i=0; i<user.scheduleDbs.size(); i++){
+            MyData myData = new MyData(user.scheduleDbs.get(i).getTitle(), R.drawable.loca2);
+            datas.add(myData);
+        }
+
         this.type = viewType;
         // 어댑터를 생성할때 뷰타입을 받아온다 - 뷰 홀더에 레이아웃 인플레이트 할때 다른 종류로 나눠줌
     }
@@ -42,7 +59,6 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         View view ;
         //리사이클러뷰 여러개에 어뎁터를 재활용하기 위해서 뷰타입으로 어떤 아이템 리스트를 만들건지 지정함
         switch (type){
-
             case 0: // main
                 view = LayoutInflater.from(context).inflate(R.layout.recycler_item, parent, false);
                 return new ViewHolder(view);

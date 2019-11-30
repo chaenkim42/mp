@@ -22,5 +22,14 @@ public class ScheduleDb {
         this.end_date = end_date;
         this.period = period;
         this.manager = u_id;
+//        this.days = dayDbs;
+    }
+
+    public String getTitle(){
+        return this.title;
+    }
+
+    public void setDays(DayDb dayDb){
+        days.add(dayDb);
     }
 }

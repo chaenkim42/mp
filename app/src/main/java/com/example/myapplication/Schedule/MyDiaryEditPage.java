@@ -14,7 +14,12 @@ import android.widget.ImageView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapplication.Database.Diary;
+import com.example.myapplication.Database.DiaryDb;
 import com.example.myapplication.R;
+import com.firebase.client.Firebase;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.InputStream;
 
@@ -26,14 +31,13 @@ public class MyDiaryEditPage extends AppCompatActivity implements View.OnClickLi
     EditText starttime, title, content;
     Button savebtn;
     ImageView imageView;
+    String key_diaries;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_diary_edit_page);
-
-        data_title = getIntent().getStringExtra("title");
-        data_content = getIntent().getStringExtra("content");
+        key_diaries = getIntent().getStringExtra("key");
 
         starttime = findViewById(R.id.editpage_timestart);
         title = findViewById(R.id.editpage_title);
@@ -56,12 +60,19 @@ public class MyDiaryEditPage extends AppCompatActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.editpage_save_btn:
+                // 디비에 저장
+                DatabaseReference diary_ref = FirebaseDatabase.getInstance().getReference().child("diaries");
+                if(key_diaries.equals("0")){
+                    // 기존 diaries 없는 상황
+//                    Diary diary = new Diary(title.getText().toString(), content.getText().toString());
+//                    diary_ref.push().setValue(new DiaryDb(sche_id, diary));
+
+                }else{
+                    // 기존 diaries 있음
+                }
+
+
                 Intent i = new Intent(MyDiaryEditPage.this, MyDiaryPage.class);
-                diaryexample.title = String.valueOf(title.getText());
-                diaryexample.contents_text = String.valueOf(content.getText());
-//        intent.putExtra("title", title.getText());
-//        intent.putExtra("content", content.getText());
-//        intent.putExtra("isFromEditPage", true);
                 startActivity(i);
                 finish();
                 break;

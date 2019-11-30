@@ -420,15 +420,13 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
             }
         });
 
-        // 유저 스케줄 가져오기 -> 드로어용
-        ArrayList<MyData> schedules = new ArrayList<>();
 
         //drawer recyclerview
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         ((LinearLayoutManager) layoutManager).setOrientation(RecyclerView.VERTICAL);
         RecyclerView drawer_recyclerview = findViewById(R.id.drawer_recyclerview);
         drawer_recyclerview.setLayoutManager(layoutManager);
-        ScheduleAdapter scheduleAdapter = new ScheduleAdapter(this, schedules, 2);
+        ScheduleAdapter scheduleAdapter = new ScheduleAdapter(this, 2);
         drawer_recyclerview.setAdapter(scheduleAdapter);
     }
 

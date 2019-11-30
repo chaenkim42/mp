@@ -48,7 +48,7 @@ public class MyPagePlansAdapter extends RecyclerView.Adapter {
         plantitle = (TextView) holder.itemView.findViewById(R.id.userplansitem_plantitle);
         plandates = (TextView) holder.itemView.findViewById(R.id.userplansitem_plandates);
         plantitle.setText(tripList.get(position).getTitle());
-//        plandates.setText((CharSequence) tripList.get(position).getStartDate());
+        plandates.setText(tripList.get(position).s_date);
         Log.e("triplist", tripList.get(position).getTitle());
     }
 

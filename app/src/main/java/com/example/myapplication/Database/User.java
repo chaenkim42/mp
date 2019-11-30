@@ -3,8 +3,11 @@ package com.example.myapplication.Database;
 import android.graphics.Bitmap;
 import android.location.Location;
 
+import com.example.myapplication.Schedule.MyData;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class User {
     private static User user = null;
@@ -15,9 +18,11 @@ public class User {
     private String name;
     private String sex;
     private int age;
-    private ArrayList<String>  schedules_id = new ArrayList<>();
-    private ArrayList<String>  preferences = new ArrayList<>();
+    public HashSet<String> schedules = new HashSet<>();
+    public ArrayList<String>  preferences = new ArrayList<>();
     private ArrayList<String>  locations = new ArrayList<>();
+    public ArrayList<ScheduleDb> scheduleDbs = new ArrayList<>();
+    public ArrayList<Diary> diaries = new ArrayList<>();
     private Bitmap user_image= null;
 
     private User(){
@@ -37,15 +42,19 @@ public class User {
                 this.name = name;
                 this.age = age;
                 this.sex = sex;
-//                this.u_id = u_id;
     }
 
     public void setUser_image(Bitmap img){
         this.user_image = img;
     }
 
-    public void setLocations(ArrayList<String> locations_id){
-        //로케이션 아이디로 받아오는 코드
+
+    public void setSchedule(String schedule){
+        this.schedules.add(schedule);
+    }
+
+    public void setScheduleDB(ScheduleDb scheduleDB){
+        this.scheduleDbs.add(scheduleDB);
     }
     public void setPreferences(String preference){
         this.preferences.add(preference);
@@ -72,8 +81,8 @@ public class User {
         return this.sex;
     }
 
-    public ArrayList<String> getSchedules(){
-        return this.schedules_id;
+    public HashSet<String> getSchedules(){
+        return this.schedules;
     }
 
     public ArrayList<String> getPreferences(){
@@ -88,7 +97,4 @@ public class User {
 
     public void setU_id(String key){ this.u_id = key;}
 
-    public void getUserInfo(){
-        System.out.println(this.email+" , "+this.password+" , "+this.name);
-    }
 }

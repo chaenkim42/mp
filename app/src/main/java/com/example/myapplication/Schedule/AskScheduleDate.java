@@ -74,7 +74,6 @@ public class AskScheduleDate extends AppCompatActivity implements View.OnClickLi
 
         imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
-
         title.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {

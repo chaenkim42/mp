@@ -9,6 +9,7 @@ public class Trip {
     private int period;
     private Date startDate;
     public List<Day> days = new ArrayList<>();
+    public String s_date, e_date;
 
     public Trip(String title, Date startDate, int period){
         this.title = title;
@@ -18,7 +19,6 @@ public class Trip {
             days.add(new Day(i));
         }
     }
-
     public void addDay(int onWhichIndex, Day day){
         this.days.add(onWhichIndex, day);
     }

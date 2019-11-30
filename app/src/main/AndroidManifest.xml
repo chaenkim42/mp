@@ -27,6 +27,7 @@
         </activity>
         <activity android:name=".Schedule.MyDiaryPage" />
         <activity android:name=".Schedule.ScheduleForm" >
+
         </activity>
         <activity android:name=".Search.SearchMap">
         </activity>
