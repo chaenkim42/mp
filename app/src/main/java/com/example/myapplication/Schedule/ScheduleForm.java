@@ -136,7 +136,9 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
 
         //final LinearLayoutManager manager = (LinearLayoutManager)recyclerView.getLayoutManager();
 
-
+        if(thisTrip.getPeriod()>0){
+            setMapPOI(0);
+        }
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -151,7 +153,7 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
                     }else if(dayCalculating>1){
                         sumOfSpots += (thisTrip.days.get(dayCalculating-1).getSpots().size() + 2);
                     }
-                    if(firstVisibleItemPosition < sumOfSpots){
+                    if(firstVisibleItemPosition <= sumOfSpots){
                         //position은 daycalculating 번째 데이(1부터 시작)
                         setMapPOI(dayCalculating-1);
                         break;
@@ -274,7 +276,7 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
     public void intentFunc(){
         newPlace = NewPlace.getInstance();
         Log.d("newPlace name", newPlace.getSelectedTripName());
-        newPlace.setSelectedTripName("오오");//임시
+        //newPlace.setSelectedTripName("오오");//임시
         if(newPlace.getSelectedTripName() != "tmp") {
             title_str = newPlace.getSelectedTripName();
             DatabaseReference schedulesRef = myRef.child("schedules");

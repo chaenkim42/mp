@@ -1,5 +1,6 @@
 package com.example.myapplication.Schedule;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.Database.NewPlace;
 import com.example.myapplication.Database.User;
 import com.example.myapplication.R;
 import com.google.firebase.database.DatabaseReference;
@@ -18,6 +20,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.myapplication.Schedule.ScheduleForm.mapViewContainer;
 
 public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     int type;
@@ -35,11 +39,17 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 @Override
                 public void onClick(View view) {
                     int pos = getAdapterPosition();
+                    NewPlace newPlace = NewPlace.getInstance();
                     if(pos != RecyclerView.NO_POSITION){
                         String sche_id = user.scheduleDbs.get(pos).sche_id;
                         Intent intent = new Intent(context, ScheduleForm.class);
                         intent.putExtra("sche_id", sche_id);
                         intent.putExtra("sche_pos", pos);
+                        if(type == 2){
+                            mapViewContainer.removeAllViews();
+                            ((Activity)context).finish();
+                        }
+                        newPlace.setSelectedTripName(user.scheduleDbs.get(pos).title);
                         context.startActivity(intent);
                     }
                 }

@@ -22,7 +22,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.myapplication.Database.DayDb;
 import com.example.myapplication.Database.Diary;
 import com.example.myapplication.Database.DiaryDb;
@@ -41,8 +40,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -76,7 +73,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setScheDB();
+        //setScheDB();
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -167,7 +164,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
     public void setScheDB(){
         DatabaseReference schedules = FirebaseDatabase.getInstance().getReference().child("schedules");
-        schedules.addListenerForSingleValueEvent(new ValueEventListener() {
+        schedules.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Iterator<DataSnapshot> child = dataSnapshot.getChildren().iterator(); // 스케줄
@@ -205,8 +202,8 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                                 Log.d("error: ", e.getMessage());
                             }
 
-                            Intent i = new Intent(getApplicationContext(), Main.class);
-                            startActivity(i);
+                            //Intent i = new Intent(getApplicationContext(), Main.class);
+                            //startActivity(i);
                             break;
                         }
 //                        setDiaryDB();
