@@ -105,6 +105,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageButton
+            android:id="@+id/main_addSche_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/WHITE"
+            app:layout_constraintBottom_toBottomOf="@+id/main_mytrip_btn"
+            app:layout_constraintEnd_toStartOf="@+id/main_seemoreplanBtn"
+            app:layout_constraintTop_toTopOf="@+id/main_mytrip_btn"
+            app:srcCompat="@drawable/addlist_plus" />
+
         <Button
             android:id="@+id/main_seemoreplanBtn"
             android:layout_width="23dp"
@@ -130,14 +141,6 @@
                 android:orientation="horizontal"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
-
-                <ImageButton
-                    android:id="@+id/main_addSche_btn"
-                    android:layout_width="91dp"
-                    android:layout_height="91dp"
-                    android:layout_marginTop="30dp"
-                    android:background="@color/WHITE"
-                    app:srcCompat="@drawable/addlist_plus" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_weight="5"

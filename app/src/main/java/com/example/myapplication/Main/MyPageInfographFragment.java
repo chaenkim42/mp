@@ -2,6 +2,7 @@ package com.example.myapplication.Main;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,6 +75,7 @@ public class MyPageInfographFragment extends Fragment {
     }
 
     public void hashsets(){
+        Log.d("mypage u_pref","0");
         history = new HashSet<>();
         history.add("역사탐방");
         history.add("절");
@@ -99,10 +101,11 @@ public class MyPageInfographFragment extends Fragment {
         culture = new HashSet<>();
         culture.add("미술관");
         culture.add("박물관");
-        HashSet<String> tour = new HashSet<>();
+        tour = new HashSet<>();
         tour.add("수산물시장");
         tour.add("농산물시장");
         tour.add("목장");
+        Log.d("mypage u_pref","00");
 
     }
 

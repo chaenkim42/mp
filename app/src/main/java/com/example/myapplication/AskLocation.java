@@ -16,9 +16,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 
@@ -79,26 +76,26 @@ public class AskLocation extends AppCompatActivity implements View.OnClickListen
                 }
 
                 // 유저 이미지 업로드
-                Bitmap bitmap = user.getUser_image();
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                byte[] data = baos.toByteArray();
+//                Bitmap bitmap = user.getUser_image();
+//                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+//                byte[] data = baos.toByteArray();
 
-                StorageReference temp_stref = FirebaseStorage.getInstance().getReference().child(user.getU_id());
-                StorageReference img_stref = temp_stref.child("user_img");
-                UploadTask uploadTask = img_stref.putBytes(data);
-                uploadTask.addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Handle unsuccessful uploads
-                        Log.d("img db result ", "fail.........");
-                    }
-                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Log.d("img db result ", "success!!");
-                    }
-                });
+//                StorageReference temp_stref = FirebaseStorage.getInstance().getReference().child(user.getU_id());
+//                StorageReference img_stref = temp_stref.child("user_img");
+//                UploadTask uploadTask = img_stref.putBytes(data);
+//                uploadTask.addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception exception) {
+//                        // Handle unsuccessful uploads
+//                        Log.d("img db result ", "fail.........");
+//                    }
+//                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                    @Override
+//                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                        Log.d("img db result ", "success!!");
+//                    }
+//                });
 
                 // 메인 화면으로 넘어간다
                 startActivity(new Intent(AskLocation.this, Main.class));
