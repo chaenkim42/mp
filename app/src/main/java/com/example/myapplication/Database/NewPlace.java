@@ -1,11 +1,12 @@
 package com.example.myapplication.Database;
 
 public class NewPlace {
-
     private static NewPlace newPlace = null;
     private int selectedDay;
     private Place selectedPlace;
     private String selectedTripName;
+    public String sche_id;
+    public int sche_pos;
 
     public static NewPlace getInstance(){
         if(newPlace ==null){

@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -36,6 +37,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -117,30 +119,43 @@ public class AskScheduleDate extends AppCompatActivity implements View.OnClickLi
 
             case R.id.btn_make_sche:
                 try {
-                    Intent intent = new Intent(AskScheduleDate.this, ScheduleForm.class);
-    //                intent.putExtra("start_date", start_date.getText().toString());
-    //                intent.putExtra("finish_date", finish_date.getText().toString());
-    //                intent.putExtra("sche_n", 0);
                     Date startDate = new SimpleDateFormat("yyyy/MM/dd").parse(String.valueOf(start_date.getText()));
                     Date endDate  =new SimpleDateFormat("yyyy/MM/dd").parse(String.valueOf(finish_date.getText()));
-                    int period = (int)(startDate.getTime() - endDate.getTime())/(24*60*60*1000)+1;
+                    int period = (int)(endDate.getTime() - startDate.getTime())/(24*60*60*1000)+1;
                     ScheduleDb tmp = new ScheduleDb(title.getText().toString(),
                                                      String.valueOf(start_date.getText()),
                                                     String.valueOf(finish_date.getText()),
                                                     period,
                                                     user.getU_id());
                     DatabaseReference schedulesRef = myRef.child("schedules");
+                    Log.d("new", schedulesRef.toString());
                     DatabaseReference thisScheduleRef = schedulesRef.push();
+                    final String key = thisScheduleRef.getKey();
                     thisScheduleRef.setValue(tmp);
+
                     DatabaseReference scheduleDaysRef = thisScheduleRef.child("days");
                     for(int i=0; i<period; i++){
                         DayDb day = new DayDb(i+1);
                         DatabaseReference dayRef = scheduleDaysRef.push();
                         dayRef.setValue(day);
                     }
+
+                    //유저디비에 스케줄 아이디 넣어줌
+                    DatabaseReference userRef = myRef.child("user").child(user.getU_id());
+                    userRef.child("schedules").push().setValue(key);
+
+                    // 유저한테 스케줄 새로 넣음
+                    user.scheduleDbs.add(new ScheduleDb(title.toString(), start_date.toString(),
+                            endDate.toString(), period, user.getU_id()));
+                    user.getSchedules().add(key);
+
                     NewPlace newPlace = NewPlace.getInstance();
                     newPlace.setSelectedTripName(title.getText().toString());
+
+                    Intent intent = new Intent(AskScheduleDate.this, ScheduleForm.class);
+                    intent.putExtra("sche_id", key);
                     startActivity(intent);
+
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

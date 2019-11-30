@@ -38,7 +38,10 @@ public class MyDiary extends AppCompatActivity implements View.OnClickListener {
         edit_diary.setOnClickListener(this);
 
         List<Diary> tmpDiaryList = new ArrayList<>();
-        List<String> emptyString = new ArrayList<>();
+
+        for(int i=0; i<user.diaries.size(); i++){
+
+        }
         Diary d = new Diary("호텔 조식", "생각보다 너무 맛있었음\n다시 올만한 곳\n아싸사사샷");
         Diary dd = new Diary("여수 세계 박람회", "너무 너무 재밌었당\n블라블라\n살라살라 쿵따리");
         Diary ddd = new Diary("한화 아쿠아 플라넷", "");
@@ -54,7 +57,10 @@ public class MyDiary extends AppCompatActivity implements View.OnClickListener {
         adapter.setItemClick(new MyDiary_Adapter.ItemClick() {
             @Override
             public void onClick(View view, int position) {
-                startActivity(new Intent(MyDiary.this, MyDiaryPage.class));
+                Intent i = new Intent(MyDiary.this, MyDiaryPage.class);
+                i.putExtra("from", 1);
+                i.putExtra("position", position);
+                startActivity(i);
             }
         });
 

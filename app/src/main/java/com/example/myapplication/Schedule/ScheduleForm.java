@@ -70,9 +70,7 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
 //    private MapPoint mapPoint;
 
     NewPlace newPlace;
-
     private int overallXScroll = 0;
-
 
     DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
 
@@ -88,6 +86,9 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
         mapViewContainer = findViewById(R.id.scheduleForm_mapContainer);
         btn_diary.setOnClickListener(this);
         btn_save.setOnClickListener(this);
+
+        // 유저 이름
+//        header_name.setText(user.getName());
 
         // 맵 생성
         mapView = new MapView(this);
@@ -187,6 +188,8 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
                         if(position == sumOfSpots){
                             //position은 daycalculating 번째 데이(1부터 시작)
                             newPlace = NewPlace.getInstance();
+                            newPlace.sche_id = getIntent().getStringExtra("sche_id");
+                            newPlace.sche_pos = getIntent().getIntExtra("sche_pos", -1);
                             newPlace.setSelectedDay(dayCalculating);
                             Intent intent = new Intent(ScheduleForm.this, SearchMap.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);

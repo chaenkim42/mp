@@ -8,9 +8,10 @@ public class ScheduleDb {
     public String start_date, end_date; //format yyyy/MM/dd
     public String manager;
     public int period;
-    public ArrayList<User> participants;
     public ArrayList<DayDb> days;
-    public String[] diaries;
+    public ArrayList<DiaryDb> diaries;
+    public String sche_id;
+
 
     public ScheduleDb(String title,
                       String start_date,
@@ -22,14 +23,13 @@ public class ScheduleDb {
         this.end_date = end_date;
         this.period = period;
         this.manager = u_id;
-//        this.days = dayDbs;
     }
 
     public String getTitle(){
         return this.title;
     }
 
-    public void setDays(DayDb dayDb){
-        days.add(dayDb);
+    public void setDiaries(DiaryDb diaryDb){
+        this.diaries.add(diaryDb);
     }
 }

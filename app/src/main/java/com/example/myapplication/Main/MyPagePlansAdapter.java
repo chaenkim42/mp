@@ -10,17 +10,24 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.Database.ScheduleDb;
 import com.example.myapplication.Database.Trip;
+import com.example.myapplication.Database.User;
 import com.example.myapplication.R;
+import com.example.myapplication.Schedule.MyData;
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MyPagePlansAdapter extends RecyclerView.Adapter {
     List<Trip> tripList = new ArrayList<>();
     Context context;
     public TextView plantitle, plandates;
+    User user = User.getInstance();
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(View view){
@@ -28,9 +35,18 @@ public class MyPagePlansAdapter extends RecyclerView.Adapter {
         }
     }
 
-    public MyPagePlansAdapter(List<Trip> tripList, Context context){
-        this.tripList = tripList;
-        this.context = context;
+    public MyPagePlansAdapter(){
+        for(int i=0; i<user.scheduleDbs.size(); i++){
+            ScheduleDb temp = user.scheduleDbs.get(i);
+            Trip trip;
+            try{
+                trip = new Trip(temp.title, new SimpleDateFormat("yyyy/MM/dd").parse(temp.start_date), temp.period);
+            }catch (ParseException e){
+                e.printStackTrace();
+                trip = new Trip(temp.title, new Date(), temp.period);
+            }
+            tripList.add(trip);
+        }
     }
 
     @NonNull

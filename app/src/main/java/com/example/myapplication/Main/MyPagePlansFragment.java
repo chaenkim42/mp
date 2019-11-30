@@ -60,7 +60,7 @@ public class MyPagePlansFragment extends Fragment {
             }
         }
 
-        recyclerView.setAdapter(new MyPagePlansAdapter(trips, getActivity()));
+        recyclerView.setAdapter(new MyPagePlansAdapter());
     }
 
     @Override

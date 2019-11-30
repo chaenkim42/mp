@@ -1,6 +1,7 @@
 package com.example.myapplication.Schedule;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.Database.User;
 import com.example.myapplication.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +36,11 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 public void onClick(View view) {
                     int pos = getAdapterPosition();
                     if(pos != RecyclerView.NO_POSITION){
-
+                        String sche_id = user.scheduleDbs.get(pos).sche_id;
+                        Intent intent = new Intent(context, ScheduleForm.class);
+                        intent.putExtra("sche_id", sche_id);
+                        intent.putExtra("sche_pos", pos);
+                        context.startActivity(intent);
                     }
                 }
             });
@@ -45,7 +52,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         datas = new ArrayList<>();
 
         for(int i=0; i<user.scheduleDbs.size(); i++){
-            MyData myData = new MyData(user.scheduleDbs.get(i).getTitle(), R.drawable.loca2);
+            MyData myData = new MyData(user.scheduleDbs.get(i).title, R.drawable.loca2);
             datas.add(myData);
         }
 

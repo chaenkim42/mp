@@ -22,7 +22,7 @@ public class User {
     public ArrayList<String>  preferences = new ArrayList<>();
     private ArrayList<String>  locations = new ArrayList<>();
     public ArrayList<ScheduleDb> scheduleDbs = new ArrayList<>();
-    public ArrayList<Diary> diaries = new ArrayList<>();
+    public ArrayList<DiaryDb> diaries = new ArrayList<>();
     private Bitmap user_image= null;
 
     private User(){
@@ -48,7 +48,6 @@ public class User {
         this.user_image = img;
     }
 
-
     public void setSchedule(String schedule){
         this.schedules.add(schedule);
     }
@@ -56,9 +55,15 @@ public class User {
     public void setScheduleDB(ScheduleDb scheduleDB){
         this.scheduleDbs.add(scheduleDB);
     }
+
     public void setPreferences(String preference){
         this.preferences.add(preference);
     }
+
+    public void setDiaryDB(DiaryDb diaryDB){
+        this.diaries.add(diaryDB);
+    }
+
     public String getU_id(){ return this.u_id;}
 
     public String getEmail(){

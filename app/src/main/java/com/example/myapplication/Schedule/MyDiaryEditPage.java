@@ -11,15 +11,21 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.Database.Diary;
 import com.example.myapplication.Database.DiaryDb;
+import com.example.myapplication.Database.NewPlace;
+import com.example.myapplication.Database.User;
 import com.example.myapplication.R;
 import com.firebase.client.Firebase;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.InputStream;
 
@@ -32,6 +38,8 @@ public class MyDiaryEditPage extends AppCompatActivity implements View.OnClickLi
     Button savebtn;
     ImageView imageView;
     String key_diaries;
+    User user = User.getInstance();
+    NewPlace newPlace = NewPlace.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,17 +71,34 @@ public class MyDiaryEditPage extends AppCompatActivity implements View.OnClickLi
                 // 디비에 저장
                 DatabaseReference diary_ref = FirebaseDatabase.getInstance().getReference().child("diaries");
                 if(key_diaries.equals("0")){
-                    // 기존 diaries 없는 상황
-//                    Diary diary = new Diary(title.getText().toString(), content.getText().toString());
-//                    diary_ref.push().setValue(new DiaryDb(sche_id, diary));
+//                     기존 diaries 없는 상황
+                    final Diary diary = new Diary(title.getText().toString(), content.getText().toString());
+                    DatabaseReference temp = diary_ref.push();
+                    temp.setValue(new DiaryDb(user.getU_id(),newPlace.sche_id));
+                    temp.child("diary").push().setValue(diary);
+                    temp.child("user").setValue(user.getU_id());
+
+                    Diary diary1 = new Diary(title.getText().toString(),
+                            content.getText().toString());
+                    if (newPlace.sche_pos==0){
+                        user.diaries.add(new DiaryDb(user.getU_id(), newPlace.sche_id));
+                    }
+                    user.diaries.get(newPlace.sche_pos).diaries.add(diary1);
+
+                    // 화면 전환
+                    Intent i = new Intent(MyDiaryEditPage.this, MyDiaryPage.class);
+                    i.putExtra("title", title.getText().toString());
+                    i.putExtra("content", content.getText().toString());
+                    i.putExtra("from", 0);
+                    startActivity(i);
 
                 }else{
                     // 기존 diaries 있음
                 }
 
+                // 유저 정보 갱신
 
-                Intent i = new Intent(MyDiaryEditPage.this, MyDiaryPage.class);
-                startActivity(i);
+
                 finish();
                 break;
 

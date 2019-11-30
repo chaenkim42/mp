@@ -24,6 +24,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.Database.DayDb;
+import com.example.myapplication.Database.Diary;
+import com.example.myapplication.Database.DiaryDb;
 import com.example.myapplication.Database.Place;
 import com.example.myapplication.Database.ScheduleDb;
 import com.example.myapplication.Database.User;
@@ -74,6 +76,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setScheDB();
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -109,7 +112,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
         adapter = new ScheduleAdapter(this, 0);
         recyclerView.setAdapter(adapter);
-
+//        Log.d("schedules ", user.scheduleDbs.get(0).title);
     }
 
     private void getAppKeyHash() {
@@ -160,5 +163,101 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 startActivity(new Intent(Main.this, AskScheduleDate.class));
                 break;
         }
+    }
+
+    public void setScheDB(){
+        DatabaseReference schedules = FirebaseDatabase.getInstance().getReference().child("schedules");
+        schedules.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Iterator<DataSnapshot> child = dataSnapshot.getChildren().iterator(); // 스케줄
+                while(child.hasNext()){
+                    DataSnapshot tmp = child.next();
+                    //유저 스케줄 아이디랑 일치하면 넣는다
+                    if(user.getSchedules().contains(tmp.getKey())){
+
+                        ScheduleDb scheduleDb = new ScheduleDb(tmp.child("title").getValue().toString(),
+                                tmp.child("start_date").getValue().toString(),
+                                tmp.child("end_date").getValue().toString(),
+                                Integer.parseInt(tmp.child("period").getValue().toString()),
+                                user.getU_id());
+                        scheduleDb.sche_id = tmp.getKey();
+                        user.setScheduleDB(scheduleDb);
+
+                        Iterator<DataSnapshot> c = tmp.child("days").getChildren().iterator(); // 데이
+                        ArrayList<Place> places;
+                        while(c.hasNext()){
+                            DataSnapshot tmp2 = c.next(); //데이 하나
+
+                            Iterator<DataSnapshot> tmp_spot = tmp2.child("spots").getChildren().iterator(); // 스팟
+                            places = new ArrayList<>();
+                            while(tmp_spot.hasNext()){
+                                DataSnapshot tmp3 = tmp_spot.next(); //스팟 객체 하나
+                                places.add(new Place(tmp3.child("name").getValue().toString(),
+                                        Double.valueOf(tmp3.child("latitude").getValue().toString()),
+                                        Double.valueOf(tmp3.child("longitude").getValue().toString())));
+                                Log.d("spot name: ", tmp3.child("name").getValue().toString());
+                            }
+
+                            try{
+                                scheduleDb.days.add(new DayDb(Integer.parseInt(tmp2.child("order").getValue().toString()), places));
+                            }catch(Exception e) {
+                                Log.d("error: ", e.getMessage());
+                            }
+
+                            Intent i = new Intent(getApplicationContext(), Main.class);
+                            startActivity(i);
+                            break;
+                        }
+//                        setDiaryDB();
+
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void setDiaryDB(){
+
+        DatabaseReference diaries_ref = FirebaseDatabase.getInstance().getReference().child("diaries");
+        diaries_ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Iterator<DataSnapshot> child = dataSnapshot.getChildren().iterator(); // 스케줄 당 다이어리들
+                while(child.hasNext()){
+                    DataSnapshot tmp = child.next(); //스케줄이랑 같음
+                    //유저 아이디끼리 같으면
+                    String sche_id = tmp.child("user").getValue().toString();
+                    if(user.getSchedules().contains(sche_id)){
+                        Iterator<DataSnapshot> temp = tmp.child("diary").getChildren().iterator();
+                        while(temp.hasNext()){
+                            DataSnapshot d = temp.next();
+                            Diary diary = new Diary(d.child("title").getValue().toString(),
+                                    d.child("contents_text").getValue().toString());
+                            DiaryDb diaryDb = new DiaryDb(user.getU_id(), sche_id);
+                            diaryDb.diaries.add(diary);
+                            user.diaries.add(diaryDb);
+                        }
+
+//                        Intent i = new Intent(getApplicationContext(), Main.class);
+//                        startActivity(i);
+                        break;
+
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }
