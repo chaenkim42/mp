@@ -93,26 +93,22 @@ public class MyPagePlansAdapter extends RecyclerView.Adapter {
         drawables[7] = R.drawable.location7;
 //        Random r = new Random();
 //        int random = r.nextInt(8);
-        for(int i=0; i<8; i++){
-            if(i==position){
-                planPhoto.setImageResource(drawables[i]);
-                planPhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                break;
-            }
-        }
-        plantitle = (TextView) holder.itemView.findViewById(R.id.userplansitem_plantitle);
-        plandates = (TextView) holder.itemView.findViewById(R.id.userplansitem_plandates);
-        plantitle.setText(tripList.get(position).getTitle());
-        plandates.setText(tripList.get(position).s_date);
         switch (type){
             case 0:
                 break;
             case 1:
+                for(int i=0; i<8; i++){
+                    if(i==position){
+                        planPhoto.setImageResource(drawables[i]);
+                        planPhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        break;
+                    }
+                }
                 plantitle = (TextView) holder.itemView.findViewById(R.id.userplansitem_plantitle);
                 plandates = (TextView) holder.itemView.findViewById(R.id.userplansitem_plandates);
                 plantitle.setText(tripList.get(position).getTitle());
                 plandates.setText("2019/12/24");
-
+                //plandates.setText(tripList.get(position).s_date);
                 break;
         }
 
