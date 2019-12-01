@@ -64,7 +64,6 @@ public class MyPageInfographFragment extends Fragment {
         mRadarView.setMaxValue(10);
         mRadarView.setData(mData);
 //        mRadarView.setSelectedValue(30);
-        Toast.makeText(getActivity(), String.valueOf(mRadarView.getCircleColor()), Toast.LENGTH_SHORT).show();
     }
 
     @Override

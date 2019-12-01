@@ -21,24 +21,31 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.Database.NewPlace;
 import com.example.myapplication.Database.Place;
 import com.example.myapplication.R;
 import com.example.myapplication.Schedule.Schedule;
+import com.example.myapplication.Schedule.ScheduleAdapter;
 import com.example.myapplication.Schedule.ScheduleForm;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -133,7 +140,7 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_map);
-
+        setDrawer();
 
         checkBoolean = SearchFilter.getCheckBoolean();
 //        Log.d("filter test map", String.valueOf(checkBoolean[0])+","+
@@ -811,6 +818,33 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
 //                infoContainer.setVisibility(View.INVISIBLE);
                 break;
         }
+    }
+
+    public void setDrawer(){
+        final DrawerLayout drawerLayout = findViewById(R.id.drawerlayout_map);
+        final NavigationView navigationView = findViewById(R.id.navigationview_map);
+
+        //drawer toggle 세트로 drawerlayout, toolbar 등 해서 생성 - 드로어 여닫기 완성
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.closed);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+
+        //
+        ImageView drawer_opener = findViewById(R.id.drawer_opener_map);
+        drawer_opener.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.openDrawer(navigationView);
+            }
+        });
+
+
+        //drawer recyclerview
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        ((LinearLayoutManager) layoutManager).setOrientation(RecyclerView.VERTICAL);
+        RecyclerView drawer_recyclerview = findViewById(R.id.drawer_recyclerview_map);
+        drawer_recyclerview.setLayoutManager(layoutManager);
+        ScheduleAdapter scheduleAdapter = new ScheduleAdapter(this, 2);
+        drawer_recyclerview.setAdapter(scheduleAdapter);
     }
 }
 

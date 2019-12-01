@@ -95,7 +95,6 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
         mapViewContainer.addView(mapView);
 
 
-        // 넘어오는 인텐트 받기 -- 새로 만드는거 아니면 인텐트로 받아오는거 없는데 머어쩌지......
         checkDaySelected();
 //        intentFunc();
         //tmp user
@@ -111,10 +110,6 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
 
         // 드로어 달기
         setDrawer();
-
-
-
-
 
     }
 
@@ -229,6 +224,7 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
                     }
                 }
             }
+
 
             recyclerView.setAdapter(expandableListAdapter);
 

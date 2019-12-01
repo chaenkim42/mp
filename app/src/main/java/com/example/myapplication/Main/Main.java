@@ -73,7 +73,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //setScheDB();
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -95,7 +94,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         recyclerView = findViewById(R.id.recyclerView);
 
         name.setText(user.getName());
-
+        profile.setImageBitmap(user.getUser_image());
         searchBtn.setOnClickListener(this);
         mytripBtn.setOnClickListener(this);
         addScheBtn.setOnClickListener(this);

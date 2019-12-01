@@ -30,6 +30,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     TextView main_title, drawer_schedule_title;
     ImageView drawer_schedule_img, main_img;
     User user = User.getInstance();
+    NewPlace newPlace = NewPlace.getInstance();
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ViewHolder(View view){
@@ -51,6 +52,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         }
                         newPlace.setSelectedTripName(user.scheduleDbs.get(pos).title);
                         context.startActivity(intent);
+
                     }
                 }
             });

@@ -123,7 +123,7 @@
             android:layout_marginLeft="13dp"
             android:layout_marginTop="50dp"
             app:civ_border_width="0dp"
-            android:src="@drawable/invalid_name" />
+            android:src="@drawable/profile_pic" />
         
         <TextView
             android:layout_marginLeft="20dp"
@@ -140,27 +140,9 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"/>
 
-        <LinearLayout
-            android:layout_marginTop="172dp"
-            android:layout_marginLeft="12.2dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.mikhaellopez.circularimageview.CircularImageView
-                app:civ_border_width="0dp"
-                android:src="@drawable/btn_floating"
-                android:layout_width="60dp"
-                android:layout_height="60dp" />
-            <TextView
-                android:text="새로운 리스트 만들기"
-                android:layout_marginLeft="18dp"
-                android:layout_marginTop="20dp"
-                android:layout_width="140dp"
-                android:layout_height="match_parent" />
-        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginTop="233dp"
+            android:layout_marginTop="170dp"
             android:id="@+id/drawer_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

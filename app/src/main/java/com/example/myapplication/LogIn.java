@@ -77,16 +77,17 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void onClick(View view){
+        final Intent i = new Intent(LogIn.this, Main.class);
         switch (view.getId()){
             case R.id.btn_login:
                 final String given_email = email_field.getText().toString();
                 final String given_password = password_field.getText().toString();
 
                 myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    Iterator<DataSnapshot> child;
+
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                child = dataSnapshot.getChildren().iterator();
+                                Iterator<DataSnapshot> child = dataSnapshot.getChildren().iterator();
                                 while(child.hasNext()){
                                     DataSnapshot temp = child.next(); //각각의 객체
                                     current = temp.getKey();
@@ -193,8 +194,8 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
                                         }
                                     }
                                 }
-                                Intent i = new Intent(LogIn.this, Main.class);
                                 startActivity(i);
+
                             }
 
                             @Override
@@ -202,9 +203,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
 
                             }
                         });
-
                 break;
-
             case R.id.btn_ask_sign_up:
                 Intent intent = new Intent(LogIn.this, SignUp.class);
                 startActivity(intent);

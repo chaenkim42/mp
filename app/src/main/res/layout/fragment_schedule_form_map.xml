@@ -39,7 +39,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_weight="1"
-        android:background="@drawable/tangerine"
+        android:background="@drawable/tangja_icon"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_scheduleFormMap_editText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/fragment_scheduleFormMap_editText"
