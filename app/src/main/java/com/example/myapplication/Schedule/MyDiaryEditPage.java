@@ -29,7 +29,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.InputStream;
 
-import static com.example.myapplication.Schedule.MyDiaryPage.diaryexample;
 
 public class MyDiaryEditPage extends AppCompatActivity implements View.OnClickListener {
 
@@ -40,6 +39,7 @@ public class MyDiaryEditPage extends AppCompatActivity implements View.OnClickLi
     String key_diaries;
     User user = User.getInstance();
     NewPlace newPlace = NewPlace.getInstance();
+    public static Bitmap img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,19 +85,18 @@ public class MyDiaryEditPage extends AppCompatActivity implements View.OnClickLi
                     }
                     user.diaries.get(newPlace.sche_pos).diaries.add(diary1);
 
-                    // 화면 전환
-                    Intent i = new Intent(MyDiaryEditPage.this, MyDiaryPage.class);
-                    i.putExtra("title", title.getText().toString());
-                    i.putExtra("content", content.getText().toString());
-                    i.putExtra("from", 0);
-                    startActivity(i);
+
 
                 }else{
                     // 기존 diaries 있음
                 }
 
-                // 유저 정보 갱신
-
+                    Intent i = new Intent(MyDiaryEditPage.this, MyDiaryPage.class);
+                    i.putExtra("title", title.getText().toString());
+                    i.putExtra("content", content.getText().toString());
+                    i.putExtra("from", 0);
+                    startActivity(i);
+                    finish();
 
                 finish();
                 break;
@@ -122,7 +121,7 @@ public class MyDiaryEditPage extends AppCompatActivity implements View.OnClickLi
                 try {
                     // 선택한 이미지에서 비트맵 생성
                     InputStream in = getContentResolver().openInputStream(data.getData());
-                    Bitmap img = BitmapFactory.decodeStream(in);
+                    img = BitmapFactory.decodeStream(in);
                     in.close();
                     // 이미지뷰에 세팅
                     imageView.setImageBitmap(img);
