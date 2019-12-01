@@ -140,7 +140,7 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_map);
-        setDrawer();
+        //setDrawer();
 
         checkBoolean = SearchFilter.getCheckBoolean();
 //        Log.d("filter test map", String.valueOf(checkBoolean[0])+","+
@@ -820,32 +820,34 @@ public class SearchMap extends AppCompatActivity implements MapView.CurrentLocat
         }
     }
 
-    public void setDrawer(){
-        final DrawerLayout drawerLayout = findViewById(R.id.drawerlayout_map);
-        final NavigationView navigationView = findViewById(R.id.navigationview_map);
-
-        //drawer toggle 세트로 drawerlayout, toolbar 등 해서 생성 - 드로어 여닫기 완성
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.closed);
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-
-        //
-        ImageView drawer_opener = findViewById(R.id.drawer_opener_map);
-        drawer_opener.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.openDrawer(navigationView);
-            }
-        });
-
-
-        //drawer recyclerview
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        ((LinearLayoutManager) layoutManager).setOrientation(RecyclerView.VERTICAL);
-        RecyclerView drawer_recyclerview = findViewById(R.id.drawer_recyclerview_map);
-        drawer_recyclerview.setLayoutManager(layoutManager);
-        ScheduleAdapter scheduleAdapter = new ScheduleAdapter(this, 2);
-        drawer_recyclerview.setAdapter(scheduleAdapter);
-    }
+//    public void setDrawer(){
+//        final DrawerLayout drawerLayout = findViewById(R.id.drawerlayout_map);
+//        final NavigationView navigationView = findViewById(R.id.navigationview_map);
+//
+//        //drawer toggle 세트로 drawerlayout, toolbar 등 해서 생성 - 드로어 여닫기 완성
+//        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.closed);
+//        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+//
+//        //
+//        ImageView drawer_opener = findViewById(R.id.drawer_opener_map);
+//        drawer_opener.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                drawerLayout.openDrawer(navigationView);
+//            }
+//        });
+//
+//
+//        //drawer recyclerview
+//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+//        ((LinearLayoutManager) layoutManager).setOrientation(RecyclerView.VERTICAL);
+//        RecyclerView drawer_recyclerview = findViewById(R.id.drawer_recyclerview_map);
+//        drawer_recyclerview.setLayoutManager(layoutManager);
+//        ScheduleAdapter scheduleAdapter = new ScheduleAdapter(this, 2);
+//        drawer_recyclerview.setAdapter(scheduleAdapter);
+//
+//
+//    }
 }
 
 

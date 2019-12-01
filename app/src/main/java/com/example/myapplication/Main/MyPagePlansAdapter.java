@@ -1,10 +1,12 @@
 package com.example.myapplication.Main;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,15 +19,18 @@ import com.example.myapplication.R;
 import com.example.myapplication.Schedule.MyData;
 
 
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 public class MyPagePlansAdapter extends RecyclerView.Adapter {
     List<Trip> tripList = new ArrayList<>();
     Context context;
+    public ImageView planPhoto;
     public TextView plantitle, plandates;
     User user = User.getInstance();
 
@@ -61,6 +66,25 @@ public class MyPagePlansAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         //각 위치에 문자열 세팅
+        planPhoto = (ImageView)holder.itemView.findViewById(R.id.userplansitem_imageview);
+        int[] drawables = new int[8];
+        drawables[0] = R.drawable.location0;
+        drawables[1] = R.drawable.location1;
+        drawables[2] = R.drawable.location2;
+        drawables[3] = R.drawable.location3;
+        drawables[4] = R.drawable.location4;
+        drawables[5] = R.drawable.location5;
+        drawables[6] = R.drawable.location6;
+        drawables[7] = R.drawable.location7;
+//        Random r = new Random();
+//        int random = r.nextInt(8);
+        for(int i=0; i<8; i++){
+            if(i==position){
+                planPhoto.setImageResource(drawables[i]);
+                planPhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                break;
+            }
+        }
         plantitle = (TextView) holder.itemView.findViewById(R.id.userplansitem_plantitle);
         plandates = (TextView) holder.itemView.findViewById(R.id.userplansitem_plandates);
         plantitle.setText(tripList.get(position).getTitle());

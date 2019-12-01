@@ -105,19 +105,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
-            android:id="@+id/main_addSche_btn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="8dp"
-            android:background="@color/WHITE"
-            app:layout_constraintBottom_toBottomOf="@+id/main_mytrip_btn"
-            app:layout_constraintEnd_toStartOf="@+id/main_seemoreplanBtn"
-            app:layout_constraintTop_toTopOf="@+id/main_mytrip_btn"
-            app:srcCompat="@drawable/addlist_plus" />
-
         <Button
-            android:id="@+id/main_seemoreplanBtn"
+            android:id="@+id/main_addSche_btn"
             android:layout_width="23dp"
             android:layout_height="23dp"
             android:layout_marginEnd="18dp"
@@ -143,11 +132,11 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:layout_weight="5"
                     android:id="@+id/recyclerView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp" />
+                    android:layout_margin="16dp"
+                    android:layout_weight="5" />
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -185,23 +174,30 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
             android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/imageView3"
-                android:layout_width="120dp"
+                android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
+                android:scaleType="centerCrop"
                 app:srcCompat="@drawable/location3" />
 
             <ImageView
                 android:id="@+id/imageView4"
-                android:layout_width="120dp"
+                android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
+                android:scaleType="centerCrop"
                 app:srcCompat="@drawable/location5" />
         </LinearLayout>
 

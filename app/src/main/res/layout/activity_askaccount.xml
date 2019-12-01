@@ -54,7 +54,7 @@
                 android:ems="10"
                 android:hint="이메일"
                 android:inputType="textNoSuggestions"
-                android:text="cgghaen@gmail.com"
+                android:text="chaen1111@gmail.com"
                 android:textColor="#808080"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -12,6 +12,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -121,7 +122,7 @@ public class AskScheduleDate extends AppCompatActivity implements View.OnClickLi
                 try {
                     Date startDate = new SimpleDateFormat("yyyy/MM/dd").parse(String.valueOf(start_date.getText()));
                     Date endDate  =new SimpleDateFormat("yyyy/MM/dd").parse(String.valueOf(finish_date.getText()));
-                    int period = (int)(endDate.getTime() - startDate.getTime())/(24*60*60*1000)+1;
+                    int period = Math.abs((int)(startDate.getTime() - endDate.getTime())/(24*60*60*1000)+1);
                     ScheduleDb tmp = new ScheduleDb(title.getText().toString(),
                                                      String.valueOf(start_date.getText()),
                                                     String.valueOf(finish_date.getText()),
@@ -145,15 +146,16 @@ public class AskScheduleDate extends AppCompatActivity implements View.OnClickLi
                     userRef.child("schedules").push().setValue(key);
 
                     // 유저한테 스케줄 새로 넣음
-                    user.scheduleDbs.add(new ScheduleDb(title.toString(), start_date.toString(),
-                            endDate.toString(), period, user.getU_id()));
+                    user.scheduleDbs.add(new ScheduleDb(title.getText().toString(), start_date.getText().toString(),
+                            finish_date.getText().toString(), period, user.getU_id()));
                     user.getSchedules().add(key);
+
 
                     NewPlace newPlace = NewPlace.getInstance();
                     newPlace.setSelectedTripName(title.getText().toString());
 
                     Intent intent = new Intent(AskScheduleDate.this, ScheduleForm.class);
-                    intent.putExtra("sche_id", key);
+                    finish();
                     startActivity(intent);
 
                 } catch (ParseException e) {
@@ -172,5 +174,10 @@ public class AskScheduleDate extends AppCompatActivity implements View.OnClickLi
         year = Integer.parseInt(yearf.format(current));
         month = Integer.parseInt(monthf.format(current));
         day = Integer.parseInt(dayf.format(current));
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(this, "스케줄 추가를 완료해주세요.", Toast.LENGTH_SHORT).show();
     }
 }

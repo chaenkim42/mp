@@ -27,6 +27,7 @@ import com.example.myapplication.Database.Place;
 import com.example.myapplication.Database.Trip;
 import com.example.myapplication.Database.User;
 import com.example.myapplication.Database.UserDb;
+import com.example.myapplication.Main.Main;
 import com.example.myapplication.R;
 import com.example.myapplication.Search.SearchMap;
 import com.google.android.material.navigation.NavigationView;
@@ -473,5 +474,12 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
     @Override
     public void addBtnClickedInAdapter(boolean isClicked) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ScheduleForm.this, Main.class);
+        finish();
+        startActivity(intent);
     }
 }

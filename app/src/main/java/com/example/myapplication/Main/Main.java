@@ -58,7 +58,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     private Button searchBtn;
     private Button mytripBtn;
     private TextView name;
-    private ImageButton addScheBtn;
+    private Button addScheBtn;
     private ImageView profile;
 
     User user = User.getInstance();
@@ -157,6 +157,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 break;
             case R.id.main_addSche_btn:
                 startActivity(new Intent(Main.this, AskScheduleDate.class));
+                finish();
                 break;
         }
     }

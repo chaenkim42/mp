@@ -3,6 +3,7 @@ package com.example.myapplication.Schedule;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +66,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         for(int i=0; i<user.scheduleDbs.size(); i++){
             MyData myData = new MyData(user.scheduleDbs.get(i).title, R.drawable.loca2);
+            Log.d("schedule test",String.valueOf(user.scheduleDbs.get(i).title));
             datas.add(myData);
         }
 
@@ -93,25 +95,55 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        // 각 레이아웃의 성분들에 데이터로 받아온 각종 자료들을 넣어줌
+        // 각 레이아웃의 성분들에 데이터로 받아온 각종 자료들을 넣어줌\
+        int[] drawables = new int[8];
+        drawables[0] = R.drawable.location0;
+        drawables[1] = R.drawable.location1;
+        drawables[2] = R.drawable.location2;
+        drawables[3] = R.drawable.location3;
+        drawables[4] = R.drawable.location4;
+        drawables[5] = R.drawable.location5;
+        drawables[6] = R.drawable.location6;
+        drawables[7] = R.drawable.location7;
         switch (type){
             case 0: //
                 main_title = holder.itemView.findViewById(R.id.schedule_title);
                 main_title.setText(datas.get(position).getText());
                 main_img = holder.itemView.findViewById(R.id.schedule_img);
-                main_img.setImageResource(datas.get(position).getImgNum());
+//                main_img.setImageResource(datas.get(position).getImgNum());
+                for(int i=0; i<8; i++){
+                    if(i==position){
+                        main_img.setImageResource(drawables[i]);
+                        main_img.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        break;
+                    }
+                }
                 break;
             case 1:
                 main_title = holder.itemView.findViewById(R.id.schedule_title);
                 main_title.setText(datas.get(position).getText());
                 main_img = holder.itemView.findViewById(R.id.schedule_img);
-                main_img.setImageResource(datas.get(position).getImgNum());
+//                main_img.setImageResource(datas.get(position).getImgNum());
+                for(int i=0; i<8; i++){
+                    if(i==position){
+                        main_img.setImageResource(drawables[i]);
+                        main_img.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        break;
+                    }
+                }
                 break;
             case 2:
                 drawer_schedule_title = holder.itemView.findViewById(R.id.drawer_schedule_title);
                 drawer_schedule_img = holder.itemView.findViewById(R.id.drawer_schedule_img);
                 drawer_schedule_title.setText(datas.get(position).getText());
-                drawer_schedule_img.setImageResource(datas.get(position).getImgNum());
+//                drawer_schedule_img.setImageResource(datas.get(position).getImgNum());
+                for(int i=0; i<8; i++){
+                    if(i==position){
+                        drawer_schedule_img.setImageResource(drawables[i]);
+                        drawer_schedule_img.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        break;
+                    }
+                }
                 break;
         }
     }
