@@ -39,15 +39,11 @@ public class MyDiary extends AppCompatActivity implements View.OnClickListener {
 
         List<Diary> tmpDiaryList = new ArrayList<>();
 
-        for(int i=0; i<user.diaries.size(); i++){
-
+        if(getIntent().hasExtra("save")){
+            Diary d = new Diary(getIntent().getStringExtra("title_d"), getIntent().getStringExtra("content_d"));
+            tmpDiaryList.add(d);
         }
-        Diary d = new Diary("호텔 조식", "생각보다 너무 맛있었음\n다시 올만한 곳\n아싸사사샷");
-        Diary dd = new Diary("여수 세계 박람회", "너무 너무 재밌었당\n블라블라\n살라살라 쿵따리");
-        Diary ddd = new Diary("한화 아쿠아 플라넷", "");
-        tmpDiaryList.add(d);
-        tmpDiaryList.add(dd);
-        tmpDiaryList.add(ddd);
+
 
         RecyclerView recyclerView = findViewById(R.id.mydiary_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager( this, RecyclerView.VERTICAL, false));
@@ -79,6 +75,7 @@ public class MyDiary extends AppCompatActivity implements View.OnClickListener {
                     // 키값으로 diraies 의 키값을 보내준다
                 }
                 startActivity(intent);
+                finish();
                 break;
             case R.id.mydiary_btn_edit:
                 // 삭제할수있는게 뜸

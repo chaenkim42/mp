@@ -28,9 +28,11 @@ import java.util.List;
 import java.util.Random;
 
 public class MyPagePlansAdapter extends RecyclerView.Adapter {
+    int type;
     List<Trip> tripList = new ArrayList<>();
     Context context;
     public ImageView planPhoto;
+    TextView no_sche;
     public TextView plantitle, plandates;
     User user = User.getInstance();
 
@@ -52,6 +54,9 @@ public class MyPagePlansAdapter extends RecyclerView.Adapter {
             }
             tripList.add(trip);
         }
+
+        if (tripList.isEmpty()) type = 0;
+        else type = 1;
     }
 
     @NonNull
@@ -59,8 +64,18 @@ public class MyPagePlansAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // userplan_itemcard layout을 화면에 뿌려주고 holder에 연결
         View view;
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.userplans_itemcard, parent, false);
-        return new ViewHolder(view);
+        switch (type){
+            case 1:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.userplans_itemcard, parent, false);
+                return new ViewHolder(view);
+
+            case 0:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.no_sche_itemcard, parent, false);
+                return new ViewHolder(view);
+
+        }
+
+        return null;
     }
 
     @Override
@@ -89,6 +104,18 @@ public class MyPagePlansAdapter extends RecyclerView.Adapter {
         plandates = (TextView) holder.itemView.findViewById(R.id.userplansitem_plandates);
         plantitle.setText(tripList.get(position).getTitle());
         plandates.setText(tripList.get(position).s_date);
+        switch (type){
+            case 0:
+                break;
+            case 1:
+                plantitle = (TextView) holder.itemView.findViewById(R.id.userplansitem_plantitle);
+                plandates = (TextView) holder.itemView.findViewById(R.id.userplansitem_plandates);
+                plantitle.setText(tripList.get(position).getTitle());
+                plandates.setText("2019/12/24");
+
+                break;
+        }
+
     }
 
     @Override

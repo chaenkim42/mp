@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
-        android:text="xx:xx ~ xx:xx"
+        android:text=""
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/mydiarypage_image"
         app:layout_constraintTop_toTopOf="parent" />

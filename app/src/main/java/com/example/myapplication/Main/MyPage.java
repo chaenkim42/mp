@@ -19,7 +19,7 @@ import com.example.myapplication.R;
 
 public class MyPage extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
-    TextView name;
+    TextView name, no_sche;
     ImageView user_img;
     public final static int FRAGMENT1 = 1;
     public final static int FRAGMENT2 = 2;
@@ -31,10 +31,10 @@ public class MyPage extends AppCompatActivity implements CompoundButton.OnChecke
         setContentView(R.layout.activity_mypage);
 
         User user = User.getInstance();
+        no_sche = findViewById(R.id.no_sche);
         name = findViewById(R.id.mypage_username);
         user_img = findViewById(R.id.mypage_profileImg);
         name.setText(user.getName());
-        user_img.setImageBitmap(user.getUser_image());
 
         RadioButton planTap = (RadioButton) findViewById(R.id.mypage_userplan_tap);
         RadioButton prefTap = (RadioButton) findViewById(R.id.mypage_userpref_tap);

@@ -22,6 +22,7 @@ public class MyDiary_Adapter extends RecyclerView.Adapter {
     public TextView title, contents_text;
     public ImageView rep_photo;
     private ItemClick itemClick;
+    int type;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(View view){
@@ -44,6 +45,8 @@ public class MyDiary_Adapter extends RecyclerView.Adapter {
     public MyDiary_Adapter(List<Diary> diaryList, Context context){
         this.diaryList = diaryList;
         this.context = context;
+        if(diaryList.isEmpty()) type =0;
+        else type = 1;
     }
 
     public interface ItemClick{
@@ -60,19 +63,34 @@ public class MyDiary_Adapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // activity_mydiary_cardview layout을 화면에 뿌려주고 holder에 연결
         View view;
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_mydiary_cardview, parent, false);
-        return new ViewHolder(view);
+        switch (type){
+            case 0:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.no_diary, parent, false);
+                return new ViewHolder(view);
+            case 1:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_mydiary_cardview, parent, false);
+                return new ViewHolder(view);
+        }
+        return null;
+
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        title = (TextView) holder.itemView.findViewById(R.id.mydiary_cardview_title);
-        contents_text = (TextView) holder.itemView.findViewById(R.id.mydiary_cardview_content);
-        rep_photo = (ImageView) holder.itemView.findViewById(R.id.mydiary_cardview_photobox);
-        title.setText(diaryList.get(position).title);
-        contents_text.setText(diaryList.get(position).contents_text);
-        rep_photo.setImageResource(R.drawable.photobox_empty);
-        rep_photo.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        switch (type){
+            case 0:
+                break;
+            case 1:
+                title = (TextView) holder.itemView.findViewById(R.id.mydiary_cardview_title);
+                contents_text = (TextView) holder.itemView.findViewById(R.id.mydiary_cardview_content);
+                rep_photo = (ImageView) holder.itemView.findViewById(R.id.mydiary_cardview_photobox);
+                title.setText(diaryList.get(position).title);
+                contents_text.setText(diaryList.get(position).contents_text);
+                rep_photo.setImageBitmap(MyDiaryEditPage.img);
+                rep_photo.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                break;
+        }
+
     }
 
     @Override

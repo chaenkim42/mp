@@ -71,6 +71,8 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
 
         this.type = viewType;
+
+        if(datas.isEmpty()) this.type = 3;
         // 어댑터를 생성할때 뷰타입을 받아온다 - 뷰 홀더에 레이아웃 인플레이트 할때 다른 종류로 나눠줌
     }
 
@@ -89,6 +91,10 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             case 2: // drawer_recyclerview
                 view = LayoutInflater.from(context).inflate(R.layout.item_cardview, parent, false);
                 return new ViewHolder(view);
+            case 3: // 스케줄 없는 경우
+                view = LayoutInflater.from(context).inflate(R.layout.no_sche_itemcard, parent, false);
+                return new ViewHolder(view);
+
         }
         return null;
     }
@@ -108,7 +114,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         switch (type){
             case 0: //
                 main_title = holder.itemView.findViewById(R.id.schedule_title);
-                main_title.setText(datas.get(position).getText());
+                main_title.setText(datas.get(position).text);
                 main_img = holder.itemView.findViewById(R.id.schedule_img);
 //                main_img.setImageResource(datas.get(position).getImgNum());
                 for(int i=0; i<8; i++){
@@ -144,6 +150,8 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         break;
                     }
                 }
+                break;
+            case 3:
                 break;
         }
     }
