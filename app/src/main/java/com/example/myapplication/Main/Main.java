@@ -94,7 +94,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         recyclerView = findViewById(R.id.recyclerView);
 
         name.setText(user.getName());
-        profile.setImageBitmap(user.getUser_image());
+//        profile.setImageBitmap(user.getUser_image());
         searchBtn.setOnClickListener(this);
         mytripBtn.setOnClickListener(this);
         addScheBtn.setOnClickListener(this);

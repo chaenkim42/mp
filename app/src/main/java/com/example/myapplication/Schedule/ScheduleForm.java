@@ -132,8 +132,15 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
 
         //final LinearLayoutManager manager = (LinearLayoutManager)recyclerView.getLayoutManager();
 
+        int numofplaces=0;
+        for(int i=0; i<thisTrip.getPeriod(); i++){
+            numofplaces += thisTrip.getDays().get(i).getSpots().size();
+        }
         if(thisTrip.getPeriod()>0){
             setMapPOI(0);
+        }else if(thisTrip.getPeriod()==0 || numofplaces==0){
+            mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.555212, 126.970573), false); //서울역
+            mapView.setZoomLevel(3, false);
         }
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -273,7 +280,7 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
     public void intentFunc(){
         newPlace = NewPlace.getInstance();
         Log.d("newPlace name", newPlace.getSelectedTripName());
-        //newPlace.setSelectedTripName("오오");//임시
+        //newPlace.setSelectedTripName("55");//임시
         if(newPlace.getSelectedTripName() != "tmp") {
             title_str = newPlace.getSelectedTripName();
             DatabaseReference schedulesRef = myRef.child("schedules");
@@ -362,43 +369,6 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
                 int padding = 100; //px
                 mapView.moveCamera(CameraUpdateFactory.newMapPointBounds(mapPointBounds, padding));
             }
-//        Place place1 = new Place("여수세계박람회 크루즈공원", 34.753264, 127.754638);
-//        Place place2 = new Place("한화아쿠아플라넷 여수", 34.746487, 127.748342);
-//        Place place3 = new Place("오동도 유람선터미널", 34.740861, 127.755591);
-//
-//        MapPOIItem marker1 = new MapPOIItem();
-//        MapPOIItem marker2 = new MapPOIItem();
-//        MapPOIItem marker3 = new MapPOIItem();
-//        marker1.setItemName(place1.getName());
-//        marker2.setItemName(place2.getName());
-//        marker3.setItemName(place3.getName());
-//        marker1.setMapPoint(MapPoint.mapPointWithGeoCoord(place1.getLatitude(), place1.getLongitude()));
-//        marker2.setMapPoint(MapPoint.mapPointWithGeoCoord(place2.getLatitude(), place2.getLongitude()));
-//        marker3.setMapPoint(MapPoint.mapPointWithGeoCoord(place3.getLatitude(), place3.getLongitude()));
-//        marker1.setMarkerType(MapPOIItem.MarkerType.BluePin);
-//        marker2.setMarkerType(MapPOIItem.MarkerType.BluePin);
-//        marker3.setMarkerType(MapPOIItem.MarkerType.BluePin);
-//        marker1.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
-//        marker2.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
-//        marker3.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
-//
-//        mapView.addPOIItem(marker1);
-//        mapView.addPOIItem(marker2);
-//        mapView.addPOIItem(marker3);
-//
-//        MapPolyline polyline = new MapPolyline();
-//        polyline.setTag(1000);
-//        polyline.setLineColor(Color.argb(128, 255, 51, 0));
-//        polyline.addPoint(MapPoint.mapPointWithGeoCoord(place1.getLatitude(), place1.getLongitude()));
-//        polyline.addPoint(MapPoint.mapPointWithGeoCoord(place2.getLatitude(), place2.getLongitude()));
-//        polyline.addPoint(MapPoint.mapPointWithGeoCoord(place3.getLatitude(), place3.getLongitude()));
-//
-//        mapView.addPolyline(polyline);
-//
-//        // 지도뷰의 중심좌표와 줌레벨을 polyline이 모두 나오도록 조정.
-//        MapPointBounds mapPointBounds = new MapPointBounds(polyline.getMapPoints());
-//        int padding = 100; //px
-//        mapView.moveCamera(CameraUpdateFactory.newMapPointBounds(mapPointBounds, padding));
         } else{
             mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.555212, 126.970573), false); //서울역
             mapView.setZoomLevel(3, false);
@@ -479,7 +449,7 @@ public class ScheduleForm extends AppCompatActivity implements ExpandableListAda
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(ScheduleForm.this, Main.class);
-        finish();
+        mapViewContainer.removeAllViews();
         startActivity(intent);
     }
 }

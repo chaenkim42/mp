@@ -25,7 +25,7 @@
         android:layout_marginTop="122dp"
         android:layout_marginEnd="289dp"
         android:layout_marginBottom="517dp"
-        android:src="@drawable/invalid_name"
+        android:src="@drawable/profile_pic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

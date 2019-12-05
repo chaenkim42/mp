@@ -30,6 +30,7 @@
 
         </activity>
         <activity android:name=".Search.SearchMap">
+
         </activity>
         <activity android:name=".AskPreference" />
         <activity android:name=".AskLocation">
@@ -39,7 +40,6 @@
         <activity android:name=".Splash" >
         </activity>
         <activity android:name=".Main.Main" >
-
         </activity>
         <activity android:name=".Main.MyPage" >
 

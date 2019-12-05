@@ -78,8 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="chaen@gmail.com" />
+            android:inputType="textPersonName" />
 
     </LinearLayout>
 
@@ -107,8 +106,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="12345" />
+            android:inputType="numberPassword" />
     </LinearLayout>
 
     <LinearLayout
@@ -135,8 +133,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="12345" />
+            android:inputType="numberPassword" />
 
     </LinearLayout>
 
@@ -164,8 +161,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="textEmailAddress"
-            android:text="채은" />
+            android:inputType="textPersonName" />
 
     </LinearLayout>
 
@@ -193,8 +189,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="textPassword"
-            android:text="24" />
+            android:inputType="number" />
     </LinearLayout>
 
     <LinearLayout
@@ -221,8 +216,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="textPassword"
-            android:text="F" />
+            android:inputType="textCapWords" />
 
     </LinearLayout>
 

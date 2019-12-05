@@ -47,7 +47,6 @@ public class MyDiaryEditPage extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_my_diary_edit_page);
         key_diaries = getIntent().getStringExtra("key");
 
-        starttime = findViewById(R.id.editpage_timestart);
         title = findViewById(R.id.editpage_title);
         content = findViewById(R.id.editpage_content);
         savebtn = findViewById(R.id.editpage_save_btn);
@@ -60,7 +59,7 @@ public class MyDiaryEditPage extends AppCompatActivity implements View.OnClickLi
         imageView.setOnClickListener(this);
 
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(starttime.getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(title.getWindowToken(), 0);
 
     }
 

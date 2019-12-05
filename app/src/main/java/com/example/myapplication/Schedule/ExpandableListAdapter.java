@@ -243,7 +243,6 @@ public class ExpandableListAdapter extends RecyclerView.Adapter implements Place
             title = (TextView) itemView.findViewById(R.id.recyclerviewchild_location_title);
             circle = (TextView) itemView.findViewById(R.id.recyclerviewchild_circle);
             edit_btn = itemView.findViewById(R.id.edit_btn);
-
         }
     }
 
@@ -251,14 +250,12 @@ public class ExpandableListAdapter extends RecyclerView.Adapter implements Place
         public TextView textView;
         public TextView plusCircle;
         public ConstraintLayout text_constraintLayout;
-        public ImageButton edit_btn;
 
         public ListEmptyChildViewHolder(final View itemView){
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.recyclerviewEmptychild_textView);
             plusCircle = (TextView) itemView.findViewById(R.id.recyclerviewEmptychild_circle);
             text_constraintLayout = (ConstraintLayout) itemView.findViewById(R.id.recyclerviewEmptychild_text_constraintLayout);
-            edit_btn = itemView.findViewById(R.id.edit_btn);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

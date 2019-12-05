@@ -31,10 +31,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="13dp"
-                        android:src="@drawable/btn_floating"
+                        android:src="@drawable/map_navbtn"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/map_navbtn" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="200dp"
@@ -67,19 +66,22 @@
 
                     <ImageButton
                         android:id="@+id/scheduleForm_diaryBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@android:drawable/ic_menu_edit"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/todiaryicon"
+                        android:src="@color/WHITE"
                         app:layout_constraintBottom_toBottomOf="@+id/btn_save"
                         app:layout_constraintEnd_toStartOf="@+id/btn_save"
                         app:layout_constraintTop_toTopOf="@+id/btn_save" />
 
                     <ImageButton
                         android:id="@+id/btn_save"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_marginEnd="16dp"
-                        android:src="@android:drawable/ic_menu_share"
+                        android:background="@drawable/editicon"
+                        android:src="@color/WHITE"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

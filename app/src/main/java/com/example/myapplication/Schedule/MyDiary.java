@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.Database.Diary;
+import com.example.myapplication.Database.NewPlace;
 import com.example.myapplication.Database.User;
 import com.example.myapplication.Main.MyPagePlansFragment;
 import com.example.myapplication.R;
@@ -27,6 +29,7 @@ public class MyDiary extends AppCompatActivity implements View.OnClickListener {
     ImageButton add_diary;
     ImageButton edit_diary;
     User user = User.getInstance();
+    TextView tripTitleView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,8 +39,11 @@ public class MyDiary extends AppCompatActivity implements View.OnClickListener {
         edit_diary = findViewById(R.id.mydiary_btn_edit);
         add_diary.setOnClickListener(this);
         edit_diary.setOnClickListener(this);
+        tripTitleView = findViewById(R.id.mydiary_triptitle);
 
         List<Diary> tmpDiaryList = new ArrayList<>();
+        NewPlace newPlace = NewPlace.getInstance();
+        tripTitleView.setText(newPlace.getSelectedTripName());
 
         if(getIntent().hasExtra("save")){
             Diary d = new Diary(getIntent().getStringExtra("title_d"), getIntent().getStringExtra("content_d"));
