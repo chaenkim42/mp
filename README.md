@@ -1,7 +1,7 @@
 # Tangja :gem:
 Schedule management Android application for domestic travel in KR
 
-## Functions
+## :zap:Functions:zap:
 
 **1. Sign Up & Sign In**
 - Sign up & sign in through email
